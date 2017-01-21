@@ -1,0 +1,89 @@
+file "$(CARS)/CARSApp/Db/motor.db"
+{
+pattern
+{P,      M,     C, S, DESC,                   EGU,  DIR,   VELO,    VBAS,ACCL,BDST,  BVEL,  TWV,   UREV,    PREC, DHLM,   DLLM}
+{14BMC:, dz,    0, 0, "Detector distance",   "mm",  Pos,  7.5000,    1.0, 0.2, 0.0, 0.381, 10.0,  3.046,      2,  1000,    200}
+{14BMC:, dyu,   0, 1, "Detector vert, up",   "mm",  Pos,  1.0000, 0.1000, 0.2, 0.0, 1.000,  1.0,  0.30000,    3,   270,     -1}
+{14BMC:, dyd,   0, 2, "Detector vert, dn",   "mm",  Pos,  1.0000, 0.1000, 0.2, 0.0, 1.000,  1.0,  0.30000,    3,   270      -1}
+{14BMC:, dx,    0, 3, "Detector horz, x",    "mm",  Pos,  2.0000, 0.5000, 0.2, 0.0, 0.381,  0.1,  1.500,      3,    40,     -3}
+{14BMC:, hst,   0, 4, "HutchSlit Top",       "mm",  Neg,  1.5875, 0.0000, 0.2, 0.0, 1.5875, 0.02, 0.79375,    3,     5,    -20}
+{14BMC:, hsb,   0, 5, "HutchSlit Bottom",    "mm",  Pos,  1.5875, 0.0000, 0.2, 0.0, 1.5875, 0.02, 0.79375,    3,     5,    -20}
+{14BMC:, hsi,   0, 6, "HutchSlit Inboard",   "mm",  Pos,  1.5875, 0.0000, 0.2, 0.0, 1.5875, 0.1,  0.79375,    3,    10,    -25}
+{14BMC:, hso,   0, 7, "HutchSlit Outboard",  "mm",  Neg,  1.5875, 0.0000, 0.2, 0.0, 1.5875, 0.1,  0.79375,    3,    10,    -25}
+#{14BMC:, phi,   1, 0, "Phi Axis",            "deg", Pos,  0.8000, 0.2000, 0.2, 0.0, 0.20,   1.0,  0.1,        4, 10000, -10000}
+#{14BMC:, bsx,   1, 1, "Beam stop, x",        "mm",  Pos,  1.2700, 1.2700, 0.2, 0.0, 1.27,   0.0,  0.635,      4,     5,     -5}
+#{14BMC:, bsy,   1, 2, "Beam stop, y",        "mm",  Pos,  4.0000, 4.0000, 0.2, 0.0, 4.00,   0.0,  2.000,      3,     5,     -5}
+#{14BMC:, m12,   1, 3, "Reserved",            "mm",  Pos,  4.0000, 4.0000, 0.2, 0.0, 4.00,   0.0,  2.000,      3,     5,     -5}
+{14BMC:, tyu,   1, 4, "Table y, upstream",   "mm",  Pos,  0.5000, 0.1000, 0.2, 0.1, 0.5000, 1.0,  0.2500,     3,    10,    -10}
+{14BMC:, tyd,   1, 5, "Table y, downstream", "mm",  Pos,  0.5000, 0.1000, 0.2, 0.1, 0.5000, 1.0,  0.2500,     3,    10,    -10}
+{14BMC:, kappa, 1, 6, "Kappa Axis",          "deg", Neg, 12.0000, 1.0000, 0.2, 0.0, 4.00,   0.0,  2.000,      3,    60,    -60}
+{14BMC:, omega, 1, 7, "Omega Axis",          "deg", Pos,  0.8000, 0.2000, 0.2, 0.0, 0.20,   1.0,  0.1,        3,    90,    -90}
+{14BMC:, txu,   2, 0, "Table x, upstream",   "mm",  Pos,  2.0000, 1.1500, 0.4, 0.2, 1.1500, 1.0,  2.0000,     3,    10,    -10}
+{14BMC:, txd,   2, 1, "Table x, downstream", "mm",  Pos,  2.0000, 1.1500, 0.4, 0.2, 1.1500, 1.0,  2.0000,     3,    10,    -10}
+{14BMC:, tyr,   2, 2, "Table tyr rotation",  "mm",  Pos,  3.0000, 3.0000, 0.2, 0.5, 3.0000, 0.1,  2.0000,     3,    10,    -10}
+{14BMC:, bsz,   2, 3, "Beam stop,z",         "mm",  Pos, 10.0000, 0.1000, 0.2, 0.0, 1.5000, 1.0,  2.0000,     3,   150,      9}
+{14BMC:, m21,   2, 4, "m21",                 "mm",  Neg,  2.0000, 0.2000, 0.2, 0.0, 2.0000, 0.0,  0.7000,     3,    10,    -10}
+{14BMC:, m22,   2, 5, "m22",                 "mm",  Pos,  2.0000, 0.1000, 0.2, 0.0, 1.5000, 0.0,  0.6350,     3,    10,    -10}
+{14BMC:, cox,   2, 6, "Collimator, x",       "mm",  Pos,  1.0000, 0.1000, 0.2, 0.0, 1.0000, 0.1,  1.0000,     3,    10,    -10}
+{14BMC:, hgx,   2, 7, "Huber Goniometer, x", "mm",  Pos,  2.0000, 0.1000, 0.2, 0.0, 1.5000, 0.0,  1.5000,     3,    1,    -10}
+}
+
+file "$(CARS)/CARSApp/Db/motor_micro.db"
+{
+pattern
+{P,      M,     C, S,           DESC,   EGU, DIR,   VELO,   VMAX,   VBAS, ACCL, BDST,   BVEL,  TWV,   UREV, PREC,  DHLM,   DLLM,  SREV}
+{14BMC:, phi,   1, 0,     "Phi Axis", "deg", Neg,  30.00,   35.00,  0.1000,  0.2,  0.0, 0.1000, 90.0,    2.0,    3, 10000, -10000, 10000}
+{14BMC:, bsx,   1, 1, "Beam stop, x",  "mm", Neg, 1.0000,   1.200,  0.1000,  0.2,  0.0,   0.10,  0.1, 0.3175,    3,     5,     -5,  2000}
+{14BMC:, bsy,   1, 2, "Beam stop, y",  "mm", Pos, 1.0000,   1.200,  0.1000,  0.2,  0.0,   0.10,  0.1, 0.3175,    3,     5,     -5,  2000}
+{14BMC:, m12,   1, 3,     "Reserved",  "mm", Neg,  30.00,   35.00,  0.1000,  0.2,  0.0, 0.1000,  0.0,    2.0,    3,     5,     -5, 10000}
+}
+
+file "$(CARS)/CARSApp/Db/pseudoMotor.db"
+{
+pattern
+{P,         M,                     DINP,                        OUT,                           RDBL,                   STOO,            DESC, EGU, DIR,   VELO,  VBAS, ACCL, BDST,   BVEL, BACC,    MRES, RRES, PREC, DHLM, DLLM,    C1,     C2}
+{14BMC:,   dY,  "14BMC:dY:Done NPP NMS",   "14BMC:dYDVAL.VAL PP MS",  "14BMC:dY:Readback.G NPP NMS",  "14BMC:dY:Stop PP MS",  "Detector, dY",  mm, Pos, 1.0000, 0.100,   .2,  0.0, 1.5870,   .1, .000750,  1.0,    3,  270,  -50,  -161,  465.8}
+{14BMC:,  dYa,  "14BMC:dY:Done NPP NMS",  "14BMC:dYaDVAL.VAL PP MS",  "14BMC:dY:Readback.H NPP NMS",  "14BMC:dY:Stop PP MS", "Detector, dYa", deg, Pos, 1.0000, 0.100,   .2,  0.0, 1.5870,   .1, .000750,  1.0,    3,   35,   -1, 0.190,      1}
+{14BMC:,   tY,  "14BMC:tY:Done NPP NMS",   "14BMC:tYDVAL.VAL PP MS",  "14BMC:tY:Readback.G NPP NMS",  "14BMC:tY:Stop PP MS",     "Table, tY",  mm, Pos, 0.5000, 0.100,   .2,  0.1, 0.5000,   .1, .000625,  1.0,    3,   10,  -10, 536.8,   -105}
+{14BMC:,  tYa,  "14BMC:tY:Done NPP NMS",  "14BMC:tYaDVAL.VAL PP MS",  "14BMC:tY:Readback.H NPP NMS",  "14BMC:tY:Stop PP MS",    "Table, tYa", deg, Pos, 0.5000, 0.100,   .2,  0.1, 0.5000,   .1, .000625,  1.0,    3,    5,   -5,-0.133,      1}
+{14BMC:,   tX,  "14BMC:tX:Done NPP NMS",   "14BMC:tXDVAL.VAL PP MS",  "14BMC:tX:Readback.G NPP NMS",  "14BMC:tX:Stop PP MS",     "Table, tX",  mm, Pos, 2.0000, 1.150,   .4,  0.2, 1.1500,   .1, .005000,  1.0,    3,   10,  -10, 279.4, 1422.4}
+{14BMC:,  tXa,  "14BMC:tX:Done NPP NMS",  "14BMC:tXaDVAL.VAL PP MS",  "14BMC:tX:Readback.H NPP NMS",  "14BMC:tX:Stop PP MS",    "Table, tXa", deg, Pos, 2.0000, 0.150,   .4,  0.0, 1.1500,   .1, .002000,  1.0,    3,    5,   -5,-0.034,      1}
+{14BMC:,  hsx, "14BMC:HSX:Done NPP NMS",  "14BMC:hsxDVAL.VAL PP MS", "14BMC:HSX:Readback.G NPP NMS", "14BMC:HSX:Stop PP MS",           "hsx",  mm, Pos, 1.5875, 0.000,   .2,  0.0, 1.5875,   .1, .002000,  1.0,    3,   20,  -10,     1,      1}
+{14BMC:, hshl, "14BMC:HSX:Done NPP NMS", "14BMC:hshlDVAL.VAL PP MS", "14BMC:HSX:Readback.H NPP NMS", "14BMC:HSX:Stop PP MS",          "hshl",  mm, Pos, 1.5875, 0.000,   .2,  0.0, 1.5875,   .1, .002000,  1.0,    3,   30,   -1,     1,      1}
+{14BMC:,  hsy, "14BMC:HSY:Done NPP NMS",  "14BMC:hsyDVAL.VAL PP MS", "14BMC:HSY:Readback.G NPP NMS", "14BMC:HSY:Stop PP MS",           "hsy",  mm, Pos, 1.5875, 0.000,   .2,  0.0, 1.5875,   .1, .002000,  1.0,    3,   20,  -10,     1,      1}
+{14BMC:, hsvl, "14BMC:HSY:Done NPP NMS", "14BMC:hsvlDVAL.VAL PP MS", "14BMC:HSY:Readback.H NPP NMS", "14BMC:HSY:Stop PP MS",          "hsvl",  mm, Pos, 1.5875, 0.000,   .2,  0.0, 1.5875,   .1, .002000,  1.0,    3,   30,   -1,     1,      1}
+#{14BMC:,  dz2,  "14BMC:dz.DMOV NPP NMS",       "14BMC:dz.VAL PP MS",         "14BMC:dz.RBV NPP NMS",  "14BMC:dz.STOP PP MS",           "dz2",  mm, Pos, 7.5000, 1.000,   .2,  0.0, 0.3800,   .1, .002000,  1.0,    2, 1000,  200,     1,      1}
+}
+
+
+file "$(CARS)/CARSApp/Db/sumDiff2D.db"
+{
+pattern
+{P,        T,  SUM, DIFF,  M1,  M2,   M1DRV,    M1RBV,   M2DRV,   M2RBV,   M1STOP,   M1DONE,   M2STOP,   M2DONE,  PREC}
+{14BMC:, dY:,   dY,  dYa, dyd, dyu, dyd.VAL,  dyd.RBV, dyu.VAL, dyu.RBV, dyd.STOP, dyd.DMOV, dyu.STOP, dyu.DMOV,     3}
+{14BMC:, tY:,   tY,  tYa, tyd, tyu, tyd.VAL,  tyd.RBV, tyu.VAL, tyu.RBV, tyd.STOP, tyd.DMOV, tyu.STOP, tyu.DMOV,     3}
+{14BMC:, tX:,   tX,  tXa, txd, txu, txd.VAL,  txd.RBV, txu.VAL, txu.RBV, txd.STOP, txd.DMOV, txu.STOP, txu.DMOV,     3}
+}
+
+file "$(CARS)/CARSApp/Db/sumDiff2D.db"
+{
+pattern
+{P,        T,  SUM, DIFF,  M1,  M2,   M1DRV,    M1RBV,   M2DRV,   M2RBV,   M1STOP,   M1DONE,   M2STOP,   M2DONE,  PREC}
+{14BMC:, HSX:, hsx, hshl, hso, hsi, hso.VAL,  hso.RBV, hsi.VAL, hsi.RBV, hso.STOP, hso.DMOV, hsi.STOP, hsi.DMOV,     3}
+{14BMC:, HSY:, hsy, hsvl, hst, hsb, hst.VAL,  hst.RBV, hsb.VAL, hsb.RBV, hst.STOP, hst.DMOV, hsb.STOP, hsb.DMOV,     3}
+}
+
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,          M,         DTYP, C, S,                 DESC,    EGU, DIR,  VELO, VBAS, ACCL, BDST,  BVEL, TWV,   UREV, SREV, PREC, DHLM, DLLM}
+{14BMC:,  jjhl, "ACS MCB-4B", 0, 0,   "jjhl x aperture",  "mm", Neg,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,   -6}
+{14BMC:,   jjx, "ACS MCB-4B", 0, 1,  "jjx x translation", "mm", Pos,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0078,   24,    4,    6,   -6}
+{14BMC:,  jjvl, "ACS MCB-4B", 0, 2,   "jjvl y aperture",  "mm", Neg,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,   -6}
+{14BMC:,   jjy, "ACS MCB-4B", 0, 3,  "jjy y translation", "mm", Neg,   0.1,  0.1,  0.2, -0.02,   0.1, 0.1, 0.0078,   24,    4,    6,   -6}
+#{14BMC:, jj2hl, "ACS MCB-4B", 1, 0,  "jj2hl x aperture",  "mm", Neg,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,   -6}
+#{14BMC:,  jj2x, "ACS MCB-4B", 1, 1, "jj2x x translation", "mm", Pos,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0078,   24,    4,    6,   -6}
+#{14BMC:, jj2vl, "ACS MCB-4B", 1, 2,  "jj2vl y aperture",  "mm", Neg,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,   -6}
+#{14BMC:,  jj2y, "ACS MCB-4B", 1, 3, "jj2y y translation", "mm", Neg,   0.1,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0078,   24,    4,    6,   -6}
+}

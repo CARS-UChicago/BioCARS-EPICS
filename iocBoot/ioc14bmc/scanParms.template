@@ -1,0 +1,26 @@
+file "$(CARS)/CARSApp/Db/scanParms.db"
+{
+pattern 
+{P,          SCANREC,     Q,                     POS,                    RDBK,         AR,         AFT,               TPV,              DPV,    SP,   EP, NP,                           A,                            B,                  DET}
+{14BMC:, 14BMC:scan1,   hsx,           14BMC:hsx.VAL,           14BMC:hsx.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   hsy,           14BMC:hsy.VAL,           14BMC:hsy.RBV, "RELATIVE",  "PEAK POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4", -1.25, 1.25, 81,                          "",                           "", "14BMC:sclS1_cts1.D"}
+{14BMC:, 14BMC:scan1,  hshl,          14BMC:hshl.VAL,          14BMC:hshl.RBV, "ABSOLUTE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",   1.0, -0.1, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,  hsvl,          14BMC:hsvl.VAL,          14BMC:hsvl.RBV, "ABSOLUTE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",   0.1,-0.05, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   hst,           14BMC:hst.VAL,           14BMC:hst.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -0.5,  0.5, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   hsb,           14BMC:hsb.VAL,           14BMC:hsb.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -0.5,  0.5, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   hsi,           14BMC:hsi.VAL,           14BMC:hsi.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   hso,           14BMC:hso.VAL,           14BMC:hso.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   jjx,           14BMC:jjx.VAL,           14BMC:jjx.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,  jjhl,          14BMC:jjhl.VAL,          14BMC:jjhl.RBV, "ABSOLUTE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",   1.0,  0.1, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   jjy,           14BMC:jjy.VAL,           14BMC:jjy.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,  jjvl,          14BMC:jjvl.VAL,          14BMC:jjvl.RBV, "ABSOLUTE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",   1.0,  0.1, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   cox,           14BMC:cox.VAL,           14BMC:cox.RBV, "RELATIVE","CNTR OF MASS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",  -1.0,  1.0, 61, "14BMC:openXiaShutter.PROC", "14BMC:closeXiaShutter.PROC",                   ""}
+{14BMC:, 14BMC:scan1,    tY,            14BMC:tY.VAL,            14BMC:tY.RBV, "RELATIVE",  "PEAK POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S5",  -1.0,  1.0, 81, "14BMC:openXiaShutter.PROC", "14BMC:closeXiaShutter.PROC", "14BMC:sclS1_cts2.A"}
+{14BMC:, 14BMC:scan1,    dx,            14BMC:dx.VAL,            14BMC:dx.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S7",  -0.5,  0.5, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,    dY,            14BMC:dY.VAL,            14BMC:dY.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S7",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   csx,  14BMA:CHslitxtrans.VAL,  14BMA:CHslitxtrans.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  -0.5,  0.5, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,  cshl,     14BMA:CHslitrot.VAL,     14BMA:CHslitrot.RBV, "ABSOLUTE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4",  89.0, 90.2, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   csy,   14BMA:Cslitytrans.VAL,   14BMA:Cslitytrans.RBV, "RELATIVE", "PRIOR POS", "14BMA:sclS1.CNT", "14BMA:sclS1.S2",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,  csvl,      14BMA:Cslitrot.VAL,      14BMA:Cslitrot.RBV, "ABSOLUTE", "PRIOR POS", "14BMA:sclS1.CNT", "14BMA:sclS1.S2",  46.0, 44.5, 41,                          "",                           "",                   ""}
+{14BMC:, 14BMC:scan1,   myd, 14BMA:Cmirrytransdn.VAL, 14BMA:Cmirrytransdn.RBV, "RELATIVE", "PRIOR POS", "14BMC:sclS1.CNT", "14BMC:sclS1.S4", -0.07, 0.07, 29,                          "",                           "",                   ""}
+}

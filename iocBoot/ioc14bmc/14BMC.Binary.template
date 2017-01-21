@@ -1,0 +1,35 @@
+file "$(CARS)/CARSApp/Db/9440_bi.db"
+{
+pattern
+{P,      C,  R, BIT}
+{14BMC:, 0,  B1, 0}
+{14BMC:, 0,  B1, 1}
+{14BMC:, 0,  B1, 2}
+{14BMC:, 0,  B1, 3}
+{14BMC:, 0,  B1, 4}
+{14BMC:, 0,  B1, 5}
+{14BMC:, 0,  B1, 6}
+{14BMC:, 0,  B1, 7}
+}
+
+file "$(CARS)/CARSApp/Db/9440_bo.db"
+{
+pattern
+{P,      C,  R, BIT}
+{14BMC:, 0,  B1, 0}
+{14BMC:, 0,  B1, 1}
+{14BMC:, 0,  B1, 2}
+{14BMC:, 0,  B1, 3}
+{14BMC:, 0,  B1, 4}
+{14BMC:, 0,  B1, 5}
+{14BMC:, 0,  B1, 6}
+{14BMC:, 0,  B1, 7}
+{14BMC:, 0,  B1, 8}
+{14BMC:, 0,  B1, 9}
+{14BMC:, 0,  B1, 10}
+{14BMC:, 0,  B1, 11}
+{14BMC:, 0,  B1, 12}
+{14BMC:, 0,  B1, 13}
+{14BMC:, 0,  B1, 14}
+{14BMC:, 0,  B1, 15}
+}
