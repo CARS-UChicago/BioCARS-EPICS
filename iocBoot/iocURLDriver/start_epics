@@ -1,0 +1,4 @@
+#medm -x -macro "P=14SIM1:, R=cam1:" simDetector.adl &
+medm -x -attach -macro "P=14URL1:,R=cam1:" URLDriver.adl &
+../../../areaDetector-1-9-1/bin/linux-x86/URLDriverApp st.cmd.linux
+

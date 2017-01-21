@@ -1,0 +1,6 @@
+medm -x -macro "P=14PS1:, R=cam1:" prosilica.adl &
+#../../bin/linux-x86_64/prosilicaApp st.cmd.linux
+#../../bin/linux-x86_64/CARS st.cmd
+../../../areaDetector-2-5/ADProsilica/iocs/prosilicaIOC/bin/linux-x86_64/prosilicaApp st.cmd
+
+
