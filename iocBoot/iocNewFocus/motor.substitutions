@@ -1,0 +1,7 @@
+file "$(MOTOR)/db/basic_motor.db"
+{
+pattern
+{P,     N,  M,        DTYP,      C,  S,  DESC,          EGU,      DIR,  VELO,  VBAS,  ACCL,  BDST,  BVEL,  BACC,  MRES,  PREC,  DHLM,  DLLM,  INIT}
+{
+xxx:, 1,   m1,  "PMNC87xx",      0, 0, "motor $(N)", degrees,     Pos,    10,    0.,    1.,     0,     1,    .2,  1e-3,     3,   100,  -100,   ""}
+}

@@ -1,0 +1,15 @@
+file "$(STD)/stdApp/Db/softMotor.db"
+{
+pattern
+{P,		SM}
+{CARS:,	SM1}
+{CARS:,	SM2}
+{CARS:,	SM3}
+{CARS:,	SM4}
+{CARS:,	SM5}
+{CARS:,	SM6}
+{CARS:,	SM7}
+{CARS:,	SM8}
+{CARS:,	SM9}
+{CARS:,	SM10}
+}

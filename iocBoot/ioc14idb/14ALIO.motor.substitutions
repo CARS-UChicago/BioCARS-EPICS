@@ -1,0 +1,9 @@
+file "$(MOTOR)/db/asyn_motor.db"
+{
+pattern
+{P,      N,  M,       DTYP,      PORT,               ADDR, DESC,        EGU, DIR, VELO, VBAS, VMAX, ACCL, BDST, BVEL, BACC, MRES,                  PREC, DHLM, DLLM,  RTRY, RDBD,  INIT}
+{14IDB:, 150, "m$(N)", asynMotor, pmacAliogAsynMotor, 1,    "Gon Z",    mm, Pos, 5,    0,    0,    0.1,  0,    5,    0.1,  1.5625e-4,             3,    10,   -49.8, 0,    0,     ""}
+{14IDB:, 151, "m$(N)", asynMotor, pmacAliogAsynCoord, 0,    "Phi", deg, Neg, 90,   0,    90,   0.1,  0,    10,   0.1,  1.7863948160094353e-4, 3, 10000,-10000,     5,    0.001, ""}
+{14IDB:, 152, "m$(N)", asynMotor, pmacAliogAsynMotor, 3,    "Gon X",    mm, Neg, 5,    0,    0,    0.1,  0,    5,    0.1,  1.5625e-4,             3,    5.5,  -5.5,  0,    0,     ""}
+{14IDB:, 153, "m$(N)", asynMotor, pmacAliogAsynMotor, 4,    "Gon Y",    mm, Pos, 5,    0,    0,    0.1,  0,    5,    0.1,  1.5625e-4,             3,    5.5,  -5.5,  0,    0,     ""}
+}

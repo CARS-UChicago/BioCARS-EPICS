@@ -1,0 +1,12 @@
+file "$(SSCAN)/sscanApp/Db/scanParms.db"
+{
+{P=CARS:,SCANREC=CARS:scan1,Q=m1,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m2,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m3,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m4,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m5,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m6,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m7,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+{P=CARS:,SCANREC=CARS:scan1,Q=m8,POS="$(Q).VAL",RDBK="$(Q).RBV"}
+
+}
