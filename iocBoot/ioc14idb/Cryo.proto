@@ -1,0 +1,58 @@
+Terminator = CR;
+
+getTemp {
+	out "R1";
+	in "R%f";
+#	@mismatch { out "R1"; in "R%f"; }
+#	@mismatch { in "?1"; }
+	@mismatch { in "?\?"; }
+}
+
+getSampleFlow {
+	out "R19";
+	in "R%f";
+	@mismatch { in "?\?"; }
+}
+
+getShieldFlow {
+	out "R18";
+	in "R%f";
+	@mismatch { in "?\?"; }
+}
+
+getDesiredT {
+	out "R0";
+	in "R%f";
+	@mismatch { in "?\?"; }
+}
+
+getLorR {
+	out "X";
+	in "X0A1C%iS00H1L0";
+#	@mismatch { out "X"; in "X0A1C%iS00H1L0"; }
+	@mismatch {in "";}
+}
+
+setLocal {
+	out "C%(A)i";
+}
+
+setRemote {
+	out "C%(A)i";
+}
+
+setTemp {
+	out "T%(A)3.1f";
+#	@init { getDesiredT; }
+#	@init { out "R0"; in "R%f"; }
+}
+
+setSampleFlow {
+	out "K%(A)2.1f";
+#	@init { getSampleFlow; }
+}
+
+setShieldFlow {
+	out "J%(A)2.1f";
+#	@init { getShieldFlow; }
+}
