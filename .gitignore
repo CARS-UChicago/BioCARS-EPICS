@@ -7,6 +7,8 @@ db/
 O.*/
 *BAK.adl
 autosave/
+auto_settings.sav*
+auto_positions.sav*
 envPaths*
 cdCommands
 dllPath.bat
