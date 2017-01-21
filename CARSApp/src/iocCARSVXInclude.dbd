@@ -1,0 +1,50 @@
+# stuff for vxWorks ioc
+
+# Include everything for non-vxWorks IOC
+include "CARSCommonInclude.dbd"
+
+include "vmeVXSupport.dbd"
+include "stdVXSupport.dbd"
+include "ipVXSupport.dbd"
+include "SIS38XXSupport.dbd"
+include "ipUnidigSupport.dbd"
+include "dac128VSupport.dbd"
+include "ip330Support.dbd"
+include "devOms.dbd"
+include "devDeltaTau.dbd"
+include "camacSupport.dbd"
+include "devCamacSupport.dbd"
+include "dxpSupport.dbd"
+include "allenBradley.dbd"
+#include "quadEMSupport.dbd"
+include "drvAPS_EM.dbd"
+# If not defined in iocCARSInclude.dbd
+include "mcaCanberraSupport.dbd"
+include "tyGSOctal.dbd"
+include "drvGsIP488.dbd"
+include "drvIpac.dbd"
+include "dvx2502.dbd"
+include "softGlueSupport.dbd"
+include "asyn.dbd"
+include "calcSupport.dbd"
+include "busySupport.dbd"
+#include "pmacAsynMotorPortVxWorks.dbd"
+#include "devDG535.dbd"
+
+# Locally defined stuff that needs to be registered
+registrar(mirrorRegistrar)
+registrar(HmirrorRegistrar)
+registrar(Mount_sampleRegistrar)
+registrar(EPS_vlvRegistrar)
+#registrar(gentecDuoRegistrar)
+registrar(keithley6485stRegistrar)
+registrar(sigmaMeterRegistrar)
+registrar(MSShutterMonoRegistrar)
+registrar(MS7023ShutterRegistrar)
+registrar(beamCheckMonoRegistrar)
+registrar(beamCheckTblRegistrar)
+registrar(fpgaRegistrar)
+registrar(IDB_MADRegistrar)
+registrar(laserPowerRegistrar)
+registrar(laserShutterRegistrar)
+registrar(M6VALCOpumpRegistrar)
