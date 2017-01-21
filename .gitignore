@@ -1,0 +1,16 @@
+bin/
+include/
+lib/
+dbd/
+templates/
+db/
+O.*/
+*BAK.adl
+autosave/
+envPaths*
+cdCommands
+dllPath.bat
+*.orig
+StageDataBase.txt
+*.trj
+*~
