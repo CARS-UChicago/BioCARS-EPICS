@@ -1,0 +1,868 @@
+# created in Dec. 2003:  Ning Lei
+# for xia 2-blade shutter control
+# by setting up 7023 Timing module
+# modified Jan 5, 2004:  Ning Lei
+#   add xiaIsStart and the associated code
+#   to decide wether to reset the velo and angle
+# 
+# Mar 29, 04 - Ning Lei
+#              replace 0.1 second by 0.01+(0.001+velo)*0.5*T
+#              where T=ACCL
+# Mar 30, 04 - Ning Lei
+#              use MRES to set the number of pulses
+#              take care of the cases of very long exposure
+# May 27, 04 - Ning Lei
+#              put some time buffer for the moter to slow down
+#              to take care of the time elapse between the
+#              triggering of the xia blade and the actual
+#              motion
+# June 4, 04 - Ning Lei
+#              take care of the case when xiaN>1
+# June 7, 05 - Ning Lei
+#              add some comments
+# Sep 13, 05 - Ning Lei
+#              take care of the very slow rotation speed case and the multiple run
+#              case (xiaN>1)
+
+
+# reads 7023 status once every 0.1 second
+grecord(vme,"$(P)xiaShutter")
+{
+	field(ADDR,"0x8f000A")
+	field(AMOD,"A24")
+	field(RDWT,"Read")
+	field(SCAN,".1 second")
+}
+
+# set counter 1 address PV
+grecord(vme,"$(P)xiaShutterCN1")
+{
+	field(ADDR,"0x8f0002")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set counter 2 address PV
+grecord(vme,"$(P)xiaShutterCN2")
+{
+	field(ADDR,"0x8f0004")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set counter 3 address PV
+grecord(vme,"$(P)xiaShutterCN3")
+{
+	field(ADDR,"0x8f0006")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set a PV for ounter control address for the clock source
+grecord(vme,"$(P)shutterControl")
+{
+	field(ADDR,"0x8f0008")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set internal trigger address PV
+grecord(vme,"$(P)xiaShutterWR")
+{
+	field(ADDR,"0x8f000c")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+#close or open the shutter at the command
+#of a manual operator
+grecord(vme,"$(P)setXia")
+{
+	field(ADDR,"0x8f000a")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# counter divider address to handle large exposure time range
+# using limited counter precision
+grecord(vme,"$(P)setXiaDivider")
+{
+	field(ADDR,"0x8f000e")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# open the shutter
+grecord(transform, "$(P)openXiaShutter")
+{
+        #change to normal mode for channel 2
+        field(CLCA, "0")
+        field(OUTA, "$(P)shutterControl.VAL PP MS")
+
+        field(CLCB, "1")
+        field(OUTB, "$(P)setXia.VAL PP MS")
+
+        field(FLNK, "$(P)xiaShutterStatusInput.PROC")
+}
+
+# close the shutter
+grecord(transform, "$(P)closeXiaShutter")
+{
+        field(CLCB, "0")
+        field(OUTB, "$(P)shutterControl.VAL PP MS")
+
+        field(CLCA, "2")
+        field(OUTA, "$(P)setXia.VAL PP MS")
+
+        field(FLNK, "$(P)xiaShutterStatusInput.PROC")
+}
+
+# abort motion for omega
+grecord(transform, "$(P)xiaAbortOmega")
+{
+    field(CLCA, "1")
+    field(OUTA, "$(P)omega.STOP PP MS")
+
+    field(CLCB, "1")
+    field(OUTB, "$(P)xiaIsAbort.VAL PP MS")
+
+    field(FLNK, "$(P)omegaResetV2.PROC")
+}
+
+# abort motion for phi
+grecord(transform, "$(P)xiaAbortPhi")
+{
+    field(CLCA, "1")
+    field(OUTA, "$(P)phi.STOP PP MS")
+
+    field(FLNK, "$(P)phiResetV2.PROC")
+}
+
+#use both blades to control the open/close
+#since no motor involved, use internal clock
+grecord(transform, "$(P)openXiaDC")
+{
+         field(CLCA, "0")
+         field(OUTA, "$(P)shutterControl.VAL PP MS")
+         field(CLCB, "1")
+         field(OUTB, "$(P)setXia.VAL PP MS")
+ 
+         #get exposure time
+         field(INPC, "$(P)xiaExposeTime.VAL PP MS")
+ 
+         #set the divider according to the expose time
+         field(CLCD, "C>1.0?13:10")
+         field(OUTD, "$(P)setXiaDivider.VAL PP MS")
+  
+         field(CLCE, "C*500000/2^(D-3)")
+ 
+         field(CLCF, "(D=13)?E+300:E+3000")
+         field(OUTF, "$(P)xiaShutterCN1.VAL PP MS")
+ 
+         #change to normal mode for channel 2
+         #use internal trigger
+         field(CLCG, "2240")
+         field(OUTG, "$(P)shutterControl.VAL PP MS")
+ 
+         field(CLCH, "0")
+         field(OUTH, "$(P)setXia.VAL PP MS")
+ 
+         field(CLCI, "(D=13)?E+300:E+3000")
+         field(OUTI, "$(P)xiaShutterCN2.VAL PP MS")
+ 
+ 
+         field(CLCJ, "(D=13)?300:3000")
+         field(OUTJ, "$(P)xiaShutterCN3.VAL PP MS")
+ 
+         field(CLCK, "0")
+         field(OUTK, "$(P)xiaShutterWR.VAL PP MS")
+}
+
+#start an snap shot for omega
+grecord(transform, "$(P)xiaStartOmega")
+{
+         #set external trigger
+         field(CLCA, "2255")
+         field(OUTA, "$(P)shutterControl.VAL PP MS")
+
+         field(CLCB, "0")
+         field(OUTB, "$(P)setXia.VAL PP MS")
+
+         #store the original velocity
+         field(INPC, "$(P)omega.VELO")
+         field(OUTC, "$(P)xiaOriginalVelo.VAL PP MS")
+
+
+         field(FLNK, "$(P)xiaStartOmega2.PROC PP MS")
+}
+
+# continue snap shot
+grecord(transform, "$(P)xiaStartOmega2")
+{
+         #compute speed
+         field(INPD, "$(P)xiaN.VAL")
+         field(INPE, "$(P)oscWidth.VAL")
+         field(INPF, "$(P)xiaExposeTime.VAL ")
+         field(INPG, "$(P)omega.SREV")
+
+         field(INPH, "$(P)omega.VAL")
+         field(OUTH, "$(P)xiaOriginalAngle.VAL PP MS")
+
+         #velocity
+         field(CLCJ, "D*E/F")
+         field(OUTJ, "$(P)omega.VELO NPP MS")
+
+         #if speed >= 0.001, set base speed at 0.001 deg/s
+         #otherwise, set the base speed the same as the speed
+         field(CLCA, "J>=0.001?0.001:J")
+         field(OUTA, "$(P)omega.VBAS NPP MS")
+
+         field(INPI, "$(P)omega.VBAS")
+
+         #ACCL is the time to reach VELO from base speed
+         field(INPK, "$(P)omega.ACCL")
+
+         field(INPL, "$(P)omega.MRES")
+        
+         
+         #set the number of pulses for CN3 
+         # field(CLCN, "(0.005+0.5*(I+J)*K)*G*10")
+         field(CLCN, "(0.005+0.5*(I+J)*K)/L")        
+         field(OUTN, "$(P)xiaShutterCN3.VAL PP MS")
+
+         #field(CLCO, "20+E*G*10")
+         field(CLCO, "20+E/L")
+         field(OUTO, "$(P)xiaShutterCN2.VAL PP MS")
+
+         #field(CLCP, "N+E*G*10")
+         field(CLCP, "N+E/L")
+         field(OUTP, "$(P)xiaShutterCN1.VAL PP MS")
+
+         field(FLNK, "$(P)xiaStartOmegaCont.PROC")
+}
+
+#continue snap shot
+grecord(transform, "$(P)xiaStartOmegaCont")
+{
+         #move omega to an angle lower than the 
+         #start angle
+#         field(INPA, "$(P)xiaNDone.VAL NPP MS")
+         field(INPB, "$(P)xiaN.VAL") 
+         field(INPC, "$(P)omega.VAL")
+         field(INPD, "$(P)oscWidth.VAL")
+         field(INPE, "$(P)omega.VELO")
+         field(INPF, "$(P)omega.ACCL")
+         field(INPG, "$(P)omega.VAL")
+         field(OUTG, "$(P)xiaOriginalAngle.VAL PP MS")
+
+#         field(CLCH, "(B-A=0)?C:(G-0.005-0.5*(E+0.001)*F)")
+
+         field(CLCH, "G-0.005-0.5*(E+0.001)*F")
+         field(OUTH, "$(P)omega.VAL PP MS")
+
+         field(INPI, "$(P)xiaExposeTime.VAL")
+         field(CLCJ, "I+2.0*F+0.01/E+1.2")
+         field(OUTJ, "$(P)xiaDelay.VAL PP MS")
+
+	 field(CLCK,"G+D+0.005+0.5*(E+0.001)*F")
+         field(OUTK,"$(P)xiaEndAngle.VAL PP MS")
+
+         #set enough time for motor to move into start position
+         field(CLCL, "E<10?(E<5?0.5:1):(E<20?2:5)")
+         field(OUTL, "$(P)omegaStartDelay.DLY1 PP MS")
+}
+
+# delay for motor to move into the start position
+grecord(seq, "$(P)omegaStartDelay")
+{
+       field(PREC, "2")
+       field(DLY1, "1.0")
+
+       #without .PROC, the link record is not excited
+       field(LNK1, "$(P)omegaStartCount.PROC")
+}
+
+grecord(transform, "$(P)omegaStartCount")
+{
+         #reset divider
+         field(CLCA, "0")
+         field(OUTA, "$(P)setXiaDivider.VAL PP MS")
+
+         #trigger the shutter to start
+         field(CLCB, "0")
+         field(OUTB, "$(P)xiaShutterWR.VAL PP MS")
+
+         #start to move the motor
+         field(INPC, "$(P)xiaEndAngle.VAL")
+         field(OUTC, "$(P)omega.VAL PP MS")
+
+	 field(INPD, "0")
+	 field(OUTD, "$(P)xiaOscDone.VAL PP MS")
+
+         field(INPK, "$(P)xiaDelay.VAL")
+         field(OUTK, "$(P)omegaResetV.DLY1 PP MS")
+
+#         field(FLNK, "$(P)omegaResetV.PROC")
+}
+
+grecord(seq, "$(P)omegaResetV")
+{
+    field(PREC, "2")
+    field(LNK1, "$(P)omegaResetTRAN.PROC")
+}
+
+#compute the condition to see whether should reset
+grecord(transform, "$(P)omegaResetTRAN")
+{
+    field(INPA, "$(P)xiaIsStart.VAL NPP MS")
+    field(INPB, "$(P)xiaIsAbort.VAL NPP MS")
+    field(CLCC, "1+(A==0&&B==1)")
+    field(OUTC, "$(P)xiaOscReset.VAL PP MS")
+
+    field(FLNK, "$(P)omegaResetWait.PROC")
+}
+
+#delay one second to wait $(P)xiaOscReset to finish
+grecord(seq, "$(P)omegaResetWait")
+{
+    field(DLY1, "0.1")
+    field(LNK1, "$(P)omegaResetV2PRE.PROC")
+}
+
+#if the condition is right, reset
+grecord(fanout, "$(P)omegaResetV2PRE")
+{
+    field(DESC, "prepare to reset")
+    field(SELM, "Specified")
+    field(SELL, "$(P)xiaOscReset.VAL")
+    field(LNK1, "$(P)omegaResetV2.PROC PP MS")
+}
+
+grecord(calcout, "$(P)omegaResetV2")
+{
+    field(INPA, "$(P)xiaOriginalVelo.VAL NPP MS")
+    field(CALC, "A")
+    field(OUT, "$(P)omega.VELO PP MS")
+    field(FLNK, "$(P)omegaResetAngle.PROC")
+}
+
+#         field(INPL, "$(P)exposeTime.VAL")
+
+grecord(transform, "$(P)omegaResetAngle")
+{
+#    field(INPA, "$(P)xiaOriginalAngle.VAL")
+#    field(OUTA, "$(P)omega.VAL PP MS")
+
+    #reset xiaIsAbort
+    field(INPB, "0")
+    field(OUTB, "$(P)xiaIsAbort.VAL NPP MS")
+
+    field(INPC, "0")
+    field(OUTC, "$(P)xiaIsStart.VAL NPP MS")
+
+    field(INPD,"1")
+    field(OUTD,"$(P)xiaOscDone.VAL PP MS")
+
+    field(FLNK, "$(P)closeXiaShutter.PROC PP MS")
+}
+
+#start a snap shot for phi
+grecord(transform, "$(P)xiaStartPhi")
+{
+         #set external trigger
+         field(CLCA, "2248")
+         field(OUTA, "$(P)shutterControl.VAL PP MS")
+
+         field(CLCB, "0")
+         field(OUTB, "$(P)setXia.VAL PP MS")
+
+         #store the original velocity
+         field(INPC, "$(P)phi.VELO NPP MS")
+         field(OUTC, "$(P)xiaOriginalVelo.VAL PP MS")
+
+         #store original base speed
+         field(INPD, "$(P)phi.VBAS NPP MS")
+         field(OUTD, "$(P)xiaOriginalVBAS.VAL PP MS")
+
+         #store original angle
+         field(INPE, "$(P)phi.VAL NPP MS")
+         field(OUTE, "$(P)xiaOriginalAngle.VAL PP MS")
+
+         field(FLNK, "$(P)xiaStartPhib PP MS")
+}
+
+grecord(transform, "$(P)xiaStartPhib")
+{
+         # set base speed as 0.001 deg/s
+         field(INPA, "0.001")
+         field(OUTA, "$(P)phi.VBAS PP MS")
+
+         field(INPB, "$(P)xiaM.VAL PP MS")
+         field(CLCC, "B+1")
+         field(OUTC, "$(P)xiaM.VAL PP MS")
+
+         # move phi to start position
+         field(INPE, "$(P)phi.VAL NPP MS")
+         field(INPF, "$(P)oscWidth.VAL NPP MS")
+         field(INPG, "$(P)xiaExposeTime.VAL NPP MS")
+         field(INPH, "$(P)xiaN.VAL NPP MS")
+         field(INPI, "$(P)phi.ACCL NPP MS")
+         field(INPJ, "$(P)phi.MRES NPP MS")
+
+         # L is the speed of rotation desired
+         field(CLCL, "H*F/G")
+
+         # compute the new base speed
+         field(CLCM, "L>=0.001?0.001:L")
+
+         # compute the amount of angle
+         field(CLCN, "0.5*(M+L)*I+0.002")
+         field(CLCO, "L>=0.01?E-N-10*J:E-N-2*J")
+
+         # move phi to start position
+         field(OUTO, "$(P)phi.VAL PP MS")
+
+         # wait some time for phi to move to the new position
+         field(CLCP, "L>=0.01?I+10*J/L+0.1:I+2*J/L+0.1")
+         field(OUTP, "$(P)phiStartDelay.DLY1 PP MS")
+}
+
+#wait to move phi into starting position
+grecord(seq, "$(P)phiStartDelay")
+{
+       field(PREC, "2")
+       field(DLY1, "1.0")
+
+       #without .PROC, the link record is not excited
+       field(LNK1, "$(P)xiaStartPhi2.PROC PP MS")
+}
+
+# set the motor speed/base speed and counters
+grecord(transform, "$(P)xiaStartPhi2")
+{
+         field(INPA, "$(P)xiaN.VAL NPP MS")
+         field(INPB, "$(P)oscWidth.VAL NPP MS")
+         field(INPC, "$(P)xiaExposeTime.VAL NPP MS")
+
+         # MRES is the degree the motor moves per pulse
+         field(INPD, "$(P)phi.MRES NPP MS")
+
+         # ACCL is the time to reach VELO from base speed
+         field(INPE, "$(P)phi.ACCL NPP MS")
+
+         # get base speed
+         field(INPF, "$(P)phi.VBAS NPP MS")
+
+         # set motor rotation velocity
+         field(CLCH, "B*A/C")
+         field(OUTH, "$(P)phi.VELO PP MS")
+
+         # if speed >= 0.001, set base speed at 0.001 deg/s
+         # otherwise, set the base speed the same as the speed
+         # VELO is in degree/s
+         field(CLCI, "H>=0.001?0.001:H")
+         field(OUTI, "$(P)phi.VBAS PP MS")
+
+         # set the number of pulses for CN3
+         field(CLCJ, "(I+H)*E*0.5+0.002")
+         field(CLCL, "H>=0.01?J/D+10:J/D+2")        
+         field(OUTL, "$(P)xiaShutterCN3.VAL PP MS")
+
+         # set the number of pulses for CN2
+         field(CLCM, "B/D")
+         field(CLCN, "H>=0.01?M+10:M+2")
+         field(OUTN, "$(P)xiaShutterCN2.VAL PP MS")
+
+         #set the number of pulses for CN1 
+         field(CLCO, "L+M")
+         field(OUTO, "$(P)xiaShutterCN1.VAL PP MS")
+
+         field(FLNK, "$(P)xiaStartPhiCont.PROC PP MS")
+}
+
+# continue snap shot
+grecord(transform, "$(P)xiaStartPhiCont")
+{
+         field(INPA, "$(P)xiaN.VAL NPP MS")
+
+         field(INPB, "$(P)phi.MRES NPP MS")
+         field(INPC, "$(P)phi.VAL NPP NMS")
+         field(INPD, "$(P)oscWidth.VAL NPP MS")
+         field(INPE, "$(P)phi.VELO NPP MS")
+         field(INPF, "$(P)phi.ACCL NPP MS")
+         field(INPG, "$(P)phi.VBAS NPP MS")
+         field(INPH, "$(P)xiaExposeTime.VAL NPP MS")
+         field(INPI, "$(P)xiaShutterCN2.VAL NPP NMS")
+         field(INPJ, "$(P)xiaShutterCN3.VAL NPP NMS")
+
+         # set the ending angle
+         # 0.1 below is to assume that the delay time from the trigger of 
+         # shutter blade to the actual move; 0.002 deg is the buffer for
+         # the case of missing pulse counts by 7023
+	 field(CLCK,"C+(I+J)*B+0.1*E+0.002")
+         field(OUTK,"$(P)xiaEndAngle.VAL PP MS")
+
+         field(FLNK, "$(P)phiStartCount.PROC PP MS")
+}
+
+# set the divider according to the expose time
+grecord(transform, "$(P)phiStartCount")
+{
+         #reset divider
+         field(CLCA, "0")
+         field(OUTA, "$(P)setXiaDivider.VAL PP MS")
+
+         #get exposure time
+         #field(INPC, "$(P)xiaExposeTime.VAL PP MS")
+
+         #set the divider according to the expose time
+         #field(CLCD, "C>1.0?13:10")
+         #field(OUTD, "$(P)setXiaDivider.VAL PP MS")
+  
+         #field(CLCE, "C*500000/2^(D-3)")
+
+         #field(CLCF, "(D=13)?E+300:E+3000")
+         #field(OUTF, "$(P)xiaShutterCN1.VAL PP MS")
+
+         field(FLNK, "$(P)phiStartCount2.PROC PP MS")
+}
+
+# trigger the counters and start to move phi into final position
+grecord(transform, "$(P)phiStartCount2")
+{
+         # when the following is excuted, the shutter is not open yet
+         # CN3 is triggered but not CN2
+	 field(INPD, "0")
+	 field(OUTD, "$(P)xiaOscDone.VAL PP MS")
+
+         # trigger the shutter to start
+         field(CLCB, "0")
+         field(OUTB, "$(P)xiaShutterWR.VAL PP MS")
+
+         # start to move the motor
+         field(INPC, "$(P)xiaEndAngle.VAL NPP MS")
+         field(OUTC, "$(P)phi.VAL PP MS")
+
+         # set phi reset delay
+         field(INPE, "$(P)xiaN.VAL NPP MS")
+         field(INPF, "$(P)phi.MRES NPP MS")
+         field(INPG, "$(P)phi.VELO NPP MS")
+         field(INPH, "$(P)phi.ACCL NPP MS")
+         field(INPI, "$(P)phi.VBAS NPP MS")
+         field(INPJ, "$(P)xiaEndAngle.VAL NPP MS")
+         field(INPK, "$(P)xiaShutterCN3.VAL NPP MS")
+         field(INPL, "$(P)xiaShutterCN2.VAL NPP MS")
+
+         # (K+L)*F is the entire angular range, (H+J)*I is the angular
+         # range for ramping up/down; so M is the time duration for steady
+         # speed plus 0.1 s buffer
+         field(CLCM, "(K+L)*F-H*(G+I)")
+         field(CLCN, "(M+0.002)/G+0.1+2*H")
+         field(OUTN, "$(P)phiResetDelay.DLY1 PP MS")
+}
+
+grecord(seq, "$(P)phiResetDelay")
+{
+    field(PREC, "2")
+    field(DLY1, "1.0")
+    field(LNK1, "$(P)phiReset.PROC PP MS")
+}
+
+#compute the condition to see whether should reset
+grecord(transform, "$(P)phiReset")
+{
+    #reset speed
+    field(INPA, "$(P)xiaOriginalVelo.VAL NPP MS")
+    field(OUTA, "$(P)phi.VELO PP MS")
+
+    #reset base speed
+    field(INPB, "$(P)xiaOriginalVBAS.VAL")
+    field(OUTB, "$(P)phi.VBAS PP MS")
+
+    field(FLNK, "$(P)xiaNDone.PROC PP MS")
+}
+
+#check whether xiaM==xiaN
+grecord(calcout, "$(P)xiaNDone")
+{
+    field(INPA, "$(P)xiaM.VAL NPP MS")
+    field(INPB, "$(P)xiaN.VAL NPP MS")
+    field(CALC, "A<B?1:2")
+    field(FLNK, "$(P)xiaNContinue.PROC PP MS")
+}
+
+#take care of the cases when xiaN>1
+grecord(fanout, "$(P)xiaNContinue") {
+    field(SELM, "Specified")
+    field(SELL, "$(P)xiaNDone.VAL NPP MS")
+    field(LNK1, "$(P)xiaRestartPrep.PROC PP MS")
+    field(LNK2, "$(P)xiaFinished.PROC PP MS")
+}
+
+#restart since xiaN>1 and xiaM<xiaN
+grecord(transform, "$(P)xiaRestartPrep") {
+
+    #close shutter
+    field(CLCA, "0")
+    field(OUTA, "$(P)shutterControl.VAL PP MS")
+
+    field(CLCB, "2")
+    field(OUTB, "$(P)setXia.VAL PP MS")
+
+    # compute the time for phi to move back to the original angle
+    field(INPC, "$(P)phi.VELO NPP MS")
+    field(INPD, "$(P)phi.VAL NPP MS")
+    field(INPE, "$(P)phi.ACCL NPP MS")
+    field(INPF, "$(P)xiaOriginalAngle.VAL NPP MS")
+    field(CLCG, "abs(D-E)/C+2*E")
+
+    # move phi to original angle
+    field(OUTF, "$(P)phi.VAL PP MS")
+
+    # wait phi to move back
+    field(OUTG, "$(P)xiaMoveBackWait.DLY1 PP MS")
+}
+
+grecord(seq, "$(P)xiaMoveBackWait")
+{
+    field(PREC, "2")
+    field(DLY1, "0.5")
+
+    #go back to start the snap shot again 
+    field(LNK1, "$(P)xiaStartPhi.PROC PP MS")
+}
+
+grecord(transform, "$(P)xiaFinished") {
+
+    #reset xiaM.VAL
+    field(INPA, "0")
+    field(OUTA, "$(P)xiaM.VAL PP MS")
+
+    field(FLNK, "$(P)xiaStatusB.PROC")
+}
+
+grecord(calcout, "$(P)xiaStatusB")
+{
+    # check whether the shutter is closed
+    field(INPA, "$(P)xiaStatus.VAL NPP NMS")
+    field(CALC, "A=0?1:2")
+    field(FLNK, "$(P)xiaOscDoneSet2.PROC")
+}
+
+grecord(fanout, "$(P)xiaOscDoneSet2")
+{
+    field(SELM, "Specified")
+    field(SELL, "$(P)xiaStatusB.VAL NPP MS")
+
+    # set xiaOscDone
+    field(LNK1, "$(P)xiaOscDoneSet3.PROC PP MS")
+
+    # wait 1 second to judge again
+    field(LNK2, "$(P)xiaOscDoneSet4.PROC PP MS")
+}
+
+#  xia shutter closed and the scan is finished and set xiaOscDone to 1
+grecord(transform, "$(P)xiaOscDoneSet3")
+{
+    field(INPA, "1")
+    field(OUTA, "$(P)xiaOscDone.VAL PP MS")    
+}
+
+# xia shutter still open and wait 1 s and then check again
+grecord(seq, "$(P)xiaOscDoneSet4")
+{
+    field(PREC, "2")
+    field(DLY1, "1.0")
+
+    field(FLNK, "$(P)xiaStatusB.PROC")
+    #field(FLNK, "$(P)xiaStatusC.PROC")
+
+    # testing
+    #field(FLNK, "$(P)xiaOscDoneSet5.PROC")
+}
+
+grecord(calcout, "$(P)xiaStatusC")
+{
+    # check whether the shutter is closed
+    field(INPA, "$(P)xiaStatus.VAL NPP MS")
+    field(CALC, "A=0?1:2")
+    field(FLNK, "$(P)xiaOscDoneSet2C.PROC")
+}
+grecord(fanout, "$(P)xiaOscDoneSet2C")
+{
+    field(SELM, "Specified")
+    field(SELL, "$(P)xiaStatusC.VAL NPP MS")
+
+    # set xiaOscDone
+    field(LNK1, "$(P)xiaOscDoneSet3.PROC PP MS")
+
+    # wait 1 second to judge again
+    field(LNK2, "$(P)xiaOscDoneSet5.PROC PP MS")
+}
+
+#for testing
+grecord(transform, "$(P)xiaOscDoneSet5")
+{
+    field(INPA, "1")
+    field(OUTA, "$(P)xiaOscDone.VAL PP MS")    
+
+    field(INPB, "$(P)xiaOscDone.VAL NPP MS")
+    field(CLCC, "B=1?0:1")
+    field(OUTC, "$(P)xiaOscDone.VAL PP MS")
+   
+    field(FLNK, "$(P)xiaStatusB.PROC")
+}
+
+grecord(ao, "$(P)xiaDelay")
+{
+       field(DESC, "delay time-reset velocity")
+       field(PREC, "2")
+       field(VAL, "2.0")
+} 
+
+grecord(ao, "$(P)xiaExposeTime")
+{
+       field(DESC, "exposure time, no motor")
+       field(PREC, "2")
+       field(VAL, "2.0")
+} 
+
+grecord(ao, "$(P)oscWidth")
+{
+       field(DESC, "angle width of a snap shot")
+       field(PREC, "2")
+       field(VAL, "1.0")
+} 
+
+grecord(ao, "$(P)xiaOriginalAngle")
+{
+       field(PREC, "3")
+       field(VAL, "0.0")
+}
+
+grecord(ao, "$(P)xiaEndAngle")
+{
+       field(PREC, "3")
+}
+
+grecord(ao, "$(P)xiaOriginalVelo")
+{
+       field(VAL, "1.2")
+       field(PREC, "3")
+}
+
+grecord(ao, "$(P)xiaOriginalVBAS")
+{
+       field(VAL, "0.001")
+       field(PREC, "4")
+}
+
+grecord(longout, "$(P)xiaN")
+{
+       field(VAL, "1")
+}
+
+#how many osc have been done
+grecord(longout, "$(P)xiaM")
+{
+       field(VAL, "0")
+}
+
+# set a PV for xia status-open/close
+grecord(bi, "$(P)xiaStatus")
+{
+       field(ZNAM, "CLOSE")
+       field(ONAM, "OPEN")
+       field(VAL, "0")
+}
+
+grecord(calcout, "$(P)xiaShutterStatusInput")
+{
+       field(INPA, "$(P)xiaShutter.VAL CP MS")
+       field(CALC, "(A=1||A=5)?1:0")
+       field(OUT, "$(P)xiaStatus.VAL PP MS")
+}
+
+# set a PV for oscillation axis
+grecord(bi, "$(P)xiaAxis")
+{
+       field(DESC, "oscillation axis")
+       field(ZNAM, "omega")
+       field(ONAM, "phi")
+       field(VAL, "1")
+}
+
+# use omega/phi to set $(P)xiaAxisAn2=1 for omega, 2 for phi
+grecord(calcout, "$(P)xiaAxisAn")
+{
+      field(INPA, "$(P)xiaAxis.VAL CP MS")
+      field(CALC, "A+1")
+      field(OOPT, "Every Time")
+      field(OUT, "$(P)xiaAxisAn2.VAL PP MS")
+}
+
+grecord(ao, "$(P)xiaAxisAn2")
+{
+      field(VAL, "1")
+}
+
+grecord(ao, "$(P)xiaOscReset")
+{
+      field(VAL, "1")
+}
+
+grecord(stringout, "$(P)xiaStringT")
+{
+}
+
+grecord(bo, "$(P)xiaIsStart")
+{
+    field(DESC, "start osc")
+    field(ZNAM, "no start")
+    field(ONAM, "start")
+    field(VAL, "0")
+}
+
+# set a PV to start to move a motor in sync with xia shutter
+grecord(transform, "$(P)xiaStart")
+{
+    field(INPA, "1")
+    field(OUTA, "$(P)xiaIsStart.VAL PP MS")
+    field(FLNK, "$(P)xiaDispatch.PROC")
+}
+
+#do omega osc or phi osc
+grecord(fanout, "$(P)xiaDispatch")
+{
+      field(DESC, "omega/phi")
+      field(SELM, "Specified")
+      field(SELL, "$(P)xiaAxisAn2.VAL")
+      field(LNK1, "$(P)xiaStartOmega.PROC PP MS")
+      field(LNK2, "$(P)xiaStartPhi.PROC PP MS")
+}
+
+# set a PV to record whether abort is issued
+grecord(bo, "$(P)xiaIsAbort")
+{
+    field(DESC, "1:to abort; 0:finished")
+    field(ZNAM, "finished")
+    field(ONAM, "abort")
+    field(VAL, "0")
+}
+
+# set a PV to abort motor motion
+grecord(fanout, "$(P)xiaAbort")
+{
+    field(SELM, "Specified")
+    field(SELL, "$(P)xiaAxisAn2.VAL")
+    field(LNK1, "$(P)xiaAbortOmega.PROC PP MS")
+    field(LNK2, "$(P)xiaAbortPhi.PROC PP MS")
+}
+
+# set a PV to indicate a snap shot is finished
+grecord(bo, "$(P)xiaOscDone")
+{
+    field(ZNAM,"Working")
+    field(ONAM,"Done")
+    field(VAL,"1")
+}

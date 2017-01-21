@@ -1,0 +1,45 @@
+#
+# Database for MKS 959 Vacuum Controller
+#
+
+# Send string to unit to read out
+grecord(asyn,"$(P)hc$(CONT)_write1")
+{
+	field(DESC,"MKS 959 Hot Cath")
+	field(PORT,"$(PORT)")
+	field(AOUT,"@1PRH?;")
+        field(SCAN,"1 second")
+	field(TMOD,"0")
+#	field(OEOS,"FF")
+        field(FLNK,"$(P)hc$(CONT) PP")
+}
+
+# Parse string
+grecord(scalcout,"$(P)hc$(CONT)") 
+{
+        field(INAA,"$(P)hc$(CONT)_write1.TINP NPP NMS")
+        field(CALC,"SSCANF(AA, '%*8c%f%*1c')")
+        field(PREC,"1")
+        field(EGU,"torr")
+}
+
+grecord(asyn,"$(P)pr$(CONT)_write2")
+{
+        field(DESC,"MKS 959 Pirani")
+        field(PORT,"$(PORT)")
+        field(AOUT,"@1PRP?;")
+        field(SCAN,"1 second")
+        field(TMOD,"0")
+#       field(OEOS,"FF")
+        field(FLNK,"$(P)pr$(CONT) PP")
+}
+
+# Parse string
+grecord(scalcout,"$(P)pr$(CONT)")
+{
+        field(INAA,"$(P)pr$(CONT)_write2.TINP NPP NMS")
+        field(CALC,"SSCANF(AA, '%*8c%f%*1c')")
+        field(PREC,"1")
+        field(EGU,"torr")
+}
+

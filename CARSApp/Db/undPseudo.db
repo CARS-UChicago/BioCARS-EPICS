@@ -1,0 +1,13 @@
+# Database to change logic of Undulator Busy
+#
+# Timothy Graber Nov. 11, 2003
+# Robert Henning Mar. 14, 2007
+#
+
+grecord(calc,"$(P)$(U)DMOV") {
+	field(DESC,"$(U) DMOV")
+	field(CALC,"A=0?1:0")
+	field(INPA,"ID$(xx):Busy CP NMS")
+	field(PREC,"1")
+}
+

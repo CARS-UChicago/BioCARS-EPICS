@@ -1,0 +1,17 @@
+grecord(bo,"$(P)valve2_open") {
+	field(DTYP,"AB-16 bit BO")
+	field(OUT,"#L0 A0 C5 S2 F0 @")
+#	field(ZNAM,"_off")
+#	field(ZSV, "NO_ALARM")
+#	field(ONAM,"_on")
+#	field(OSV,"NO_ALARM")
+}
+
+grecord(bo,"$(P)valve2_close") {
+	field(DTYP,"AB-16 bit BO")
+	field(OUT,"#L0 A0 C7 S102 F0 @")
+#	field(ZNAM,"_off")
+#	field(ZSV, "NO_ALARM")
+#	field(ONAM,"_on")
+#	field(OSV,"NO_ALARM")
+}

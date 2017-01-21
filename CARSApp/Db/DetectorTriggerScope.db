@@ -1,0 +1,128 @@
+# This record will trigger FPGA for the required number of pulses in counted mode
+# The read mean P2 value of LeCroy Scope. The interface to the database is done through DetectortriggerScope.adl
+# IK
+
+grecord(calcout,"$(P)NumberOfTriggers") {
+	field(VAL, "1")
+
+}
+
+
+grecord(busy,"$(P)SetNumberOfTriggers") {
+#	field(PINI, "YES")
+	field(VAL,"0")
+#	field(TPRO, "1")
+#	field(FLNK,"$(P)DefineTriggers.PROC PP NMS")
+}
+
+grecord(sseq,"$(P)DefineTriggers") {
+	field(DO1,"1")
+
+	field(LNK1,"$(P)SetNumberOfTriggers.VAL  NPP NMS")
+	field(DO2,"1")
+
+	field(LNK2,"$(P)GetTriggers.PROC  PP NMS")
+	field(FLNK,"$(P)SetNumberOfTriggers.PROC PP NMS")
+
+
+}
+
+
+
+grecord(calcout,"$(P)GetTriggers") {
+	field(INPA,"$(P)NumberOfTriggers.VAL NPP NMS")
+	field(CALC, "A")
+#	field(TPRO, "1")
+	field(OUT,"$(P)SetDetectorTriggers.DO3 NPP NMS")
+	field(FLNK, "$(P)SetDetectorTriggers")
+
+}
+
+# Seq record for setting up a scan
+grecord(sseq,"$(P)SetDetectorTriggers") {
+	field(STR1,"Normal")
+	field(LNK1,"14IDB:waveSurfer:triggerMode.VAL PP NMS")
+	field(DO2,"1")
+	field(LNK2,"14IDB:fpga_DRV:tmode PP NMS")
+	# DO3 written to from earlier record
+	field(LNK3,"14IDB:fpga_DRV:pulses PP NMS")	
+
+	field(DO4,"1")
+	
+	field(LNK4, "$(P)ScanFPGAPulsesStatus.A NPP NMS")
+
+#	field(TPRO, "1")
+	field(FLNK, "$(P)ScanFPGAPulsesStatus")
+}
+grecord(calcout,"$(P)ScanFPGAPulsesStatus") {
+#	field(VAL, "0")
+	field(SCAN, ".5 second")
+	field(INPB,"14IDB:fpga_DRV:pulses NPP NMS")
+	field(CALC, "(B<1)&(A>0)?1:0")
+
+	field(OOPT,"When Non-zero")
+#	field(TPRO, "1")
+	field(OUT,"$(P)ScanFPGAPulses.PROC PP NMS")
+}
+grecord(sseq,"$(P)ScanFPGAPulses") {
+	field(DO1,"0")
+	field(DLY1, "1")
+	field(LNK1,"$(P)ScanFPGAPulsesStatus.A NPP NMS")
+	field(DO3,"1")
+	field(LNK3,"14IDB:waveSurfer:P2:read.PROC PP NMS")
+	field(DO4,"1")
+	field(LNK4,"14IDB:waveSurfer:P3:read.PROC PP NMS")
+	field(DO2,"1")
+	field(LNK2,"14IDB:waveSurfer:P1:read.PROC PP NMS")
+#	field(TPRO, "1")
+	field(DLY4, "1")
+	field(FLNK, "$(P)ReadScope")
+}
+
+
+#grecord(calcout,"$(P)ReadScope") {
+#	field(PREC,"10")
+#	field(INPA,"14IDB:waveSurfer:P2:mean.VAL NPP NMS")
+#	field(TPRO, "1")
+#	field(CALC, "A*10000000000")
+
+#	field(FLNK,"$(P)DoClearSweeps")
+
+#}
+
+#if more then one channel will be connected
+grecord(transform,"$(P)ReadScope") {
+	field(PREC,"10")
+	field(INPA,"14IDB:waveSurfer:P2:mean.VAL NPP NMS")
+#	field(TPRO, "1")
+	field(CLCA, "A")
+	field(INPB,"14IDB:waveSurfer:P3:mean.VAL NPP NMS")
+#	field(TPRO, "1")
+	field(CLCB, "B")
+	field(INPC,"14IDB:waveSurfer:P1:mean.VAL NPP NMS")
+#	field(TPRO, "1")
+	field(CLCC, "C")
+	field(FLNK,"$(P)DoClearSweeps")
+
+}
+
+
+grecord(sseq,"$(P)DoClearSweeps") {
+
+	field(DO1,"1")
+	field(LNK1,"14IDB:waveSurfer:clearSweeps.PROC PP NMS")
+#	field(TPRO, "1")
+	field(FLNK, "$(P)ReturnBusyTriggers")
+}
+
+grecord(sseq,"$(P)ReturnBusyTriggers") {
+	field(DO1,"0")
+	field(DLY1,"1")
+
+#	field(LNK1,"$(P)SetNumberOfTriggers.VAL  PP NMS")
+	field(LNK1,"$(P)SetNumberOfTriggers.VAL  CA NMS")
+
+}
+
+
+

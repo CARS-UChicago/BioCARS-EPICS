@@ -1,0 +1,104 @@
+#14ID-EPS_2K10_hc.db
+
+# This file defines PVs for sending vacuum data from Epics to PLC with a scan loop
+#  so that the real pressure values can be displayed on PanelView
+#--------------------------------
+# hcN -- the index of the hot-cathod gauge from which the vacuum data is being transmitted 
+
+record(longin,"$(P)eps_hcN_FB")
+# receive hcN feedback from PLC 
+{
+	field(DESC,"from DCM-B_OUT-8 -- O:8.7")
+	field(DTYP,"AB-SLC500DCM")
+#	field(SCAN,"I/O Intr")
+     field(SCAN,"2 second")
+     field(INP,"#L0 A1 C14 S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"65535")
+     field(LOPR,"0")
+}
+
+record(calc,"$(P)eps_hcN_add1")
+# advance hcN by 1 if hcN_FB==hcN
+{
+	field(INPA,"$(P)eps_hcN_FB.VAL CP NMS")
+	field(INPB,"$(P)eps_hcN.VAL PP NMS")
+	field(CALC,"(A=B) ? (A+1):A")
+}
+
+record(calcout,"$(P)eps_hcN_new")
+# reset to zero if hcN_add1 >= 10, so only hc0-hc10 are in scan loop
+{
+	field(INPA,"$(P)eps_hcN_add1.VAL CP NMS")
+	field(CALC,"(A>=10) ? 0:A")
+	field(OUT,"$(P)eps_hcN.VAL PP NMS")
+}
+#------------------------------------------
+# Prepare and send out pressure value and the correcponding hcN
+
+record(sel,"$(P)eps_hc_sel")
+# Select pressure value corresponding to hcN_new
+{
+	field(INPA,"$(P)hc0.VAL PP NMS")
+	field(INPB,"$(P)hc1.VAL PP NMS")
+	field(INPC,"$(P)hc2.VAL PP NMS")
+	field(INPD,"$(P)hc3.VAL PP NMS")
+	field(INPE,"$(P)hc4.VAL PP NMS")
+	field(INPF,"$(P)hc5.VAL PP NMS")
+	field(INPG,"$(P)hc6.VAL PP NMS")
+	field(INPH,"$(P)hc7.VAL PP NMS")
+	field(INPI,"$(P)HLS_cc1.VAL PP NMS")
+	field(INPJ,"14IDB:IDB_cc1.VAL PP NMS")
+	field(NVL, "$(P)eps_hcN_new.VAL CP NMS")
+}
+record(calcout,"$(P)eps_hc_expnt_cal")
+# find exponent of pressure value in float-point expresion
+{
+	field(INPA,"$(P)eps_hc_sel.VAL CP NMS")
+	field(CALC,"FLOOR(LOG(A))")
+	field(OUT,"$(P)eps_hc_exponent.VAL PP NMS")
+}
+record(longout,"$(P)eps_hc_exponent")
+# send exponent to PLC via DCM
+{
+#	field(DESC,"to DCM-B_slot 8 -- I:8.5")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"Passive")
+     field(OUT,"#L0 A1 C11 S0 @")     
+	field(EGU,"Number")
+     field(HOPR,"32767")
+     field(LOPR,"-32767")
+}
+record(calcout,"$(P)eps_hc_signf_calc")
+# find (100*mantissa) of pressure value in float-point expresion
+{
+	field(INPA,"$(P)eps_hc_sel.VAL CP NMS")
+	field(INPB,"$(P)eps_hc_exponent.VAL PP NMS")
+	field(CALC,"10*A/(10^B)")
+	field(OUT,"$(P)eps_hc_10X_significand.VAL PP NMS")
+}
+record(ao,"$(P)eps_hc_10X_significand")
+# send (100*mantissa) to PLC via DCM
+{
+#	field(DESC,"to DCM-B_IN-8 -- I:8.6")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"Passive")
+     field(OUT,"#L0 A1 C13 S0 @")     
+	field(EGU,"Number")
+     field(HOPR,"32767")
+     field(LOPR,"-32767")
+}
+
+#----------------------------------------
+record(longout,"$(P)eps_hcN")
+# send vacuum sensor Idx to PLC
+{
+	field(DESC,"send hc-Idx")
+	field(DTYP,"AB-SLC500DCM")
+     field(OUT,"#L0 A1 C15 S0 @")
+     field(SCAN,"Passive")
+	field(EGU,"Number")
+     field(HOPR,"65535")
+     field(LOPR,"0")
+}
+

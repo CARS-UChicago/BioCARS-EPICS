@@ -1,0 +1,104 @@
+grecord(motor,"$(P)Energy_CC") {
+	field(DESC,"Channel Cut Energy")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(P)E2Phi.A PP MS")
+	field(RDBL,"$(P)Phi2E.VAL NPP MS")
+	field(URIP,"Yes")
+	field(STOO,"$(P)$(M1).STOP PP MS")
+	field(DINP,"$(P)$(M1).DMOV NPP MS")
+	field(MRES,"0.0002")
+	field(RRES,"1.0")
+	field(PREC,"3")
+	field(DHLM,"100000")
+	field(DLLM,"-100000")
+	field(TWV,"1")
+	field(EGU,"keV")
+}
+
+grecord(calcout,"$(P)Phi2E") {
+	field(DESC,"Convert Phi to Energy")
+	field(INPA,"$(P)$(M1).RBV CP MS")
+	field(INPB,"$(P)phi_offset PP MS")
+	field(INPC,"12.3985")
+	field(INPD,"6.26945")
+	field(INPE,"-1")
+	field(INPF,"-90")
+	field(CALC,"(A<E)&&(A>F)?-C/(sin((A-B)*D2R)*D):VAL")
+	field(PREC,"3")
+}
+
+grecord(calcout,"$(P)E2Phi") {
+	field(DESC,"Convert Energy to Phi")
+	field(INPB,"$(P)phi_offset CP MS")
+	field(INPC,"12.3985")
+	field(INPD,"6.26945")
+#	field(CALC,"-asin(12.3985/(A*6.26945))/D2R+B")
+	field(CALC,"(A>=2)?-asin(C/(A*D))/D2R+B:VAL")
+	field(OUT,"14IDB:$(M1).VAL PP MS")
+	field(OOPT,"3")
+	field(PREC,"3")
+}
+
+# Set Phi limits to prevent collision
+grecord(sseq,"$(P)new_phi_limits") {
+	field(DESC,"Set limits on Phi")
+	field(LNK1,"$(P)$(M1).LLM PP NMS")
+	field(DO1,"-41")
+	field(LNK2,"$(P)$(M1).HLM PP NMS")
+	field(DO2,"5")
+}
+
+grecord(sseq,"$(P)old_phi_limits") {
+	field(DESC,"Set original limits on Phi")
+	field(LNK1,"$(P)$(M1).LLM PP NMS")
+	field(DO1,"-10000")
+	field(LNK2,"$(P)$(M1).HLM PP NMS")
+	field(DO2,"10000")
+}
+
+
+# This assumes that crystal is in sync to the level.
+grecord(calc,"$(P)phi_offset") {	
+#	field(INPA,"-9.4856")
+#	field(CALC,"A-B")
+	field(PREC,"3")
+}
+
+
+# Calc beam offset to drive pinhole
+record(transform,"$(P)channel_cut_offset"){
+        field(DESC,"Channel Cut Offset")
+        field(PREC,"5")
+        field(DISV, "0")
+        field(SDIS, "$(P)channel_cut_offset_enable.VAL")
+        field(CMTA,"Phi")
+        field(INPA,"$(P)$(M1) CP NMS")
+        field(CMTB,"Crystal separation")
+        field(CLCB,"3.475")
+        field(CMTC,"Phi calibration")
+	field(INPC,"$(P)phi_offset.VAL NPP NMS")
+	field(CLCD,"2.2")
+	field(CMTD,"DetY initial pos")
+        field(CMTE,"DetY position")
+        field(CLCE,"2*B*cos((C-A)*D2R)+D")
+	field(OUTE,"$(P)m34.VAL PP NMS")
+}
+
+record(bo, "$(P)channel_cut_offset_enable") {
+        field(OMSL, "closed_loop")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+        field(VAL,"0")
+}
+
+# Drive to the initial starting position for alignment
+record(sseq,"$(P)align") {
+	field(DO1,"0.865")
+	field(LNK1,"$(P)$(Z) PP NMS")
+	field(DO2,"0.37")
+	field(LNK2,"$(P)$(X) PP NMS")
+	field(DO3,"1.862")
+	field(LNK3,"$(P)$(Y) PP NMS")
+	field(DO4,"-35")
+	field(LNK4,"$(P)$(M1) PP NMS")
+}

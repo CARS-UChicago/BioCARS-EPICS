@@ -1,0 +1,44 @@
+# This is Energy Pseudomotor modified from RH Channel_Cut.db
+# Providing that offset of analyzer's Phy is known, it will calculate energy and vice verca.
+
+grecord(motor,"$(P)Energy_Dispersion") {
+	field(DESC,"Analyzer Energy")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(P)ED2Phi.A PP MS")
+	field(RDBL,"$(P)Phi2ED.VAL NPP MS")
+	field(URIP,"Yes")
+	field(STOO,"$(P)$(M).STOP PP MS")
+	field(DINP,"$(P)$(M).DMOV NPP MS")
+	field(MRES,"0.0002")
+	field(RRES,"1.0")
+	field(PREC,"3")
+	field(DHLM,"100000")
+	field(DLLM,"-100000")
+	field(TWV,"1")
+	field(EGU,"keV")
+}
+
+grecord(calcout,"$(P)Phi2ED") {
+	field(DESC,"Conv Phi to EnergyD")
+	field(INPA,"$(P)$(M).RBV CP MS")
+#	field(INPB,"$(P)phiD_offset CP MS")
+	field(INPB,"$(P)phiD_offset PP MS")
+#	field(CALC,"-12.3985/(sin((A+B)*D2R)*6.26945)")
+	field(CALC,"-12.3985/(sin((A-B)*D2R)*6.26945)")
+	field(PREC,"3")
+}
+
+grecord(calcout,"$(P)ED2Phi") {
+	field(DESC,"Convert Energy to Phi")
+	field(INPB,"$(P)phiD_offset CP MS")
+#	field(CALC,"-asin(12.3985/(A*6.26945))/D2R-B")
+	field(CALC,"-asin(12.3985/(A*6.26945))/D2R+B")
+	field(OUT,"$(P)$(M).VAL PP MS")
+	field(PREC,"3")
+}
+
+# This assumes that crystal is in sync to the level.
+grecord(calc,"$(P)phiD_offset") {	
+
+	field(PREC,"3")
+}

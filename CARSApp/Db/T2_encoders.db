@@ -1,0 +1,77 @@
+# readings of voltages from analog encoders fot T2 at IDB 
+
+grecord(ai,"$(P)T2_DNSTR_Y")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_DNSTR_Y")
+	field(PREC,"3")
+}
+
+grecord(ai,"$(P)T2_OUT_Y")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_OUT_Y")
+	field(PREC,"3")
+}
+
+grecord(ai,"$(P)T2_IN_Y")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_IN_Y")
+	field(PREC,"3")
+}
+
+
+grecord(ai,"$(P)T2_UPSTR_X")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_UPSTR_X")
+	field(PREC,"3")
+}
+
+
+grecord(ai,"$(P)T2_DNSTR_X")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_DNSTR_X")
+	field(PREC,"3")
+}
+
+grecord(ai,"$(P)T2_DNSTR_Z")  {
+	field(VAL, "0.0")
+	field(DESC,"encoder T2_DNSTR_Z")
+	field(PREC,"3")
+}
+
+grecord(transform,"$(P)T2_ENCODERS_CALIBRATION") {
+        field(DESC,"T2 ENCODERS")
+        field(SCAN,"1 second")
+        field(CMTA,"slope T2_DNSTR_Y")
+        field(INPA,"$(P)IP330_1.VAL NPP NMS")
+	field(CLCH,"1.0*A+0.0")
+	field(OUTH,"$(P)T2_DNSTR_Y.VAL PP NMS")
+	
+	
+        field(CMTB,"T2_OUT_Y")
+        field(INPB,"$(P)IP330_2.VAL NPP NMS")
+	field(CLCI,"1.0*B+0.0")
+	field(OUTI,"$(P)T2_OUT_Y.VAL PP NMS")
+
+        field(CMTC,"T2_IN_Y")
+        field(INPC,"$(P)IP330_3.VAL NPP NMS")
+	field(CLCJ,"1.0*C+0.0")
+	field(OUTJ,"$(P)T2_IN_Y.VAL PP NMS")
+
+        field(CMTD,"T2_UPSTR_X")
+        field(INPD,"$(P)IP330_4.VAL NPP NMS")
+	field(CLCK,"1.0*D+0.0")
+	field(OUTK,"$(P)T2_UPSTR_X.VAL PP NMS")
+
+
+	field(CMTE,"T2_DNSTR_X")
+        field(INPE,"$(P)IP330_5.VAL NPP NMS")
+	field(CLCL,"1.0*E+0.0")
+	field(OUTL,"$(P)T2_DNSTR_X.VAL PP NMS")
+
+	field(CMTF,"T2_DNSTR_Z")
+        field(INPF,"$(P)IP330_6.VAL NPP NMS")
+	field(CLCM,"1.0*F+0.0")
+	field(OUTM,"$(P)T2_DNSTR_Z.VAL PP NMS")
+
+        field(PREC,"3")
+}

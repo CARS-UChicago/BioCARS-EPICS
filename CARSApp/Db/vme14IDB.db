@@ -1,0 +1,49 @@
+#grecord(vme,"14IDB:6chtm")
+#{
+#	field(ADDR,"0xff0000")
+#	field(AMOD,"A24")
+#}
+#grecord(vme,"14IDB:bpm")
+#{
+#	field(ADDR,"0x7f0000")
+#	field(AMOD,"A24")
+#}
+#grecord(vme,"14IDB:fsh")
+#{
+#	field(ADDR,"0x7f1000")
+#	field(AMOD,"A24")
+#}
+#grecord(vme,"14IDB:mfm")
+#{
+#	field(ADDR,"0x7f2000")
+#	field(AMOD,"A24")
+#}
+#grecord(vme,"14IDB:ltm")
+#{
+#	field(ADDR,"0x7f3000")
+#	field(AMOD,"A24")
+#}
+grecord(vme,"14IDB:otm")
+{
+	field(ADDR,"0x8f0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14IDB:otm2")
+{
+	field(ADDR,"0x8f0010")
+	field(AMOD,"A24")
+}
+#grecord(vme,"14IDB:avme9440")
+#{
+#	field(ADDR,"0xa00000")
+#	field(AMOD,"A24")
+#	field(NUSE,"1")
+#}
+
+
+
+
+
+
+
+

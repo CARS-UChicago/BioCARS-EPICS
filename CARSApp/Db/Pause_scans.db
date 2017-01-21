@@ -1,0 +1,18 @@
+record(transform,"$(P)Pause_scans") {
+	field(DESC,"Pause scans during topup")
+	field(INPA,"Mt:TopUpTime2Inject CP NMS")
+	field(CLCB,"(A<2)?1:0")
+	field(OUTB,"14IDB:scanPause.VAL PP NMS")
+	field(INPC,"PA:14ID:A_SHTRS_CLOSED.VAL CP NMS")
+	field(CLCD,"((A<5)||(C=1))?1:0")
+	field(OUTD,"14IDB:scanPause.VAL NPP NMS")
+	field(DISV,"0")
+	field(SDIS, "$(P)Pause_scans_enable.VAL")
+}
+
+record(bo,"$(P)Pause_scans_enable") {
+        field(OMSL, "closed_loop")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+        field(VAL,"0")
+}

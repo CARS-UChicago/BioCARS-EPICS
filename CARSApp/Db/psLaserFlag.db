@@ -1,0 +1,26 @@
+
+# PS Laser Flag database
+# $(P)="14IDB:", $(R)="1" Number for Binary output in use
+# When LaserFlagInsert is processes, the flag is inserted, and retracted in 10 min
+# When LaserFlagRetract is processed, the Flag is retracted 
+
+record(sseq,"$(P)LaserFlagInsert") {
+	field(STR1,"1")
+	field(LNK1,"$(P)B1Bo$(R) PP NMS")
+#	field(DLY2,"600")
+#	field(STR2,"0")
+#	field(LNK2,"$(P)B1Bo$(R) PP NMS")
+	field(FLNK,"$(P)LaserFlagDelay NPP NMS")
+}
+record(sseq,"$(P)LaserFlagDelay") {
+	field(DLY2,"600")
+	field(STR2,"0")
+	field(LNK2,"$(P)B1Bo$(R) PP NMS")
+}
+
+record(sseq,"$(P)LaserFlagRetract") {
+	field(STR1,"0")
+	field(LNK1,"$(P)B1Bo$(R) PP NMS")
+}
+
+

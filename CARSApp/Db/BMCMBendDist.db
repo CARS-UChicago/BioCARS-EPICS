@@ -1,0 +1,68 @@
+#use detector-sample to set the mono focus
+
+#this record creates a new soft PV
+#SDD-sample detector distance
+grecord(motor,"$(P)SDD")
+{
+    field(DESC,"Sample-detector dist")
+    field(DTYP,"Soft Channel")
+
+#     rotary value
+    field(OUT,"$(P)MONOF.A PP MS")
+
+#     linear value
+    field(RDBL,"$(P)MONOFRBK.VAL NPP MS")
+
+    field(URIP,"Yes")
+    field(STOO,"$(P)Cmonobender.STOP PP MS")
+    field(DINP,"$(P)Cmonobender.DMOV NPP MS")
+    field(MRES,"15.0")
+    field(RRES,"1.000")
+    field(PREC,"0")
+    field(DHLM,"830")
+    field(DLLM,"-100")
+    field(TWV,"50")
+    field(RTRY,"0")
+    field(EGU,"mm")
+    field(VBAS,"4500")
+    field(VELO,"4500")
+    field(BVEL,"4500")
+    field(BDST,"-25.0")
+}
+    
+grecord(transform,"$(P)MONOF")
+{
+    field(DESC,"Convert s-det dist. to focus")
+    field(CLCB,"-0.000143*A")
+    field(CLCC,"B+1.816")
+    field(OUTC,"$(P)Cmonobender.VAL PP MS")
+}
+
+grecord(calcout,"$(P)MONOFRBK")
+{
+    field(DESC,"Convert Mbend to s-det dist.")
+    field(INPA,"$(P)Cmonobender.RBV CP MS")
+    field(CALC,"7500.0*(1.816-A)")
+    field(OUT,"$(P)SDD.VAL NPP MS")
+} 
+
+grecord(mbbo,"$(P)SDD_menu") {
+    field(OUT,"$(P)SDD.VAL PP MS")
+    field(DTYP,"Raw Soft Channel")
+    field(ZRST,"Sample")
+    field(ZRVL,"75")
+    field(ONST,"200 mm")
+    field(ONVL,"200")
+    field(TWST,"300 mm")
+    field(TWVL,"300")
+    field(THST,"400 mm")
+    field(THVL,"400")
+    field(FRST,"500 mm")
+    field(FRVL,"500")
+    field(FVST,"600 mm")
+    field(FVVL,"600")
+    field(SXST,"700 mm")
+    field(SXVL,"700")
+    field(SVST,"800 mm")
+    field(SVVL,"800")
+}

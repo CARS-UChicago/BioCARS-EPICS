@@ -1,0 +1,6 @@
+record(calcout, "$(P)$(M)_Interlock") {
+    field(INPA,"$(P)B1Bi$(N).VAL CP MS")
+    field(CALC,"A = 0 ? 1 : 0")
+    field(OUT, "$(P)$(M)_able.VAL PP NMS")
+#    field(DISA,"1")
+}

@@ -1,0 +1,52 @@
+
+
+
+# This uses substitution 
+# P=14IDB, W=Dlieprc1, (DLI WebPower Switch), D=1, C=8 DAC1_8 for LED light
+
+grecord(ai,"$(P)BacklightInsert") {
+	field(VAL,"0")
+	field(PINI, "NO")
+#	field(FLNK,"$(P)BacklightInsertSeq")
+	field(FLNK,"$(P)DoInsertBacklight")
+}
+
+# Calc record to prevent backlight on when beamstop closer then 40 mm
+#
+ grecord(calcout, "$(P)DoInsertBacklight"){
+ field(INPA, "$(P)m8.RBV")
+ field(CALC,"A>39.9?1:0")
+ field(OOPT, "When Non-zero")
+ field(OUT, "$(P)BacklightInsertSeq.PROC PP NMS")
+ 
+ }
+#
+#
+
+# Seq record for setting Backlight On
+grecord(sseq,"$(P)BacklightInsertSeq") {
+	field(DO1,"10")
+	field(LNK1,"14IDB:DAC$(D)_$(C).VAL PP NMS")
+#	field(DO2,"1")
+#	field(LNK2,"$(P)$(W):SetOut2Off.PROC PP NMS")	
+	field(DO2,"1")
+	field(LNK2,"$(P)$(W):SetOut1On.PROC PP NMS")
+}
+
+grecord(ai,"$(P)BacklightRetract") {
+	field(VAL,"0")
+	field(PINI, "YES")
+	field(FLNK,"$(P)BacklightRetractSeq")
+}
+
+
+# Seq record for setting Backlight Off
+grecord(sseq,"$(P)BacklightRetractSeq") {
+	field(DO1,"7")
+	field(LNK1,"14IDB:DAC$(D)_$(C).VAL PP NMS")
+	field(DO2,"1")
+	field(LNK2,"$(P)$(W):SetOut1Off.PROC PP NMS")	
+#	field(DO3,"1")
+#	field(LNK3,"$(P)$(W):SetOut2On.PROC PP NMS")
+}
+

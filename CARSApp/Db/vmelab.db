@@ -1,0 +1,41 @@
+grecord(vme,"14-lab:vme1")
+{
+	field(ADDR,"0xff0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14-lab:vme2")
+{
+	field(ADDR,"0x7f0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14-lab:fsh")
+{
+	field(ADDR,"0x7f1000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14-lab:mfm")
+{
+	field(ADDR,"0x7f2000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14Lab:avme9440")
+{
+	field(ADDR,"0xa00000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14Lab:avme9210")
+{
+	field(ADDR,"0x1000")
+	field(AMOD,"A16")
+}
+grecord(vme,"14Lab:dvx2503Control")
+{
+	field(ADDR,"0xc000")
+	field(AMOD,"A16")
+}
+grecord(vme,"14Lab:dvx2503Sequence")
+{
+	field(ADDR,"0xb00000")
+	field(RDWT, "Write")
+	field(AMOD,"A24")
+}

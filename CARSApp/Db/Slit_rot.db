@@ -1,0 +1,45 @@
+#soft slit
+grecord(motor,"$(P)$(SLIT)")
+{
+    field(DESC,"$(SLIT) slit opening")
+    field(DTYP,"Soft Channel")
+
+#     rotary value
+    field(OUT,"$(P)$(SLIT)LIN.A PP MS")
+
+#     linear value
+    field(RDBL,"$(P)$(SLIT)LINRBK.VAL NPP MS")
+
+    field(URIP,"Yes")
+    field(STOO,"$(P)$(mRot).STOP PP MS")
+    field(DINP,"$(P)$(mRot).DMOV NPP MS")
+    field(MRES,"0.001")
+    field(RRES,"1.000")
+    field(PREC,"3")
+    field(DHLM,"6")
+    field(DLLM,"-0.24")
+    field(TWV,"0.1")
+    field(RTRY,"0")
+    field(EGU,"mm")
+    field(VBAS,"0.2")
+    field(VELO,"0.4")
+    field(BVEL,"0.4")
+    field(BDST,"-0.025")
+}
+    
+grecord(transform, "$(P)$(SLIT)LIN")
+{
+    field(DESC,"Convert linear to rotary")
+    field(CLCB,"A/25.4/$(SEP)")
+    field(CLCC,"$(DIA)/$(SEP)")
+    field(CLCD,"57.282*ASIN(B+C)")
+    field(OUTD,"$(P)$(mRot).VAL PP MS")
+}
+
+grecord(calcout,"$(P)$(SLIT)LINRBK")
+{
+    field(DESC,"Convert rotary to linear")
+    field(INPA,"$(P)$(mRot).RBV CP MS")
+    field(CALC,"25.4*($(SEP)*SIN(A/57.282)-$(DIA))")
+    field(OUT,"$(P)$(SLIT).VAL NPP MS")
+} 

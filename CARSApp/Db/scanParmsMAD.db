@@ -1,0 +1,211 @@
+# Need to add the next 5 records so that I could include before and after commands,
+# record old position and old intensity.
+# RH
+
+# This sets up the before scan parameter
+grecord(stringout,"$(P)$(Q):setup") {
+	field(VAL,"$(A)")
+	field(OUT,"$(SCANREC).BSPV CA NMS")
+	field(FLNK,"$(P)$(Q):setup2.PROC")
+}
+
+# This sets up the after scan parameter
+grecord(stringout,"$(P)$(Q):setup2") {
+	field(VAL,"$(B)")
+	field(OUT,"$(SCANREC).ASPV CA NMS")
+	field(FLNK,"$(P)$(Q):setup3.PROC")
+}
+
+# This sets up the low range for the ROI
+grecord(stringout,"$(P)$(Q):setup3") {
+	field(VAL,"$(L)")
+	field(OUT,"$(DPV)LO CA NMS")
+	field(FLNK,"$(P)$(Q):setup4.PROC")
+}
+
+# This sets up the high range for the ROI
+grecord(stringout,"$(P)$(Q):setup4") {
+	field(VAL,"$(H)")
+	field(OUT,"$(DPV)HI CA NMS")
+	field(FLNK,"$(P)$(Q):setup5.PROC")
+}
+
+# This sets up the Label for the ROI
+grecord(stringout,"$(P)$(Q):setup5") {
+	field(VAL,"$(Q)")
+	field(OUT,"$(DPV)NM CA NMS")
+	field(FLNK,"$(P)$(Q):setup6.PROC")
+}
+
+# This sets up where the mono will be driven initially
+grecord(stringout,"$(P)$(Q):setup6") {
+	field(VAL,"$(SP)")
+	field(OUT,"$(P)setup_scan.DO2 NPP NMS")
+	field(FLNK,"$(P)$(Q):setup7.PROC")
+}
+
+grecord(calcout,"$(P)$(Q):setup7") {
+	field(VAL,"1")
+	field(OUT,"$(P)$(Q):scanParms.LOAD CA NMS")
+}
+
+# Changed to allow scanning of motors in other crates.  RH
+grecord(scanparm,"$(P)$(Q):scanParms") {
+	field(PREC,"6")
+	field(PRE,"4")
+	field(OPRE,"$(SCANREC).CMND  CA NMS")
+	field(OSM,"$(SCANREC).P1SM  CA NMS")
+	field(AR,"$(AR)")
+	field(OAR,"$(SCANREC).P1AR  CA NMS")
+	field(AFT,"$(AFT)")
+	field(OAFT,"$(SCANREC).PASM  CA NMS")
+	field(PPV,"$(POS)")
+	field(RPV,"$(RDBK)")
+	field(OPPV,"$(SCANREC).P1PV  CA NMS")
+	field(ORPV,"$(SCANREC).R1PV  CA NMS")
+	field(SP,"$(SP)")
+	field(OSP,"$(SCANREC).P1SP  CA NMS")
+	field(EP,"$(EP)")
+	field(OEP,"$(SCANREC).P1EP  CA NMS")
+	field(NP,"$(NP)")
+	field(ONP,"$(SCANREC).NPTS  CA NMS")
+	field(SC,"1")
+	field(OSC,"$(SCANREC).EXSC  CA NMS")
+	field(IMP,"$(SCANREC).MPTS  NPP NMS")
+	field(IACT,"$(SCANREC).BUSY  NPP NMS")
+        field(TPV,"$(TPV)")
+        field(OTPV,"$(SCANREC).T1PV CA NMS")
+        field(DPV,"$(DPV)")
+        field(ODPV,"$(SCANREC).D01PV CA NMS")
+}
+
+# Seq record for setting up a scan
+grecord(sseq,"$(P)setup_scan") {
+	field(DO1,"0")
+	field(LNK1,"14IDB:DAC1_2.VAL PP NMS")
+	# DO2 written to from earlier record
+	field(LNK2,"$(P)drive_energy.A PP NMS")	
+	field(DO3,"250")
+	field(LNK3,"14IDB:m3.VAL PP NMS")
+	field(WAIT3,"Wait")
+	field(DO4,"150")
+	field(LNK4,"14IDB:m8.VAL PP NMS")
+	field(SELM,"Mask")
+	field(SELL,"$(P)SELN.VAL NPP NMS")
+}
+
+# Calculates if dz should be moved and sets SELN for setup_scan
+grecord(calc,"$(P)SELN") {
+	field(INPA,"$(P)m3.RBV CP NMS")
+	field(INPB,"$(P)setup_scan.DO3 CP NMS")
+	field(CALC,"A>=B?11:15")
+}
+
+# Drive both the mono and undulator
+grecord(transform,"$(P)drive_energy") {
+	field(PREC,"4")
+	field(OUTA,"14IDA:BraggEAO.VAL PP NMS")
+	field(CLCB,"A+0.15")
+	field(OUTB,"14IDA:U27Eng.VAL PP NMS")
+}
+
+# Setup a Moving PV which checks if motors are done moving
+grecord(calcout,"$(P)ES_DMOV") {
+	field(DESC,"Motors moving?")
+#	field(INPA,"14IDA:KohzuMoving CP NMS")
+	field(INPB,"ID14us:Busy CP NMS")
+	field(INPC,"14IDB:m3.DMOV CP NMS")
+	field(INPD,"14IDB:m8.DMOV CP NMS")
+	field(INPE,"14IDA:BraggERdbkAO CP NMS")
+	field(INPF,"14IDA:BraggEAO.VAL CP NMS")
+	field(CALC,"(F-0.01<E&&E<F+0.01)&&B=0&C=1&D=1?1:0")
+}
+
+# Seq record which finds the maximum for the Mono intensity feedback
+grecord(sseq,"$(P)Mono_Scan") {
+	field(DESC,"Mono Scan")
+	field(PREC,"1")
+	field(STR1,"1")
+	field(LNK1,"14IDB:beamCheckDetector PP NMS")
+	field(STR2,"0")
+	field(LNK2,"14IDA:mono_pid1.FBON PP NMS")
+	field(STR3,"0")
+	field(LNK3,"14IDA:vmirror_pid1.FBON PP NMS")
+	field(DO4,"1")
+	field(LNK4,"14IDB:Mono_DAC:setup.PROC PP NMS")
+	field(DLY5,"0.1")
+	field(DO5,"0.1")
+	field(LNK5,"14IDB:scanAux.PDLY NPP NMS")
+	field(DO6,"1")
+	field(LNK6,"14IDB:scanAux.EXSC CA NMS")
+	field(WAIT6,"Wait")
+	field(DOL7,"14IDB:Mono_Max PP NMS")
+	field(LNK7,"14IDA:mono_pid1_incalc.F NPP NMS")
+	field(DOL8,"S:SRcurrentAI.VAL PP NMS")
+	field(LNK8,"14IDA:mono_pid1_incalc.E NPP NMS")
+	field(STR9,"1")
+	field(LNK9,"14IDA:mono_pid1.FBON PP NMS")
+	field(STRA,"1")
+	field(LNKA,"14IDA:vmirror_pid1.FBON PP NMS")
+}
+
+# Find maximum from the scan of the mono piezo
+grecord(acalcout,"$(P)Mono_Max") {
+	field(INAA,"$(P)scanAux.D01DA NPP NMS")
+	field(CALC,"AMAX(AA)")
+	field(NELM,"100")
+}
+
+# Setup a Locked PV which checks if both piezos are locked in
+grecord(calcout,"$(P)PZ_Locked") {
+	field(DESC,"Piezos locked?")
+	field(INPA,"14IDA:mono_pid1Locked CP NMS")
+	field(INPB,"14IDA:vmirror_pid1Locked CP NMS")
+	field(CALC,"A & B")
+}
+
+# Seq record which finds the maximum at I0 for the mirror positional feedback
+grecord(sseq,"$(P)Mirror_Scan") {
+	field(DESC,"Mirror Scan")
+	field(PREC,"1")
+	field(STR1,"1")
+	field(LNK1,"14IDB:beamCheckDetector PP NMS")
+	field(STR2,"0")
+	field(LNK2,"14IDA:vmirror_pid1.FBON PP NMS")
+	field(DO3,"1")
+	field(LNK3,"14IDB:openXiaShutter.PROC PP NMS")
+	field(DLY4,"0.1")
+	field(STR4,"1")
+	field(LNK4,"14IDB:beamCheckComb CA NMS")
+	field(WAIT4,"Wait")
+	field(DO5,"1")
+	field(LNK5,"14IDB:Mirror_Max.PROC PP NMS")
+	field(DO6,"1")
+	field(LNK6,"14IDB:closeXiaShutter.PROC PP NMS")
+	field(STR7,"1")
+	field(LNK7,"14IDA:vmirror_pid1.FBON PP NMS")
+
+#	field(STR1,"0")
+#	field(LNK1,"14IDA:vmirror_pid1.FBON PP NMS")
+#	field(DO2,"1")
+#	field(LNK2,"14IDB:Mirror_DAC:setup.PROC PP NMS")
+#	field(DLY3,"0.1")
+#	field(DO3,"0.0")
+#	field(LNK3,"14IDB:scanAux.PDLY NPP NMS")
+#	field(DO4,"1")
+#	field(LNK4,"14IDB:scanAux.EXSC CA NMS")
+#	field(WAIT4,"Wait")
+#	field(DLY5,"2")
+#	field(DO5,"1")
+#	field(LNK5,"14IDB:Mirror_Max.PROC PP NMS")
+#	field(STR6,"1")
+#	field(LNK6,"14IDA:vmirror_pid1.FBON PP NMS")
+}
+
+# Calculate offset for vertical feedback
+grecord(calcout,"$(P)Mirror_Max") {
+	field(INPA,"14IDA:vmirror_pid1_incalc.F NPP NMS")
+	field(INPB,"14IDA:vmirror_pid1_incalc.G NPP NMS")
+	field(CALC,"A-B")
+	field(OUT,"14IDA:vmirror_pid1_incalc.F PP NMS")
+}

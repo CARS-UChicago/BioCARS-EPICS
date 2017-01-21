@@ -1,0 +1,998 @@
+#  Database for Oxford Danfysik QBPM (Model: DQM-0012).
+#  Electronics module model: YMM-0012.
+#  QBPM = Quadrant PIN Diode Based Beam Position Monitor.
+#  http://www.oxford-danfysik.com/product_pdf/SCC04_P15.pdf
+#
+#  Written by XXX, 2005-12-08
+#  Modified: Roy Emerson 2006-06-01
+#            Added a parameter for the Oxford QBPM device address $(AD)
+#
+#  Parameters:
+#   P              PV name prefix (e.g. 17id:)
+#   DEVICE         PV name for the specific Oxford DQM device (e.g. Bpm1)
+#   PORT           asyn PORT name (e.g. serial1)
+#   AD             Added 2006-06-01 The QBPM instrument address (0->15).
+#                  The default is 0.
+#   AVGCURRSUMCNT  Number of values to use for calculating average input
+#                  current sum in driver; must be between 1 and 100 (e.g. 10)
+#   DESCR          Description of this device (e.g. 17-Lab Oxford DQM)
+#
+#  PVs Provided:
+#   $(P)$(DEVICE):DESCR
+#     A human readable description of the device. May be used in a UI.
+#   $(P)$(DEVICE):CURRENT_RANGE
+#     Input current range (1-6).
+#   $(P)$(DEVICE):CURRENT_RANGEm
+#     Input current range from medm Choice Button or Menu controller.
+#   $(P)$(DEVICE):CURRENT_[1-4]
+#     Input currents from four channels.
+#   $(P)$(DEVICE):NumAvgValues
+#     How many values to use in calculating average sum, X, and Y.
+#   $(P)$(DEVICE):CURRENT_SUM
+#     Input current sum of four channels.
+#   $(P)$(DEVICE):AvgSum
+#     Average input current sum of four channels (i.e. moving average of most
+#     recent AVGCURRSUMCNT input current sums).
+#   $(P)$(DEVICE):AcqTime.A
+#     Acquisition time in seconds
+#   $(P)$(DEVICE):AcqTotal
+#     Sum of Input Current Sum during acquisition
+#   $(P)$(DEVICE):AcqStart.PROC
+#     Start acquisition
+#   $(P)$(DEVICE):AcqStop.PROC
+#     Stop acquisition
+#   $(P)$(DEVICE):POSITION_X
+#     Beam position X.
+#   $(P)$(DEVICE):AvgX
+#     Average X beam position (moving average of most recent AVGCURRSUMCNT
+#     readings)
+#   $(P)$(DEVICE):POSITION_Y
+#     Beam position Y.
+#   $(P)$(DEVICE):AvgY
+#     Average Y beam position (moving average of most recent AVGCURRSUMCNT
+#     readings)
+#   $(P)$(DEVICE):{GX,A1,A2,B1,B2,GY,C1,C2,D1,D2}
+#     Coefficients for beam position X and Y calculation.
+#
+#   $(P)$(DEVICE):POS_XY_AS_STRING Added 2006-06-01
+#     Beam position X and Y as calculated by the instrument updated every 5 seconds.
+#   $(P)$(DEVICE):POS_XD.VAL
+#     Beam position X as calculated by the DQM instrument.
+#   $(P)$(DEVICE):POS_YD.VAL
+#     Beam position Y as calculated by the DQM instrument.
+#   $(P)$(DEVICE):POS_X.VAL
+#     Beam position X as calculated by the DQM instrument.
+#   $(P)$(DEVICE):POS_Y.VAL
+#     Beam position Y as calculated by the DQM instrument.
+#
+# Notes:
+# * The Input Current Sum Acquisition mechanism is implemented in this driver;
+#   it is not a feature of the device. Also, it does not interfer with the
+#   normal periodic polling of the device.
+#
+#  Developer Notes:
+#    ** ":READad:POSXY?" implimented 2006-06-01 by Roy Emerson
+#
+#    Note: The ":READad:POSXY?" command is implimented at the end of this file
+#          as the last six records and works with a scan rate of 5 seconds.
+#          The instrument coefficients must be set in the instrument before
+#          the returned X-Y coordinates will be valid. Although implimented and
+#          tested it is currently not used as the four currents must be read
+#          to calculate the total current ( $(P)$(DEVICE):CURRENT_SUM ).
+#
+#    Note: The DQM current range has been implimented as a mbbo and as an ao.
+#          The ( $(P)$(DEVICE):CURRENT_RANGEm ) record is the mbbo implimentation.
+#          The ( $(P)$(DEVICE):CURRENT_RANGE ) record is the ao implimentation.
+#          Either or both PV's maybe used. They will remain syncronized in value.
+#          The mbbo PV may use either a medm Menu Controller update field
+#          or a medm Choice Button Controller update field.
+#          The ao PV must use the medm Text Entry Controller update field.
+#          The mbbo implimentation requires 3 more records than the ao solution.
+#          The extra records are necessary for scaling and conversion of data types.
+#-------------------------------------------------------
+
+record(stringin, "$(P)$(DEVICE):DESCR") {
+  field(DESC, "Description of this device")
+  field(VAL, "$(DESCR)")
+  field(PINI, "YES")
+}
+
+#-------------------------------------------------------
+# Read all 4 currents from the Oxford-DQM.
+
+# This is also the start of all processing for the DQM.
+# PV's are not written to the DQM unless they were changed by the operator
+#    or the DQM value does not agree with the last operator written value.
+#    On start-up the PV's will be updated (read) from the DQM and
+#    written 1 time back to the DQM if the PV value differs from the DQM value.
+#    This will cause the PV's to match the DQM values until the operator
+#    changes them.
+
+# Device communication: poll interval
+
+record(ao, "$(P)$(DEVICE):Poll") {
+  field(SCAN, "1 second")
+  field(FLNK, "$(P)$(DEVICE):BASIC_ALL_CURRENTS")
+}
+
+record(asyn, "$(P)$(DEVICE):BASIC_ALL_CURRENTS") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":READ$(AD):CURRALL?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_ALL_CURRENTS.AINP NPP MS")
+  #field(VAL, "\00669733 339557 231435 232641")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_1")
+}
+record(scalcout, "$(P)$(DEVICE):CURRENT_1") {
+  field(INAA, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_2")
+}
+record(scalcout, "$(P)$(DEVICE):CURRENT_2") {
+  field(INAA, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%*d %d')")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_3")
+}
+record(scalcout, "$(P)$(DEVICE):CURRENT_3") {
+  field(INAA, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%*d %*d %d')")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_4")
+}
+record(scalcout, "$(P)$(DEVICE):CURRENT_4") {
+  field(INAA, "$(P)$(DEVICE):ALL_CURRENTS_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%*d %*d %*d %d')")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_SUM")
+}
+record(calcout, "$(P)$(DEVICE):CURRENT_SUM") {
+  field(INPA, "$(P)$(DEVICE):CURRENT_1 NPP MS")
+  field(INPB, "$(P)$(DEVICE):CURRENT_2 NPP MS")
+  field(INPC, "$(P)$(DEVICE):CURRENT_3 NPP MS")
+  field(INPD, "$(P)$(DEVICE):CURRENT_4 NPP MS")
+  field(CALC, "A + B + C + D")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):AvgSumValues")
+}
+
+# Average sum
+
+record(compress, "$(P)$(DEVICE):AvgSumValues") {
+  field(INP, "$(P)$(DEVICE):CURRENT_SUM.VAL NPP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(AVGCURRSUMCNT)")
+  field(FLNK, "$(P)$(DEVICE):AvgSum")
+}
+record(acalcout, "$(P)$(DEVICE):AvgSum") {
+  field(NELM, "$(AVGCURRSUMCNT)")
+  field(INAA, "$(P)$(DEVICE):AvgSumValues.VAL NPP MS")
+  field(CALC, "AVG(AA)")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):AcqCount")
+}
+
+# Input current sum acquisition
+
+record(seq, "$(P)$(DEVICE):AcqStart") {
+  field(DO1, "-1")
+  field(LNK1, "$(P)$(DEVICE):AcqCount.VAL NPP MS")
+  field(DO2, "0")
+  field(LNK2, "$(P)$(DEVICE):AcqTotal.VAL PP MS")
+  field(DO3, "1")
+  field(LNK3, "$(P)$(DEVICE):AcqCount.C NPP MS")
+  field(DO4, "1")
+  field(LNK4, "$(P)$(DEVICE):AcqWait.VAL PP MS")
+  field(FLNK, "$(P)$(DEVICE):AcqWait")
+}
+record(busy, "$(P)$(DEVICE):AcqWait") {
+  field(VAL, "0")
+}
+
+record(dfanout, "$(P)$(DEVICE):AcqStop") {
+  field(VAL, "0")
+  field(OUTA, "$(P)$(DEVICE):AcqCount.C NPP MS")
+}
+
+record(calcout, "$(P)$(DEVICE):AcqTime") {
+  # NOTE: Assumes device poll rate (SCAN field) of "1 second". If change poll
+  # rate, should also adjust this record's HOPR and LOPR.
+  field(A, "1") # requested acquisition time
+  field(INPB, "$(P)$(DEVICE):AcqTime.LOPR NPP NMS")
+  field(INPC, "$(P)$(DEVICE):AcqTime.HOPR NPP NMS")
+  field(EGU, "s")
+  field(LOPR, "1")
+  field(HOPR, "60")
+  field(CALC, "A<B?B:(A>C?C:A)")
+  field(OUT, "$(P)$(DEVICE):AcqTime.A NPP NMS")
+  field(FLNK, "$(P)$(DEVICE):AcqNumSamples")
+  field(PINI, "YES")
+}
+record(calcout, "$(P)$(DEVICE):AcqNumSamples") {
+  # NOTE: Assumes device poll rate (SCAN field) of "1 second". If change poll
+  # rate, must also change the 1 in this record's CALC field to convert
+  # seconds into the number of samples to be acquired.
+  field(INPA, "$(P)$(DEVICE):AcqTime NPP MS")
+  field(CALC, "A*1")
+}
+
+record(calcout, "$(P)$(DEVICE):AcqCount") {
+  # Counting starts at 0
+  field(INPA, "$(P)$(DEVICE):AcqNumSamples NPP MS")
+  field(INPB, "$(P)$(DEVICE):AcqCount.VAL NPP NMS")
+  field(C, "0") # should count
+  field(CALC, "C=0?-1:(B<A?B+1:B)")
+  field(OCAL, "C=0?0:(B<A?1:0)")
+  field(DOPT, "Use OCAL")
+  field(OUT, "$(P)$(DEVICE):AcqCount.C NPP NMS")
+  field(FLNK, "$(P)$(DEVICE):AcqTotal")
+}
+record(calcout, "$(P)$(DEVICE):AcqTotal") {
+  field(VAL, "0")
+  field(INPA, "$(P)$(DEVICE):CURRENT_SUM NPP MS")
+  field(INPB, "$(P)$(DEVICE):AcqCount NPP MS")
+  field(INPC, "$(P)$(DEVICE):AcqNumSamples NPP MS")
+  field(INPD, "$(P)$(DEVICE):AcqTotal.VAL NPP NMS")
+  field(CALC, "(B=-1||B>=C)?D:D+A")
+  field(OCAL, "(B=-1||B>=C)?0:1")
+  field(DOPT, "Use OCAL")
+  field(IVOV, "2")
+  field(IVOA, "Set output to IVOV")
+  field(OUT, "$(P)$(DEVICE):AcqStatus PP NMS")
+  field(EGU, "counts")
+  field(FLNK, "$(P)$(DEVICE):BASIC_CURRENT_RANGE")
+}
+record(mbbo, "$(P)$(DEVICE):AcqStatus") {
+  field(VAL, "0")
+  field(ZRST, "Idle")
+  field(ONST, "Acquiring")
+  field(TWST, "Error")
+  field(TWSV, "MAJOR")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(DEVICE):AcqUpdWait")
+}
+record(calcout, "$(P)$(DEVICE):AcqUpdWait") {
+  field(INPA, "$(P)$(DEVICE):AcqStatus NPP MS")
+  field(CALC, "A=1?1:0")
+  field(OOPT, "When Zero")
+  field(IVOV, "0")
+  field(IVOA, "Set output to IVOV")
+  field(OUT, "$(P)$(DEVICE):AcqWait PP NMS")
+}
+
+# Read current range
+
+record(asyn, "$(P)$(DEVICE):BASIC_CURRENT_RANGE") {
+  field(DESC, "Read DQM current setting")
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):CURR:RANG?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_RANGE_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):CURRENT_RANGE_AS_STRING") {
+  field(DESC, "Get DQM value as a string")
+  field(INP, "$(P)$(DEVICE):BASIC_CURRENT_RANGE.AINP NPP MS")
+#  field(SIMM, "YES")
+#  field(SVAL, " 6")
+  field(FLNK, "$(P)$(DEVICE):CURRENT_RANGE_AS_INT")
+}
+record(scalcout, "$(P)$(DEVICE):CURRENT_RANGE_AS_INT") {
+  field(DESC, "Get DQM value int(1 to 6)")
+  field(INAA, "$(P)$(DEVICE):CURRENT_RANGE_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(OUT, "$(P)$(DEVICE):CURRENT_RANGEc1.PROC PP MS")
+  field(OOPT, "On Change")
+  field(FLNK, "$(P)$(DEVICE):BASIC_GX")
+}
+
+# The Oxford-DQM uses a number from 1 to 6
+# Convert it for the mbbo to the range 0 to 5
+
+record(scalcout, "$(P)$(DEVICE):CURRENT_RANGEc1") {
+  field(DESC, "Device VAL changed scale it")
+  field(INPA, "$(P)$(DEVICE):CURRENT_RANGE_AS_INT NPP MS")
+  field(INPB, "1")
+  field(CALC, "A-B")
+  field(OUT, "$(P)$(DEVICE):CURRENT_RANGEc1a PP MS")
+  field(DOPT, "Use CALC")
+  field(OOPT, "Every Time")
+  field(PREC, "0")
+}
+
+# ao is needed to convert from scalcout double to
+# mbbo long integer scalcout record support will not do it!
+# The ao also forces a hard limit on the entry of (1 to 6).
+
+record(ao, "$(P)$(DEVICE):CURRENT_RANGEc1a") {
+  field(DESC, "Device VAL change convert it")
+  field(OUT, "$(P)$(DEVICE):CURRENT_RANGEm PP MS")
+  field(OMSL, "supervisory")
+  field(DRVL, "0")
+  field(DRVH, "5")
+}
+
+# medm operator entry PV using the Choice Button or Menu updates
+
+record(mbbo, "$(P)$(DEVICE):CURRENT_RANGEm") {
+  field(DESC, "Operator entry current range")
+  field(DTYP, "Soft Channel")
+  field(OMSL, "supervisory")
+  field(OUT, "$(P)$(DEVICE):CURRENT_RANGEc2.PROC PP NMS")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(THVL, "3")
+  field(FRVL, "4")
+  field(FVVL, "5")
+#              123456789012345 - max field size 15
+  field(ZRST, "35pA  to 350nA")
+  field(ONST, "70pA  to 70nA")
+  field(TWST, "140pA to 1.4uA")
+  field(THST, "0.7nA to 7uA")
+  field(FRST, "7nA   to 70uA")
+  field(FVST, "70nA  to 0.7mA")
+}
+
+# The Oxford-DQM uses a number from 1 to 6
+# Convert the mbbo value (0 to 5) back to (1 to 6)
+
+record(scalcout, "$(P)$(DEVICE):CURRENT_RANGEc2") {
+  field(DESC, "Scale Operator VAL for DQM")
+  field(INPA, "$(P)$(DEVICE):CURRENT_RANGEm.VAL NPP MS")
+  field(INPB, "1")
+  field(CALC, "A+B")
+  field(OUT, "$(P)$(DEVICE):CURRENT_RANGE.VAL PP MS")
+  field(DOPT, "Use CALC")
+  field(OOPT, "Every Time")
+  field(PREC, "5")
+}
+
+# medm operator entry PV using the Text Entry update
+
+# The ao also forces a hard limit on the entry of (1 to 6).
+
+record(ao, "$(P)$(DEVICE):CURRENT_RANGE") {
+  field(DESC, "Operator entry current range")
+  field(DRVL, "1")
+  field(DRVH, "6")
+  field(FLNK, "$(P)$(DEVICE):SET_CURRENT_RANGE")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_CURRENT_RANGE") {
+  field(DESC, "Format set current cmd")
+  field(INPA, "$(P)$(DEVICE):CURRENT_RANGE NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):CURR:RANG %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_CURRENT_RANGE.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_CURRENT_RANGE") {
+  field(DESC, "Put set cur cmd to DQM")
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_GX") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):GX?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):GX_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):GX_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_GX.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):GX_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):GX_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):GX_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):GX PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_A1")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):GX") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_GX")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_GX") {
+  field(INPA, "$(P)$(DEVICE):GX NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):GX %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_GX.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_GX") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+#  field(FLNK, "$(P)$(DEVICE):BASIC_GX")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_A1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):A1?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):A1_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):A1_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_A1.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):A1_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):A1_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):A1_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):A1 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_A2")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):A1") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_A1")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_A1") {
+  field(INPA, "$(P)$(DEVICE):A1 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):A1 %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_A1.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_A1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_A2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):A2?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):A2_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):A2_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_A2.AINP NPP MS")
+  field(SVAL, " 0")
+  field(FLNK, "$(P)$(DEVICE):A2_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):A2_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):A2_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(OUT, "$(P)$(DEVICE):A2 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_B1")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):A2") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_A2")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_A2") {
+  field(INPA, "$(P)$(DEVICE):A2 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):A2 %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_A2.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_A2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_B1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):B1?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):B1_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):B1_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_B1.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):B1_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):B1_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):B1_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):B1 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_B2")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):B1") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_B1")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_B1") {
+  field(INPA, "$(P)$(DEVICE):B1 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):B1 %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_B1.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_B1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_B2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):B2?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):B2_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):B2_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_B2.AINP NPP MS")
+  field(SVAL, " 0")
+  field(FLNK, "$(P)$(DEVICE):B2_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):B2_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):B2_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(OUT, "$(P)$(DEVICE):B2 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_GY")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):B2") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_B2")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_B2") {
+  field(INPA, "$(P)$(DEVICE):B2 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):B2 %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_B2.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_B2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_GY") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):GY?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):GY_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):GY_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_GY.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):GY_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):GY_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):GY_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):GY PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_C1")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):GY") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_GY")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_GY") {
+  field(INPA, "$(P)$(DEVICE):GY NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):GY %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_GY.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_GY") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_C1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):C1?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):C1_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):C1_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_C1.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):C1_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):C1_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):C1_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):C1 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_C2")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):C1") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_C1")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_C1") {
+  field(INPA, "$(P)$(DEVICE):C1 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):C1 %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_C1.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_C1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_C2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):C2?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):C2_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):C2_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_C2.AINP NPP MS")
+  field(SVAL, " 0")
+  field(FLNK, "$(P)$(DEVICE):C2_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):C2_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):C2_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(OUT, "$(P)$(DEVICE):C2 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_D1")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):C2") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_C2")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_C2") {
+  field(INPA, "$(P)$(DEVICE):C2 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):C2 %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_C2.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_C2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_D1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):D1?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):D1_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):D1_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_D1.AINP NPP MS")
+  field(SVAL, " 1.00000")
+  field(FLNK, "$(P)$(DEVICE):D1_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):D1_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):D1_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%f')")
+  field(OUT, "$(P)$(DEVICE):D1 PP MS")
+  field(FLNK, "$(P)$(DEVICE):BASIC_D2")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):D1") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_D1")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_D1") {
+  field(INPA, "$(P)$(DEVICE):D1 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):D1 %.5f', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_D1.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_D1") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# read data
+
+record(asyn, "$(P)$(DEVICE):BASIC_D2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):D2?")
+  field(TMOT, "1.0")
+  field(FLNK, "$(P)$(DEVICE):D2_AS_STRING")
+}
+record(stringin, "$(P)$(DEVICE):D2_AS_STRING") {
+  field(INP, "$(P)$(DEVICE):BASIC_D2.AINP NPP MS")
+  field(SVAL, " 0")
+  field(FLNK, "$(P)$(DEVICE):D2_AS_NUM")
+}
+record(scalcout, "$(P)$(DEVICE):D2_AS_NUM") {
+  field(INAA, "$(P)$(DEVICE):D2_AS_STRING NPP MS")
+  field(CALC, "SSCANF(AA, '%*c%d')")
+  field(OUT, "$(P)$(DEVICE):D2 PP MS")
+  field(FLNK, "$(P)$(DEVICE):A")
+}
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):D2") {
+  field(PREC, "5")
+  field(FLNK, "$(P)$(DEVICE):SET_D2")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_D2") {
+  field(INPA, "$(P)$(DEVICE):D2 NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):D2 %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_D2.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_D2") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+#-------------------------------------------------------
+# calculate the X beam position
+
+record(calcout, "$(P)$(DEVICE):A") {
+  field(INPA, "$(P)$(DEVICE):CURRENT_4 NPP MS")
+  field(INPB, "$(P)$(DEVICE):A1 NPP MS")
+  field(INPC, "$(P)$(DEVICE):A2 NPP MS")
+  field(CALC, "B * (A - C)")
+  field(FLNK, "$(P)$(DEVICE):B")
+}
+record(calcout, "$(P)$(DEVICE):B") {
+  field(INPA, "$(P)$(DEVICE):CURRENT_2 NPP MS")
+  field(INPB, "$(P)$(DEVICE):B1 NPP MS")
+  field(INPC, "$(P)$(DEVICE):B2 NPP MS")
+  field(CALC, "B * (A - C)")
+  field(FLNK, "$(P)$(DEVICE):POSITION_X")
+}
+record(scalcout, "$(P)$(DEVICE):POSITION_X") {
+  field(INPA, "$(P)$(DEVICE):A NPP MS")
+  field(INPB, "$(P)$(DEVICE):B NPP MS")
+  field(INPC, "$(P)$(DEVICE):GX NPP MS")
+  field(CALC, "C * (A - B) / (A + B)")
+  field(EGU, "um")
+  field(FLNK, "$(P)$(DEVICE):AvgXValues")
+}
+record(compress, "$(P)$(DEVICE):AvgXValues") {
+  field(INP, "$(P)$(DEVICE):POSITION_X.VAL NPP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(AVGCURRSUMCNT)")
+  field(FLNK, "$(P)$(DEVICE):AvgX")
+}
+record(acalcout, "$(P)$(DEVICE):AvgX") {
+  field(NELM, "$(AVGCURRSUMCNT)")
+  field(INAA, "$(P)$(DEVICE):AvgXValues.VAL NPP MS")
+  field(CALC, "AVG(AA)")
+  field(FLNK, "$(P)$(DEVICE):C")
+}
+
+# calculate the Y beam position
+
+record(calcout, "$(P)$(DEVICE):C") {
+  field(INPA, "$(P)$(DEVICE):CURRENT_1 NPP MS")
+  field(INPB, "$(P)$(DEVICE):C1 NPP MS")
+  field(INPC, "$(P)$(DEVICE):C2 NPP MS")
+  field(CALC, "B * (A - C)")
+  field(FLNK, "$(P)$(DEVICE):D")
+}
+record(calcout, "$(P)$(DEVICE):D") {
+  field(INPA, "$(P)$(DEVICE):CURRENT_3 NPP MS")
+  field(INPB, "$(P)$(DEVICE):D1 NPP MS")
+  field(INPC, "$(P)$(DEVICE):D2 NPP MS")
+  field(CALC, "B * (A - C)")
+  field(FLNK, "$(P)$(DEVICE):POSITION_Y")
+}
+record(scalcout, "$(P)$(DEVICE):POSITION_Y") {
+  field(INPA, "$(P)$(DEVICE):C NPP MS")
+  field(INPB, "$(P)$(DEVICE):D NPP MS")
+  field(INPC, "$(P)$(DEVICE):GY NPP MS")
+  field(CALC, "C * (A - B) / (A + B)")
+  field(EGU, "um")
+  field(FLNK, "$(P)$(DEVICE):AvgYValues")
+}
+record(compress, "$(P)$(DEVICE):AvgYValues") {
+  field(INP, "$(P)$(DEVICE):POSITION_Y.VAL NPP MS")
+  field(ALG, "Circular Buffer")
+  field(NSAM, "$(AVGCURRSUMCNT)")
+  field(FLNK, "$(P)$(DEVICE):AvgY")
+}
+record(acalcout, "$(P)$(DEVICE):AvgY") {
+  field(NELM, "$(AVGCURRSUMCNT)")
+  field(INAA, "$(P)$(DEVICE):AvgYValues.VAL NPP MS")
+  field(CALC, "AVG(AA)")
+}
+
+#-------------------------------------------------------
+
+# operator entry
+
+record(ao, "$(P)$(DEVICE):AVGCURR") {
+  field(DRVL, "2")
+  field(DRVH, "99")
+  field(FLNK, "$(P)$(DEVICE):SET_AVGCURR")
+}
+
+# conditionally write data
+
+record(scalcout, "$(P)$(DEVICE):SET_AVGCURR") {
+  field(INPA, "$(P)$(DEVICE):AVGCURR NPP MS")
+  field(CALC, "A")
+  field(OCAL, "PRINTF(':CONF$(AD):AVGCURR %d', A)")
+  field(OUT, "$(P)$(DEVICE):BASIC_SET_AVGCURR.AOUT PP MS")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "On Change")
+}
+record(asyn, "$(P)$(DEVICE):BASIC_SET_AVGCURR") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+
+# operator entry - medm message button to initiate record processing
+
+record(asyn, "$(P)$(DEVICE):BASIC_SET_AVGCURR_OFF") {
+  field(PORT, "$(PORT)")
+  field(AOUT, ":CONF$(AD):SINGLE")
+  field(TMOT, "1.0")
+  field(IEOS, "")
+  field(NRRD, "1")
+}
+##-------------------------------------------------------
+## Read the Oxford-DQM-0012 X/Y device calculated position values
+#
+#record(asyn, "$(P)$(DEVICE):POS_XY") {
+#  field(DESC, "Read DQM X/Y positions")
+#  field(PORT, "$(PORT)")
+#  field(AOUT, ":READ$(AD):POS_XY?")
+#  field(TMOT, "1.0")
+#  field(SCAN, "5 second")
+#  field(FLNK, "$(P)$(DEVICE):POS_XY_AS_STRING")
+#}
+#record(stringin, "$(P)$(DEVICE):POS_XY_AS_STRING") {
+#  field(DESC, "Parse DQM X/Y positions")
+#  field(INP, "$(P)$(DEVICE):POS_XY.AINP NPP MS")
+#  field(SIMM, "NO")
+#  field(SVAL, " -0.20915 0.00074")
+#  field(FLNK, "$(P)$(DEVICE):POS_XD")
+#}
+#record(scalcout, "$(P)$(DEVICE):POS_XD") {
+#  field(DESC, "Convert DQM X posn to float")
+#  field(INAA, "$(P)$(DEVICE):POS_XY_AS_STRING NPP MS")
+#  field(CALC, "SSCANF(AA, '%*c%f')")
+#  field(OUT, "$(P)$(DEVICE):POS_X PP MS")
+#  field(FLNK, "$(P)$(DEVICE):POS_YD")
+#  field(DOPT, "Use CALC")
+#  field(OOPT, "Every Time")
+#  field(PREC, "5")
+#}
+#record(scalcout, "$(P)$(DEVICE):POS_YD") {
+#  field(DESC, "Convert DQM Y posn to float")
+#  field(INAA, "$(P)$(DEVICE):POS_XY_AS_STRING NPP MS")
+#  field(CALC, "SSCANF(AA, '%*c%*f%f')")
+#  field(OUT, "$(P)$(DEVICE):POS_Y PP MS")
+#  field(DOPT, "Use CALC")
+#  field(OOPT, "Every Time")
+#  field(PREC, "5")
+#}
+#
+## Note: The following two records are needed
+##       only if DRVL and DRVH limits must be used  (for safety maybe ?)
+#
+#record(ao, "$(P)$(DEVICE):POS_X") {
+#  field(DESC, "Oxford DQM Y position")
+#  field(PREC, "5")
+#  field(DRVL, "-100.0")
+#  field(DRVH, "100.0")
+#}
+#record(ao, "$(P)$(DEVICE):POS_Y") {
+#  field(DESC, "Oxford DQM X position")
+#  field(PREC, "5")
+#  field(DRVL, "-100.0")
+#  field(DRVH, "100.0")
+#}

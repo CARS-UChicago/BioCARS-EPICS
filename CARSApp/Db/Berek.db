@@ -1,0 +1,74 @@
+
+# This is a Database to calculate settings for Berek Compensator
+# Here $(P)= 14IDB:, $(DEVICE)=BEREK
+#
+#
+grecord(ao, "$(P)$(DEVICE):Wavelegnth") {
+	field("VAL","480.00")
+ 	field(PREC,"2")
+    	field(DESC, "Laser Wavelegnth")
+	field(FLNK,"$(P)$(DEVICE):SelectPhase PP MS")
+}
+
+# This is a variable for selections of Rate
+# An MBBO record which provides the menu and the Rate values
+#
+grecord(ao, "$(P)$(DEVICE):DesiredOrientation") {
+	field("VAL","0")
+ 	field(PREC,"1")
+    	field(DESC, "Desired Polariz Orientation")
+	field(FLNK,"$(P)$(DEVICE):SelectPhase PP MS")
+
+}
+
+grecord(mbbo,"$(P)$(DEVICE):SelectPhase") {
+	field(NOBT, "4")
+        field(ZRVL,"0x1")
+        field(ZRST,"NO CHANGE")
+        field(ONVL,"0x2")
+        field(ONST,"CIRCULAR")
+        field(TWVL,"0x4")
+        field(TWST,"LINEAR")
+ #       field(THVL,"0x8")
+ #       field(THST,"3/4")
+#	field(FRVL,"0x16")
+#        field(FRST,"1") 
+#	field(FVVL,"0x32")
+#       field(FVST,"")  
+#	field(PINI, "YES")
+	field(FLNK,"$(P)$(DEVICE):PHASE_SET PP MS")
+}
+#
+#
+
+grecord(calcout,"$(P)$(DEVICE):PHASE_SET") {
+	##field(TPRO, "1")
+	field(INPA,"$(P)$(DEVICE):SelectPhase.VAL PP MS") #############
+	field(CALC, "A*0.25")
+	field(OUT,"$(P)$(DEVICE):DesiredPhase.VAL PP MS") #############
+	field(FLNK,"$(P)$(DEVICE):DesiredPhase PP MS" )
+}
+
+grecord(ao, "$(P)$(DEVICE):DesiredPhase") {
+	field("VAL","0.0")
+ 	field(PREC,"4")
+    	field(DESC, "Desired Phase")
+	field(FLNK,"$(P)$(DEVICE):PARAMETERS PP MS" )
+}
+
+grecord(transform, "$(P)$(DEVICE):PARAMETERS")
+{
+# 	field(TPRO, "1")
+	 field(INPA, "$(P)$(DEVICE):DesiredPhase.VAL PP MS")
+         field(INPB, "$(P)$(DEVICE):Wavelegnth.VAL PP MS")
+	 field(INPG, "$(P)$(DEVICE):DesiredOrientation.VAL PP MS")
+ 	 field(CLCC, "ASIN(0.284*(SQR(0.001*B*A)))")
+         field(CLCD, "C*180/3.14")
+        # field(OUTA, "$(P)Somevalue.VAL PP MS")
+         field(CLCE, "50.22-71*SIN(3.14/4-C)")
+	 field(CLCH, "G/2")
+ 
+        
+        field(CLCF, "(A<0.3 & A>0.2)?45:H")
+        field(PREC,"4")
+}

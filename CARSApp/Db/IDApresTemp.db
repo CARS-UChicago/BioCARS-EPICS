@@ -1,0 +1,48 @@
+# readings of pressures and tempertures for the ID line  
+# argon gas pressure for ID line
+grecord(calcout,"$(P)ARGON_PRESSURE")  {
+	field(INPA,"$(P)DVX_5.VAL")
+	field(CALC,"(ABS(A)-0.5)*600.0")
+	field(SCAN,"1 second")
+	field(DESC,"argon pressure (psi)")
+}
+
+# helium gas pressure for ID line
+grecord(calcout,"$(P)HELIUM_PRESSURE")  {
+	field(INPA,"$(P)DVX_6.VAL")
+	field(CALC,"(ABS(A)-0.5)*600.0")
+	field(SCAN,"1 second")
+	field(DESC,"helium pressure (psi)")
+}
+
+# nitrogen gas pressure for user
+grecord(calcout,"$(P)NITROGEN_PRESSURE")  {
+	field(INPA,"$(P)DVX_7.VAL")
+	field(CALC,"(ABS(A)-0.5)*600.0")
+	field(SCAN,"1 second")
+	field(DESC,"nitrogen pressure (psi)")
+}
+
+# bolometer top temperature
+#grecord(calcout,"$(P)_BOLOMETER_TOP_TEMP")  {
+#	field(INPA,"$(P):DVX_1.VAL")
+#	field(CALC,"ABS(A)*100")
+#	field(SCAN,"1 second")
+#	field(DESC,"bolometer top temp (C)")
+#}
+
+# bolometer bottom temperature
+#grecord(calcout,"$(P)_BOLOMETER_BOTT_TEMP")  {
+#	field(INPA,"$(P):DVX_2.VAL")
+#	field(CALC,"ABS(A)*100")
+#	field(SCAN,"1 second")
+#	field(DESC,"bolometer bott temp (C)")
+#}
+
+# hot cathode measurement for mirror tank vacuum
+#grecord(calcout,"$(P):HOTCATHODE")  {
+#	field(INPA,"$(P):DVX_4.VAL")
+#	field(CALC,"10^(A-11)")
+#	field(SCAN,"1 second")
+#	field(DESC,"mirror tank vacuum in torr")
+#}

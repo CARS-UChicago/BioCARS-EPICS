@@ -1,0 +1,9 @@
+grecord(sseq,"$(P)$(S)") {
+	field(DESC,"Remove Ag then Ti in XIA")
+	field(LNK1,"14IDB:DAC1_2.VAL PP NMS")
+	field(DO1,"5")
+	field(DLY2,"0.2")
+	field(LNK2,"14IDB:DAC1_3.VAL PP NMS")
+	field(DO2,"5")
+	field(PREC,"1")
+}

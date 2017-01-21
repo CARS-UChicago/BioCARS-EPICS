@@ -1,0 +1,58 @@
+# readings of analog encoders for Downstream Table
+# T2DnY
+grecord(calcout,"$(P)T2DnY")  {
+	field(INPA,"$(P)IP330_1.VAL")
+	##field(INPA,"$(P)userAve5.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Downstream Y mm")
+}
+#T2OutY
+grecord(calcout,"$(P)T2OutY")  {
+	field(INPA,"$(P)IP330_2.VAL")
+	##field(INPA,"$(P)userAve6.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Outboard Y mm")
+}
+#T2InY
+grecord(calcout,"$(P)T2InY")  {
+	field(INPA,"$(P)IP330_3.VAL")
+	##field(INPA,"$(P)userAve7.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Inboard Y mm")
+}
+
+# T2UpX
+grecord(calcout,"$(P)T2UpX")  {
+	field(INPA,"$(P)IP330_4.VAL")
+	##field(INPA,"$(P)userAve8.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Upstream X mm")
+}
+
+# T2DnX
+grecord(calcout,"$(P)T2DnX")  {
+	field(INPA,"$(P)IP330_5.VAL")
+	##field(INPA,"$(P)userAve8.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Downstream X mm")
+}
+
+# T2DnZ
+grecord(calcout,"$(P)T2DnZ")  {
+	field(INPA,"$(P)IP330_6.VAL")
+	##field(INPA,"$(P)userAve9.VAL")
+	field(CALC,"((A)*1.0 +0.0)")
+	field(PREC,"4")
+	field(SCAN,"1 second")
+	field(DESC,"T2 Downstream Z mm")
+}

@@ -1,0 +1,20 @@
+grecord(vme,"$(P)MS_SHUTTER") {
+	field(ADDR,"0x8f000A")
+	field(AMOD,"A24")
+	field(RDWT,"Read")
+	field(SCAN,".1 second")
+}
+
+grecord(mbbi,"$(P)MS_SHUTTER_STATUS") {
+	field(INP,"$(P)MS_SHUTTER.VAL CP")
+	field(ZRVL,"0")
+	field(TWVL,"2")
+	field(ZRST,"CLOSED")
+	field(TWST,"OPEN")
+}
+
+grecord(vme,"$(P)MS_SHUTTER_SET") {
+	field(ADDR,"0x8f000A")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}

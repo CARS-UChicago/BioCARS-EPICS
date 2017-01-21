@@ -1,0 +1,173 @@
+#
+#	This is the SASSO Mirror data base it is to be used in conjunction 
+#	with the state notation language program mirror.st found in 
+#	/epics_local/ChemMat/ChemMatApp/src.  It also needs to have 
+#	pseudomotors loaded.  It is devided into two parts.  The Y-translation 
+#	motors and any motion using these motors uses the mirror.st program.
+#	The X-translations are achieved using just a database.
+#
+#	Timothy Graber June 7,2001
+#
+#	Changed X motions to use DVAL field. RH Feb. 12, 2009
+#       
+
+grecord(ai,"$(P)$(MIR)debugLevel") {
+	field(VAL,"0")
+}
+
+# These three records are where the soft motors write their output.
+grecord(ao,"$(P)$(MIR)YMove") {}
+grecord(ao,"$(P)$(MIR)ThMove") {}
+grecord(ao,"$(P)$(MIR)ChiMove") {}
+
+
+# These records hold the readback positions of the soft motors
+grecord(ao,"$(P)$(MIR)YRdbk") {}
+grecord(ao,"$(P)$(MIR)ThRdbk") {}
+grecord(ao,"$(P)$(MIR)ChiRdbk") {}
+
+# This record processes if either of the soft motor STOP fields is set.
+grecord(dfanout,"$(P)$(MIR)YStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)ThStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)ChiStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+#
+# This record computes whether the compound motors are done moving.  
+# It goes to 1 when all of the real motors are done moving.
+#
+grecord(calcout,"$(P)$(MIR)CompDone") {
+        field(INPA,"$(P)$(Y1).DMOV CP NMS")
+        field(INPB,"$(P)$(Y2).DMOV CP NMS")
+        field(INPC,"$(P)$(Y3).DMOV CP NMS")
+        field(CALC,"A&B&C")
+}
+grecord(ao,"$(P)$(MIR)PseudoDone") {
+		field(VAL, "1")
+}
+
+grecord(transform,"$(P)$(MIR)AllStop") {
+		field(PREC,"6")
+		field(CLCA,"0")
+		field(OUTA,"$(P)$(Y1).SPMG PP NMS")
+		field(CLCB,"0")
+		field(OUTB,"$(P)$(Y2).SPMG PP NMS")
+		field(CLCC,"0")
+		field(OUTC,"$(P)$(Y3).SPMG PP NMS")
+		field(CLCD,"0")
+		field(OUTD,"$(P)$(X1).SPMG PP NMS")
+		field(CLCE,"0")
+		field(OUTE,"$(P)$(X2).SPMG PP NMS")
+}
+#  These AI records hold data for the mirror the values are initialized
+#  the mirror A parameters.  The State Notation Language program that 
+#  runs the Y, Theta, and Chi motions will reset the values for each 
+#  mirror when it is started up.
+
+grecord(ai,"$(P)$(MIR)yPosZ") {
+	field(DESC, "Z Jack Sep")
+	field(VAL, "840.")
+	field(EGU, "mm")
+}
+grecord(ai,"$(P)$(MIR)CntLength") {
+	field(DESC, "Mirror Center")
+	field(VAL, "425.")
+	field(EGU, "mm")
+}
+grecord(ai,"$(P)$(MIR)yPosX") {
+	field(DESC, "X Jack Sep")
+	field(VAL, "240.")
+	field(EGU, "mm")
+}
+
+#
+# This part of the database is used to move the X translation of the 
+# mirror system in the FOE.  The next two records will transform and 
+# send a value to the Motor VAL field when the pseudo motor changes.  
+#
+
+grecord(ao,"$(P)$(MIR)XMove") {
+	field(OUT,"$(P)$(MIR)XTrns1 PP NMS") 
+} 
+grecord(transform,"$(P)$(MIR)XTrns1") {
+	field(INPA,"$(P)$(MIR)X.DVAL NPP NMS")
+	field(INPB,"$(P)$(MIR)X.DVAL NPP NMS")
+	field(OUTA,"$(P)$(X1).VAL  PP NMS")
+	field(OUTB,"$(P)$(X2).VAL  PP NMS")
+}
+
+#
+# The next two records will update the pseudo motor readback field when the 
+# the motors change.
+#
+
+grecord(ai,"$(P)$(MIR)XRdbk") {
+	field(PROC,"1")
+	field(PREC,"4")
+	field(INP,"$(P)$(MIR)XCalc1 CP NMS")
+}
+grecord(calc,"$(P)$(MIR)XCalc1") {
+	field(DESC,"Converts Mir Center")
+	field(CALC,"(A+B)/2")
+	field(INPA,"$(P)$(X1).RBV  CP NMS")
+	field(INPB,"$(P)$(X2).RBV  CP NMS")
+	field(PREC,"4")
+}
+
+
+# This record processes if  the soft motor STOP field is set.
+
+grecord(dfanout,"$(P)$(MIR)XStop") {
+	field(VAL,"1")
+	field(OUTA,"$(P)$(X1).STOP PP MS")
+	field(OUTB,"$(P)$(X2).STOP PP MS")
+}
+
+# This record computes whether the compound motor is done moving.  
+# It goes to 1 when both real motors are done moving.
+# On the transition to 1 its causes the $(P)$(MIR)XTrns2 record to process, which 
+# updates the DVAL fields of the soft motors so they reflect the drive 
+# positions of the real motors.
+
+grecord(calcout,"$(P)$(MIR)XDone") {
+	field(INPA,"$(P)$(X1).DMOV CP MS")
+	field(INPB,"$(P)$(X2).DMOV CP MS")
+	field(CALC,"A & B")
+	field(OUT,"$(P)$(MIR)XTrns2.PROC PP MS")
+	field(OOPT,"Transition To Non-zero")
+}
+
+
+# This record will initialize the  DVAL fields of the pseudo motor when 
+# the record is loaded.
+
+grecord(transform,"$(P)$(MIR)XTrns3") {
+	field(PINI,"1")
+	field(DESC,"Init DVAL field")
+	field(CLCA,"1")
+	field(OUTA,"$(P)$(MIR)X.SET NPP NMS")
+	field(INPB,"$(P)$(X1).RBV  NPP NMS")
+	field(INPC,"$(P)$(X2).RBV  NPP NMS")
+	field(CLCD,"(B+C)/2")
+	field(OUTD,"$(P)$(MIR)X.DVAL NPP NMS")
+	field(CLCE,"0")
+	field(OUTE,"$(P)$(MIR)X.SET NPP NMS")
+	field(FLNK,"$(P)$(MIR)XTrns2 PP NMS")
+	field(PREC,"4")
+}
+
+
+

@@ -1,0 +1,48 @@
+grecord(asyn,"$(P)gentecSer") {
+        field(TMOD,"Write/Read")
+	field(PORT,"$(PORT)")
+}
+
+grecord(stringin,"$(P)gentecUnitsA") {
+	field(DESC, "Power Units A")
+}
+grecord(stringin,"$(P)gentecHeadA") {
+	field(DESC, "Head Type A")
+}
+grecord(stringin,"$(P)gentecRespTmA") {
+	field(DESC, "Meter Responce Time A")
+}
+grecord(stringin,"$(P)gentecSensA") {
+	field(DESC, "Detector Sensitivity A")
+}
+grecord(ai,"$(P)gentecPwrA") {
+	field(DESC, "Laser Power A")
+}
+grecord(stringin,"$(P)gentecUnitsB") {
+	field(DESC, "Power Units B")
+}
+grecord(stringin,"$(P)gentecHeadB") {
+	field(DESC, "Head Type B")
+}
+grecord(stringin,"$(P)gentecRespTmB") {
+	field(DESC, "Meter Responce Time B")
+}
+grecord(stringin,"$(P)gentecSensB") {
+	field(DESC, "Detector Sensitivity B")
+}
+grecord(ai,"$(P)gentecPwrB") {
+	field(DESC, "Laser Power B")
+}
+grecord(ai,"$(P)gentecDebugLevel") {
+	field(DESC, "Debug Lever 1, 2, or 5")
+}
+grecord(bo,"$(P)gentecUpdate") {
+	field(DESC, "Get Info")
+}
+grecord(seq,"$(P)gentecSeq") {
+        field(SCAN, "Passive")
+        field(DO1,"1")
+        field(LNK1,"$(P)gentecUpdate.PROC PP NMS")
+        field(DO2,"0")
+        field(LNK2,"$(P)gentecUpdate.PROC PP NMS")
+}

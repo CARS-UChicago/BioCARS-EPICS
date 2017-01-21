@@ -1,0 +1,60 @@
+# This record will update the soft limit of the dz motor so that it does not run 
+# into the bsz or kappa motors. 
+# A is the readback value for the bsz motor.
+# B is the initial value of the soft limit for dz. 
+# C is position of the bsz motor that begins to change to dz soft limit.
+# D calculation that determines dz limit based on bsz
+# E is the readback value for the kappa motor.
+# F kappa limit where dz soft limit changes.
+# G dz soft limit if kappa is >= F
+# H calculation that determines dz limit based on kappa
+# I calculation that determines if D or H is used.
+record(transform, "$(P)dzSoft") {
+    field(INPA,"$(P)bsz.RBV PP NMS")
+    field(INPB,"100")
+    field(INPC,"10.1")
+    field(CLCD,"A < C ? B : B+A-C")
+    field(INPE,"$(P)kappa.RBV PP NMS")
+    field(INPF,"0")
+    field(INPG,"200")
+#    field(CLCH,"E > F ? B:B+ABS(E)-F")
+    field(CLCH,"E >= F ? B:G")
+    field(CLCI,"D > H? D:H")
+    field(OUTI,"$(P)dz.LLM PP NMS")
+    field(SCAN,".2 second") 
+}
+
+# This record will update the soft limit of the kappa motor (dz in this case) motor so that it does not run 
+# into the detector. It only checks the detector distance.  It assumes omega is at 35 degree.
+# A is the readback value for the dz motor.
+# B is the kappa soft limit if the detector is <= C. 
+# C is position of the dz motor changes the kappa soft limit.
+# D is the kappa soft limit if the detector is > C.
+# E is the calc result.
+record(transform, "$(P)kappaSoft") {
+    field(INPA,"$(P)dz.RBV PP NMS")
+    field(INPB,"-1")
+    field(INPC,"199")
+    field(INPD,"-65")
+#    field(CLCD,"A <= C ? B : B-A+C")
+    field(CLCE,"A <= C ? B : D")
+    field(OUTE,"$(P)kappa.LLM PP NMS")
+    field(SCAN,".2 second")
+}
+
+
+# This record will update the soft limit of the bsz motor so that it does not run
+# into the dz motor.
+# A is position of dz motor.
+# C is the initial value of the soft limit for bsz.
+# D is position of the dz motor that begins to change to bsz motor.
+# DOPT: 0 "Use CALC", 1 "Use OCAL"
+ 
+record(calcout, "$(P)bszSoft") {
+    field(INPA,"$(P)dz.RBV PP NMS")
+    field(INPC,"150")
+    field(INPD,"239.9")
+    field(CALC,"A > D ? C : C+A-D")
+    field(OUT,"$(P)bsz.HLM PP NMS")
+    field(SCAN,".2 second")
+}

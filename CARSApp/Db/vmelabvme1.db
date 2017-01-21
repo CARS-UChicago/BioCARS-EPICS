@@ -1,0 +1,6 @@
+grecord(vme,"14LAB:vme1")
+{
+        field(ADDR,"0xff0000")
+        field(AMOD,"A24")
+}
+

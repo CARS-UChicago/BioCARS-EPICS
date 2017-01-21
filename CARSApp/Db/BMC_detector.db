@@ -1,0 +1,6 @@
+record(dfanout, "$(P)detector_brakes") {
+    field(DESC,"Controls detector brakes")
+    field(OUTA,"$(P)B1Bo2 PP NMS")
+    field(OUTB,"$(P)B1Bo3 PP NMS")
+    field(OMSL,"supervisory")
+}

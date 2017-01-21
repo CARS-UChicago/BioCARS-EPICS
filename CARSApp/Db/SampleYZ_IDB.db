@@ -1,0 +1,165 @@
+grecord(motor,"$(P)sampleY")
+{
+    field(DESC,"Vertical")
+    field(DTYP,"Soft Channel")
+    field(OUT,"$(P)sampleYDriveValue.A PP NMS")
+    field(RDBL,"$(P)sampleYReadbackValue.G NPP MS")
+    field(URIP,"Yes")
+# Stop all instead? Setup seperate record that does this
+    field(STOO,"$(P)$(PHI).STOP  PP MS")
+# Not sure about this yet. Setup seperate record that monitors this
+#    field(DINP,"$(P)$(PHI).DMOV  NPP MS")
+    field(DINP,"$(P)sampleDMOV  NPP MS")
+    field(MRES,"0.0001")
+    field(RRES,"1.000")
+    field(PREC,"3")
+    field(DHLM,"100")
+    field(DLLM,"-100")
+    field(TWV,"0.1")
+    field(RTRY,"0")
+    field(EGU,"mm")
+}
+
+grecord(transform,"$(P)sampleYDriveValue")
+{
+    field(DESC,"Convert sampleY to X,Y")
+    field(CMTA,"sampleY position")
+    field(CMTB,"Zero Pt X position")
+    field(INPB,"$(P)zeroPtX.VAL PP NMS")
+    field(CMTC,"Zero Pt Y position")
+    field(INPC,"$(P)zeroPtY.VAL PP NMS")
+    field(CMTD,"Real Phi position")
+    field(INPD,"$(P)$(PHI).RBV PP NMS")
+    field(CMTE,"sampleZ position")
+    field(INPE,"$(P)sampleZ.RBV PP NMS")
+    field(CMTF,"Omega position")
+    field(CLCF,"0")
+    field(CMTG,"New X position")
+    field(CLCG,"E*COS((D+F)*P)-A*SIN((D+F)*P)+B")
+    field(OUTG,"$(P)$(X).VAL PP NMS")
+    field(CMTH,"New Y position")
+    field(CLCH,"A*COS((D+F)*P)+E*SIN((D+F)*P)+C")
+    field(OUTH,"$(P)$(Y).VAL PP NMS")
+    field(CLCP,"3.14159/180")
+    field(PREC,"3")
+}
+
+grecord(motor,"$(P)sampleZ")
+{
+    field(DESC,"Upstream/Downstream")
+    field(DTYP,"Soft Channel")
+    field(OUT,"$(P)sampleZDriveValue.E PP NMS")
+    field(RDBL,"$(P)sampleZReadbackValue.G NPP MS")
+    field(URIP,"Yes")
+# Stop all instead? Setup seperate record that does this
+    field(STOO,"$(P)$(PHI).STOP  PP MS")
+# Not sure about this yet. Setup seperate record that monitors this
+#    field(DINP,"$(P)$(PHI).DMOV  NPP MS")
+    field(DINP,"$(P)sampleDMOV  NPP MS")
+    field(MRES,"0.0001")
+    field(RRES,"1.000")
+    field(PREC,"3")
+    field(DHLM,"45")
+    field(DLLM,"-45")
+    field(TWV,"0.1")
+    field(RTRY,"0")
+    field(EGU,"mm")
+}
+
+grecord(transform,"$(P)sampleZDriveValue")
+{
+    field(DESC,"Convert sampleZ to X,Y")
+    field(CMTA,"sampleY position")
+    field(INPA,"$(P)sampleY.RBV PP NMS")
+    field(CMTB,"Zero Pt X position")
+    field(INPB,"$(P)zeroPtX.VAL PP NMS")
+    field(CMTC,"Zero Pt Y position")
+    field(INPC,"$(P)zeroPtY.VAL PP NMS")
+    field(CMTD,"Real Phi position")
+    field(INPD,"$(P)$(PHI).RBV PP NMS")
+    field(CMTE,"sampleZ position")
+    field(CMTF,"Omega position")
+    field(CLCF,"0")
+    field(CMTG,"New X position")
+    field(CLCG,"E*COS((D+F)*P)-A*SIN((D+F)*P)+B")
+    field(OUTG,"$(P)$(X).VAL PP NMS")
+    field(CMTH,"New Y position")
+    field(CLCH,"A*COS((D+F)*P)+E*SIN((D+F)*P)+C")
+    field(OUTH,"$(P)$(Y).VAL PP NMS")
+    field(CLCP,"3.14159/180")
+    field(PREC,"3")
+}
+
+grecord(transform,"$(P)sampleYReadbackValue")
+{
+    field(DESC,"Convert X,Y to sampleY")
+    field(CMTA,"Real X position")
+    field(INPA,"$(P)$(X).RBV CPP NMS")
+    field(CMTB,"Real Y position")
+    field(INPB,"$(P)$(Y).RBV CPP NMS")
+    field(CMTC,"Zero Pt X position")
+    field(INPC,"$(P)zeroPtX CPP NMS")
+    field(CMTD,"Zero Pt Y positoin")
+    field(INPD,"$(P)zeroPtY CPP NMS")
+    field(CMTE,"Real Phi position")
+    field(INPE,"$(P)$(PHI).RBV CPP NMS")
+    field(CMTF,"Omega position")
+    field(CLCF,"0")
+    field(CMTG,"Calculated pseudoY position")
+    field(CLCG,"(B-D)*COS((E+F)*P)-(A-C)*SIN((E+F)*P)")
+    field(CLCP,"3.14159/180")
+    field(SCAN,".1 second")
+    field(PREC,"3")
+}
+
+grecord(transform,"$(P)sampleZReadbackValue")
+{
+    field(DESC,"Convert X,Y to sampleZ")
+    field(CMTA,"Real X position")
+    field(INPA,"$(P)$(X).RBV CPP NMS")
+    field(CMTB,"Real Y position")
+    field(INPB,"$(P)$(Y).RBV CPP NMS")
+    field(CMTC,"Zero Pt X position")
+    field(INPC,"$(P)zeroPtX CPP NMS")
+    field(CMTD,"Zero Pt Y positoin")
+    field(INPD,"$(P)zeroPtY CPP NMS")
+    field(CMTE,"Real Phi position")
+    field(INPE,"$(P)$(PHI).RBV PP NMS")
+    field(CMTF,"Omega position")
+    field(CLCF,"0")
+    field(CMTG,"Calculated pseudoY position")
+    field(CLCG,"(A-C)*COS((E+F)*P)+(B-D)*SIN((E+F)*P)")
+    field(CLCP,"3.14159/180")
+    field(SCAN,".1 second")
+    field(PREC,"3")
+}
+
+grecord(ao,"$(P)zeroPtX") {
+    field(PREC,"3")
+}
+
+grecord(ao,"$(P)zeroPtY") {
+    field(PREC,"3")
+}
+
+grecord(sseq, "$(P)copyXY") {
+    field(DOL1,"$(P)$(X).RBV")
+    field(LNK1,"$(P)zeroPtX.VAL PP NMS")
+    field(DOL2,"$(P)$(Y).RBV")
+    field(LNK2,"$(P)zeroPtY.VAL PP NMS")
+    field(DLY3,"1")
+    field(DO3,"0")
+    field(LNK3,"$(P)sampleY.VAL PP NMS")
+    field(DLY4,"1")
+    field(DO4,"0")
+    field(LNK4,"$(P)sampleZ.VAL PP NMS")
+}
+
+# This record computes whether the compound motor is done moving.  
+# It goes to 1 when all real motors are done moving.
+grecord(calcout,"$(P)sampleDMOV") {
+        field(INPA,"$(P)$(X).DMOV CP MS")
+        field(INPB,"$(P)$(Y).DMOV CP MS")
+        field(INPC,"$(P)$(PHI).DMOV CP MS")
+        field(CALC,"A & B & C")
+}

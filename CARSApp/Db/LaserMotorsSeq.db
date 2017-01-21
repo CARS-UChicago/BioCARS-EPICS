@@ -1,0 +1,87 @@
+#
+#
+#	Remote Shutter DatabaseLaser Motors Sequense database - IK
+#
+#
+
+
+grecord(ai,"$(P)LaserWavelegnth") {
+	field(VAL,"532")
+	field(PREC, "2")
+	field(PINI, "YES")
+#	field(TPRO, "1")
+	field(FLNK,"$(P)LensXType PP MS")
+}
+
+grecord(bo,"$(P)LensXType") {
+	field(ZNAM,"CYLINDRICAL")
+	field(ONAM,"SPHERICAL")
+	field(PINI, "YES")
+	field(FLNK,"$(P)LaserRefractionIndex PP MS")
+}
+# calculated from CVI catalog 
+grecord(transform,"$(P)LaserRefractionIndex") {
+	field(INPA,"$(P)LaserWavelegnth.VAL PP NMS")
+	field(CLCB,"0.6961663")
+	field(CLCC,"0.4079426")
+	field(CLCD,"0.8974794")
+	field(CLCE,"0.00467914826")
+	field(CLCF,"0.0135120631")
+	field(CLCG,"97.9340025")
+	field(CLCI,"((B*(A/1000)^2)/((A/1000)^2-E))")
+	field(CLCK,"((C*(A/1000)^2)/((A/1000)^2-F))")
+	field(CLCL,"((D*(A/1000)^2)/((A/1000)^2-G))")
+	field(CLCM,"SQRT(1+I+K+L)")
+	field(PREC, "10")
+	field(FLNK,"$(P)Laser480RefractionIndex PP MS")
+}
+grecord(transform,"$(P)Laser480RefractionIndex") {
+	field(INPA,"532")
+	field(CLCB,"0.6961663")
+	field(CLCC,"0.4079426")
+	field(CLCD,"0.8974794")
+	field(CLCE,"0.00467914826")
+	field(CLCF,"0.0135120631")
+	field(CLCG,"97.9340025")
+	field(CLCI,"((B*(A/1000)^2)/((A/1000)^2-E))")
+	field(CLCK,"((C*(A/1000)^2)/((A/1000)^2-F))")
+	field(CLCL,"((D*(A/1000)^2)/((A/1000)^2-G))")
+	field(CLCM,"SQRT(1+I+K+L)")
+	field(PREC, "10")
+	field(FLNK,"$(P)CalcLaserMotors PP MS")
+
+}
+
+
+grecord(transform,"$(P)CalcLaserMotors") {
+	field(INPA,"$(P)LaserWavelegnth.VAL PP MS")
+	field(INPB,"$(P)LaserRefractionIndex.M PP MS")
+	field(INPC,"$(P)Laser480RefractionIndex.M PP MS")
+	field(INPD,"$(P)LensXType.RVAL PP MS")
+	field(CLCE,"8.3")
+	field(CLCF,"(E+(38.6/(C-1)-38.6/(B-1)))")
+	field(OUTF,"$(P)MoveLaserMotors.DO1 NPP NMS")
+	field(CLCG,"-28.6+(254.3/(C-1))-(254.3/(B-1))")
+	field(OUTG,"$(P)MoveLaserMotors.DO2 NPP NMS")
+	field(CLCM,"(0.1-(50.90/(C-1)-50.90/(B-1)))")
+	field(CLCN,"(-0.5-(51.5/(C-1)-51.5/(B-1)))")
+	field(CLCO,"((D<1)? M :N)")
+	field(OUTO,"$(P)MoveLaserMotors.DO3 NPP NMS")
+	field(CLCK,"(-3+(20.6/(C-1))-(20.6/(B-1)))")
+	field(OUTK,"$(P)MoveLaserMotors.DO4 NPP NMS")
+	field(CLCL,"(6.1+(103/(C-1)-103/(B-1)))")
+	field(OUTL,"$(P)MoveLaserMotors.DO5 NPP NMS")
+	field(PREC, "4")
+
+
+}
+
+grecord(seq,"$(P)MoveLaserMotors") {
+#	field(DO1,"0") get fields from OUT links of CalcLaserMotors record
+	field(LNK1,"$(P1)m9.VAL PP NMS")
+	field(LNK2,"$(P2)m21.VAL PP NMS")
+	field(LNK3,"$(P2)m22.VAL PP NMS")
+	field(LNK4,"$(P2)m23.VAL PP NMS")
+	field(LNK5,"$(P2)m24.VAL PP NMS")
+}
+

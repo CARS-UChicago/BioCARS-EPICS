@@ -1,0 +1,169 @@
+# oxfordCryoRead.db
+# to read temp and  flow rates from the oxford cryjet controller
+# 
+# Apr. 11 06 - Ning Lei
+# Sep. 25 08 - RH
+#   Expanded to include temperature and flow control.
+# Sep.  1 11 - RH
+#   This has been superseded by oxfordCryoRead_Stream.db which used streamdevice.
+
+grecord(asyn,"$(P)oxTR")
+{
+	field(DESC, "oxford cryo temp")
+	field(PORT, "$(PORT)")
+	field(AOUT, "R1")
+	field(SCAN, "3")
+	field(TMOD, "0")
+	field(FLNK, "$(P)oxTemp.PROC")
+}
+grecord(scalcout,"$(P)oxTemp")
+{
+	field(DESC, "Cryo temp")
+	field(INAA, "$(P)oxTR.AINP NPP NMS")
+	field(CALC, "SSCANF(AA, 'R%lf')")
+	field(PREC, "1")
+	field(FLNK, "$(P)oxSF.PROC")
+}
+
+grecord(asyn,"$(P)oxSF")
+{
+        field(DESC, "Sample flow")
+        field(PORT, "$(PORT)")
+        field(AOUT, "R19")
+#        field(SCAN, "3")
+        field(TMOD, "0")
+        field(FLNK, "$(P)oxSampleFlow.PROC")
+}
+
+grecord(scalcout,"$(P)oxSampleFlow")
+{
+	field(DESC, "Sample Flow")
+	field(INAA, "$(P)oxSF.AINP NPP NMS")
+	field(CALC, "SSCANF(AA, '%*3c%lf')")
+	field(PREC, "1")
+	field(FLNK, "$(P)oxShF.PROC")
+}
+
+grecord(asyn,"$(P)oxShF")
+{
+        field(DESC, "Shield flow")
+        field(PORT, "$(PORT)")
+        field(AOUT, "R18")
+        field(TMOD, "0")
+        field(FLNK, "$(P)oxShieldFlow.PROC")
+}
+
+grecord(scalcout,"$(P)oxShieldFlow")
+{
+	field(DESC, "Shield flow")
+	field(INAA, "$(P)oxShF.AINP NPP NMS")
+	field(CALC, "SSCANF(AA, '%*3c%lf')")
+	field(PREC, "1")
+	field(FLNK, "$(P)oxDT.PROC")
+}
+
+grecord(asyn,"$(P)oxDT")
+{
+        field(DESC, "Desired Temp")
+        field(PORT, "$(PORT)")
+        field(AOUT, "R0")
+        field(TMOD, "0")
+        field(FLNK, "$(P)oxDesiredT.PROC")
+}
+
+grecord(scalcout,"$(P)oxDesiredT")
+{
+	field(DESC, "Desired Temp")
+	field(INAA, "$(P)oxDT.AINP NPP NMS")
+	field(CALC, "SSCANF(AA, 'R%lf')")
+	field(PREC, "1")
+	field(FLNK, "$(P)oxStatus.PROC")
+}
+
+grecord(asyn,"$(P)oxStatus")
+{
+        field(DESC, "Status")
+        field(PORT, "$(PORT)")
+        field(AOUT, "X")
+        field(TMOD, "0")
+        field(FLNK, "$(P)oxLorR.PROC")
+}
+
+grecord(scalcout,"$(P)oxLorR")
+{
+	field(DESC, "Status")
+	field(INAA, "$(P)oxStatus.AINP NPP NMS")
+	field(CALC, "AA[5,5]")
+	field(PREC, "1")
+}
+
+# Set to either Local or Remote mode
+grecord(stringout,"$(P)oxLocal") {
+	field(DESC,"Local mode")
+	field(VAL,"C0")
+	field(OUT,"$(P)oxLR.AOUT PP NMS")
+}
+
+grecord(stringout,"$(P)oxRemote") {
+	field(DESC,"Remote mode")
+	field(VAL,"C1")
+	field(OUT,"$(P)oxLR.AOUT PP NMS")
+}
+
+grecord(asyn,"$(P)oxLR")
+{
+        field(DESC, "Local/Remote")
+        field(PORT, "$(PORT)")
+        field(TMOD, "0")
+}
+
+
+# Set Temperature
+grecord(scalcout,"$(P)oxSetTemp") {
+	field(DESC,"Set Temp")
+	field(PREC,"1")
+	field(CALC,"PRINTF('T%3.1f', A)")
+	field(OUT,"$(P)oxSetT.AOUT PP NMS")
+}
+
+grecord(asyn,"$(P)oxSetT")
+{
+        field(PORT, "$(PORT)")
+        field(TMOD, "0")
+}
+
+# Set sample flow rate
+grecord(scalcout,"$(P)oxSetSampleFlow") {
+	field(DESC,"Set sample flow")
+	field(PREC,"1")
+	field(CALC,"PRINTF('K%2.1f', A)")
+	field(OUT,"$(P)oxSetSF.AOUT PP NMS")
+}
+
+grecord(asyn,"$(P)oxSetSF")
+{
+        field(PORT, "$(PORT)")
+        field(TMOD, "0")
+}
+
+# Set shield flow rate
+grecord(scalcout,"$(P)oxSetShieldFlow") {
+	field(DESC,"Set shield flow")
+	field(PREC,"1")
+	field(CALC,"PRINTF('J%2.1f', A)")
+	field(OUT,"$(P)oxSetShF.AOUT PP NMS")
+}
+
+grecord(asyn,"$(P)oxSetShF")
+{
+        field(PORT, "$(PORT)")
+        field(TMOD, "0")
+}
+
+grecord(compress,"$(P)oxTempPlot") {
+	field(DESC,"Cryojet Temperature")
+	field(INP,"$(P)oxTemp")
+	field(NSAM,"1440")
+	field(SCAN,"3")
+	field(PREC,"1")
+}

@@ -1,0 +1,190 @@
+#
+#
+#	Remote Shutter Database
+#       Modified 5/25/11
+#
+
+# The shutter is opens or closes on the DAC transition from 0V to 5V so go to 0->5 to open, and 0->5 to close
+#       IK 2/16/11-BMA
+#	Remote Shutter Database
+#
+#
+grecord(bi,"$(P)shutter_in$(N)") {
+	field(ZNAM,"OPEN")
+	field(ONAM,"CLOSE")
+	field(VAL,"1")
+#	field(TPRO, "1")
+	field(FLNK, "$(P)shutter_checkDACclosed$(N) PP NMS")
+}
+
+grecord(transform,"$(P)shutter_checkDACclosed$(N)") {
+# A=1: shutter open; A=0: shutter closed
+	field(INPA,"$(ShutterStatus).VAL NPP NMS")
+	field(INPB,"$(P)DAC1_$(N).VAL PP NMS")
+# if shutter status 1  open and B=0 closed then put DAC to 5, if A shutter  closed  and DAC  B=5 set DAC to 0 otherwise leave it as in is inp B
+	field(CLCD,"(A<1 && B >0 )? 0:B")
+	field(OUTD,"$(P)DAC1_$(N).VAL PP NMS")
+	field(FLNK, "$(P)shutter_checkDACopen$(N) PP NMS")
+#	field(TPRO, "1")
+}
+
+grecord(transform,"$(P)shutter_checkDACopen$(N)") {
+# A=1: shutter open; A=0: shutter closed
+	field(INPA,"$(ShutterStatus).VAL NPP NMS")
+	field(INPB,"$(P)DAC1_$(N).VAL PP NMS")
+# if shutter status 1  open and B=0 closed then put DAC to 5, if A shutter  closed  and DAC  B=5 set DAC to 0 otherwise leave it as in is inp B
+	field(CLCD,"(A>0 && B < 1)? 5 : B")
+	field(OUTD,"$(P)DAC1_$(N).VAL PP NMS")
+	field(FLNK, "$(P)shutter_check$(N) PP NMS")
+#	field(TPRO, "1")
+}
+
+
+
+
+grecord(transform,"$(P)shutter_check$(N)") {
+
+	field(INPA,"$(ShutterStatus).VAL NPP NMS")
+	field(INPB,"$(P)shutter_in$(N).VAL NPP NMS")
+	field(INPC, "$(ShutterSearched).VAL PP NMS")
+        #A=1: shutter open; A=0: shutter closed
+        field(CLCD,"(((A=1 & B=1)||(A=0 & B=0))&&C=1)?1:0")
+	# put it to DISV so it woudn't try to open/close if it is not correct request
+	# A=1 shutter is open, B=1 request to close enable shutter seg send request to shutter sequence DAC 0, DAC 5
+	# A=0 shutter is closed, B=0 request to open enable shutter seq and send request to shutter sequence DAC 0, DAC 5
+	# otherwise disable the seq shutter record
+	field(OUTD,"$(P)shutter_seq$(N).DISV PP NMS")
+	field(CLCF,"1")
+	field(OUTF,"$(P)shutter_seq$(N).PROC PP NMS")
+#	field(TPRO, "1")
+}
+
+
+grecord(transform,"$(P)shutter_auto$(N)") {
+	field(CLCF,"0")
+	field(OUTF,"$(P)shutter_in$(N).VAL PP NMS")
+	field(DISV,"0")
+	field(SCAN,"10 second")
+#	field(TPRO, "1")
+}
+
+
+
+grecord(transform,"$(P)shutter_seq$(N)") {
+	field(INPA,"$(P)shutter_in$(N).VAL PP NMS")
+	field(CLCB,"A<1?5:0")
+	field(OUTB,"$(P)shutter_seq_open$(N).DO1 PP NMS")
+#	field(TPRO, "1")
+}
+
+grecord(seq,"$(P)shutter_seq_open$(N)") {
+	field(DO1,"0")
+	field(LNK1,"$(P)DAC1_$(N).VAL PP NMS")
+	field(DLY1,"1")
+}
+
+grecord(bo,"$(P)shutter_auto_enable$(N)") {
+	field(ZNAM,"No")
+	field(ONAM,"Yes")
+	field(OUT,"$(P)shutter_auto$(N).DISV PP NMS")
+#	field(TPRO, "1")
+}
+
+grecord(sseq,"$(P)shutterMono_seq_open$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait")
+	field(LNK1,"$(P)shutter_in$(N).VAL PP NMS")
+	field(DO2,"0")
+#	field(STR2,"0")
+#	field(WAIT2,"No Wait")
+	field(LNK2,"$(P)PID_Select PP NMS")
+	field(DLY3,"10")
+	field(DO3,"1")
+#	field(STR3,"1")
+#	field(WAIT3,"No Wait")
+	field(LNK3,"$(P)mono_pid1.FBON CA NMS")
+	field(DLY4,"10")
+	field(DO4,"1")
+#	field(STR4,"1")
+#	field(WAIT4,"No Wait")
+	field(LNK4,"$(P)vmirror_pid1.FBON CA NMS")
+}
+grecord(sseq,"$(P)shutterMono_seq_close$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait")
+	field(LNK1,"$(P)mono_pid1.FBON CA NMS")
+	field(DO2,"0")
+#	field(STR2,"0")
+#	field(WAIT2,"No Wait")
+	field(LNK2,"$(P)vmirror_pid1.FBON CA NMS")
+	field(DO3,"1")
+#	field(STR3,"1")
+#	field(WAIT3,"No Wait")
+	field(DLY3,"1")
+	field(LNK3,"$(P)shutter_in$(N).VAL PP NMS")
+}
+
+grecord(sseq,"$(P)shutter83_seq_open$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait")
+	field(LNK1,"$(P)shutter_in$(N).VAL PP NMS")
+	field(DO2,"1")
+#	field(STR2,"1")
+#	field(WAIT2,"No Wait")
+	field(LNK2,"$(P)PID_Select PP NMS")
+	field(DLY3,"10")
+	field(DO3,"1")
+#	field(STR3,"1")
+#	field(WAIT3,"No Wait")
+	field(LNK3,"$(P)mono_pid1.FBON CA NMS")
+
+}
+grecord(sseq,"$(P)shutter83_seq_close$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait"))
+	field(LNK1,"$(P)mono_pid1.FBON CA NMS")
+	field(DO2,"1")
+#	field(STR2,"1")
+#	field(WAIT2,"No Wait")
+	field(DLY2,"1")
+	field(LNK2,"$(P)shutter_in$(N).VAL PP NMS")
+}
+grecord(sseq,"$(P)shutter1K_seq_open$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait")
+	field(LNK1,"$(P)shutter_in$(N).VAL PP NMS")
+	field(DO2,"2")
+#	field(STR2,"2")
+#	field(WAIT2,"No Wait")
+	field(LNK2,"$(P)PID_Select PP NMS")
+	field(DLY3,"10")
+	field(DO3,"1")
+#	field(STR3,"1")
+#	field(WAIT3,"No Wait"))
+	field(LNK3,"$(P)mono_pid1.FBON CA NMS")
+	field(DLY4,"10")
+#	field(STR4,"1")
+#	field(WAIT4,"No Wait")
+	field(DO4,"1")
+	field(LNK4,"$(P)vmirror_pid1.FBON CA NMS")
+}
+grecord(sseq,"$(P)shutter1K_seq_close$(N)") {
+	field(DO1,"0")
+#	field(STR1,"0")
+#	field(WAIT1,"No Wait")
+	field(LNK1,"$(P)mono_pid1.FBON CA NMS")
+	field(DO2,"0")
+#	field(STR2,"0")
+#	field(WAIT2,"No Wait")
+	field(LNK2,"$(P)vmirror_pid1.FBON CA NMS")
+	field(DO3,"1")
+#	field(STR3,"1")
+#	field(WAIT3,"No Wait")
+	field(DLY3,"1")
+	field(LNK3,"$(P)shutter_in$(N).VAL PP NMS")
+}

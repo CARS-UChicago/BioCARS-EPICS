@@ -1,0 +1,36 @@
+# 14IDA-EPS_2K10_vlvOP.db
+#-------------------------------
+# for signed user to operate valves
+#------------------------------------------
+# select valve to drive.  bit map to PLC
+
+grecord(bo,"$(P)eps_tgtRQ_$(NAME)")
+{
+	field(DTYP,"AB-16 bit BO")
+	field(OUT,"#L0 A$(A) C$(C) S$(S) F0 @")
+	field(ZNAM,"_off")
+	field(ZSV, "NO_ALARM")
+	field(ONAM,"_on")
+	field(OSV,"NO_ALARM")
+}
+
+#------------------------------------------
+# Indicate selected valve index No
+
+record(longin,"$(P)eps_tgtCTRL_word")
+
+{
+	field(DESC,"from DCM-A O:1.7")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"I/O Intr")
+     field(INP,"#L0 A1 C2 S0 @")
+	field(EGU,"Number")
+    	field(HOPR,"15")
+     field(LOPR,"0")
+}
+
+record(calc,"$(P)eps_TGT_idx")
+{
+	field(INPA,"$(P)eps_tgtCTRL_word.VAL CP NMS")
+	field(CALC,"A & 15")	
+}

@@ -1,0 +1,49 @@
+
+# This is database to use with the beamCheckMono.st
+# where $P is what is used in $P2 in beamCheckMono.st and here 14IDB:
+
+
+grecord(busy,"$(P)beamCheckMDT") {
+		field(DESC, "Beam Check Mono Piezo Theta")
+}
+grecord(busy,"$(P)beamCheckMD") {
+		field(DESC, "Beam Check Mono Pz Start")
+}
+
+grecord(busy,"$(P)beamCheckMT") {
+		field(DESC, "Beam Check Mono Th Start")
+}
+
+grecord(busy,"$(P)beamCheckMCancel") {
+		field(DESC, "Beam Check Mono Cancel")
+}
+
+grecord(ao, "$(P)beamCheckDeltaMD") {
+		field("VAL",".3")
+ 	    field(PREC,"4")
+    	field(DESC, "Mono Piezo Incr")
+}
+
+grecord(ao, "$(P)beamCheckDeltaMT") {
+ 		field("VAL",".03")
+ 	    field(PREC,"4")
+    	field(DESC, "Mono Theta Incr")
+}
+
+grecord(ao, "$(P)beamCheckMIter") {
+		field("VAL","5")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheckM Iterations")
+}
+
+grecord(ai, "$(P)beamCheckMAligned") {
+		field("VAL","0")
+ 	    field(PREC,"0")
+    	field(DESC, "Mono Align Status")
+}
+
+grecord(stringout, "$(P)beamCheckMStatus") {
+	field("VAL", "Idle")
+}
+
+

@@ -1,0 +1,70 @@
+# Database to make the PZT on the Kohzu second crystal look like
+# a motor with arcsec units.
+#
+# Timothy Graber Feb. 6, 2001
+#
+#
+# The next three records will transform and send a value to the DAC VAL field 
+# when the pseudo motor changes.  
+#
+
+grecord(ao,"$(P)pzt$(E)Move") {
+	field(PREC,"4")
+	field(OUT,"$(P)pzt$(E)_write_calc PP NMS") 
+} 
+grecord(ao,"$(P)pzt$(E)Done") {
+	field(VAL,"1")
+
+} 
+
+grecord(calc,"$(P)pzt$(E)_write_calc") {
+	field(DESC,"Convert Volts to Arcsec")
+	field(FLNK,"$(P)pzt$(E)_arcsecTrns1 PP NMS") 
+	field(CALC,"A*B+C")
+	field(INPA,"$(P)pzt$(E)Move CP NMS")
+	field(INPB,"0.1388889")
+	field(INPC,"0")
+	field(PREC,"8")
+}
+grecord(transform,"$(P)pzt$(E)_arcsecTrns1") {
+	field(PREC,"4")
+	field(INPA,"$(P)pzt$(E)_write_calc NPP NMS")
+	field(OUTA,"$(P)DAC$(D)_$(C).VAL  PP NMS")
+	field(INPB,"$(P)pzt$(E)_write_calc NPP NMS")
+	field(OUTB,"$(P)pzt$(E)Rdbk PP NMS")
+}
+
+#
+# The next two records will update the pseudo motor readback field when the 
+# the PZT changes.
+#
+
+grecord(ai,"$(P)pzt$(E)Rdbk") {
+	field(PREC,"4")
+	field(INP,"$(P)pzt$(E)_read_calc CP NMS")
+	field(FLNK,"$(P)pzt$(E)_arcsecTrns2 PP NMS") 
+}
+grecord(calc,"$(P)pzt$(E)_read_calc") {
+	field(DESC,"Convert Volts to Arcsec")
+	field(CALC,"A*B+C")
+	field(INPA,"$(P)DAC$(D)_$(C).VAL  CP NMS")
+	field(INPB,"7.2")
+	field(INPC,"0")
+	field(PREC,"4")
+}
+
+#
+# The transform record will update the pseudo motor VAL field when the 
+# the PZT changes.  Note: It gets its value from "$(P)pzt_read_calc PP MS" 
+# in order to avoid a loop.
+#
+
+grecord(transform,"$(P)pzt$(E)_arcsecTrns2") {
+	field(PREC,"4")
+	field(CLCA,"1")
+	field(OUTA,"$(P)$(PM).SET NPP MS")
+	field(INPB,"$(P)pzt$(E)_read_calc PP MS")
+	field(OUTB,"$(P)$(PM).DVAL PP MS")
+ 	field(CLCC,"0")
+	field(OUTC,"$(P)$(PM).SET NPP MS")
+}

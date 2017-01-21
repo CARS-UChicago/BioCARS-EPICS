@@ -1,0 +1,248 @@
+# Setup for to store 8 different positions of 2 motors (M1 and M2) and the HSC phase.
+record(mbbo,"$(P1)$(Q)_Select") {
+  field(DTYP, "Raw Soft Channel")
+  field(OUT, "$(P1)$(Q)_Seq.SELN PP")
+  field(ZRVL, "1")
+  field(ONVL, "2")
+  field(TWVL, "3")
+  field(THVL, "4")
+#  field(FRVL, "5")
+#  field(FVVL, "6")
+#  field(SXVL, "7")
+#  field(SVVL, "8")
+  field(ZRST, "STANDARD MONO")
+  field(ONST, "PULSED MONO 83")
+  field(TWST, "PULSED MONO 1K")
+  field(THST, "Position 4")
+ # field(FRST, "Position 5")
+ # field(FVST, "Position 6")
+ # field(SXST, "Position 7")
+ # field(SVST, "Position 8")
+}
+
+record(sseq, "$(P1)$(Q)_Seq") {
+  field(SELM, "Specified")
+  field(DOL1, "$(P1)$(Q)_Select.ZRST")
+  field(LNK1, "$(P1)$(Q)0.STR1 PP")
+  field(DOL2, "$(P1)$(Q)_Select.ONST")
+  field(LNK2, "$(P1)$(Q)1.STR1 PP")
+  field(DOL3, "$(P1)$(Q)_Select.TWST")
+  field(LNK3, "$(P1)$(Q)2.STR1 PP")
+  field(DOL4, "$(P1)$(Q)_Select.THST")
+  field(LNK4, "$(P1)$(Q)3.STR1 PP")
+#  field(DOL5, "$(P1)$(Q)_Select.FRST")
+#  field(LNK5, "$(P1)$(Q)4.STR1 PP")
+#  field(DOL6, "$(P1)$(Q)_Select.FVST")
+#  field(LNK6, "$(P1)$(Q)5.STR1 PP")
+#  field(DOL7, "$(P1)$(Q)_Select.SXST")
+#  field(LNK7, "$(P1)$(Q)6.STR1 PP")
+#  field(DOL8, "$(P1)$(Q)_Select.SVST")
+#  field(LNK8, "$(P1)$(Q)7.STR1 PP")
+}
+
+# this would overwrite settings on the BPM, is this right? set those to monochromatic settings?
+record(sseq, "$(P1)$(Q)") {
+  field(LNK2, "$(P2)mono_pid1.KP PP")
+  field(LNK3, "$(P2)mono_pid1.KI PP")
+  field(LNK4, "$(P2)mono_pid1.KD PP")
+  field(LNK5, "$(P1)userAve3.A PP")
+  field(LNK6, "$(P2)vmirror_pid1.KP PP")
+  field(LNK7, "$(P2)vmirror_pid1.KI PP")
+  field(LNK8, "$(P2)vmirror_pid1.KD PP")
+  field(LNK9, "$(P1)userAve1.A PP")
+  field(LNKA, "$(P1)EM1ConversionTime.VAL PP")
+  field(DO2, "0.01")
+  field(DO3, "2")
+  field(DO4, "0")
+  field(DO5, "10")
+  field(DO6, "0.004")
+  field(DO7, "2")
+  field(DO8, "0")
+  field(DO9, "10")
+  field(DOA, "0.00062")
+  field(SELM, "All")
+  field(PREC, "4")
+}
+
+# Need to add PP to last link field; This is monochromatoc position defaults
+record(sseq, "$(P1)$(Q)0") {
+  field(LNK1, "$(P1)$(Q).STR1")
+  field(LNK2, "$(P1)$(Q).DO2")
+  field(LNK3, "$(P1)$(Q).DO3")
+  field(LNK4, "$(P1)$(Q).DO4")
+  field(LNK5, "$(P1)$(Q).DO5")
+  field(LNK6, "$(P1)$(Q).DO6")
+  field(LNK7, "$(P1)$(Q).DO7")
+  field(LNK8, "$(P1)$(Q).DO8")
+  field(LNK9, "$(P1)$(Q).DO9")
+  field(LNKA, "$(P1)$(Q).DOA PP")
+
+  field(DO2, "0.01")
+  field(DO3, "2")
+  field(DO4, "0")
+  field(DO5, "10")
+  field(DO6, "0.004")
+  field(DO7, "2")
+  field(DO8, "0")
+  field(DO9, "10")
+  field(DOA, "0.00062")
+  field(SELM, "All")
+  field(PREC, "4")
+}
+
+record(sseq, "$(P1)$(Q)1") {
+  field(LNK1, "$(P1)$(Q).STR1")
+  field(LNK2, "$(P1)$(Q).DO2")
+  field(LNK3, "$(P1)$(Q).DO3")
+  field(LNK4, "$(P1)$(Q).DO4")
+  field(LNK5, "$(P1)$(Q).DO5")
+  field(LNK6, "$(P1)$(Q).DO6")
+  field(LNK7, "$(P1)$(Q).DO7")
+  field(LNK8, "$(P1)$(Q).DO8")
+  field(LNK9, "$(P1)$(Q).DO9")
+  field(LNKA, "$(P1)$(Q).DOA PP")
+ 
+
+  field(DO2, "0.02")
+  field(DO3, "0.05")
+  field(DO4, "0")
+  field(DO5, "200")
+  field(DO6, "0.005")
+  field(DO7, "2")
+  field(DO8, "0")
+  field(DO9, "50")
+  field(DOA, "0.01311")
+  field(SELM, "All")
+  field(PREC, "4")
+
+}
+
+record(sseq, "$(P1)$(Q)2") {
+
+  field(LNK1, "$(P1)$(Q).STR1")
+  field(LNK2, "$(P1)$(Q).DO2")
+  field(LNK3, "$(P1)$(Q).DO3")
+  field(LNK4, "$(P1)$(Q).DO4")
+  field(LNK5, "$(P1)$(Q).DO5")
+  field(LNK6, "$(P1)$(Q).DO6")
+  field(LNK7, "$(P1)$(Q).DO7")
+  field(LNK8, "$(P1)$(Q).DO8")
+  field(LNK9, "$(P1)$(Q).DO9")
+  field(LNKA, "$(P1)$(Q).DOA PP")
+ 
+
+  field(DO2, "0.02")
+  field(DO3, "0.05")
+  field(DO4, "0")
+  field(DO5, "25")
+  field(DO6, "0.005")
+  field(DO7, "2")
+  field(DO8, "0")
+  field(DO9, "50")
+  field(DOA, "0.01311")
+  field(SELM, "All")
+  field(PREC, "4")
+
+}
+
+
+record(sseq, "$(P1)$(Q)3") {
+
+ field(LNK1, "$(P1)$(Q).STR1")
+  field(LNK2, "$(P1)$(Q).DO2")
+  field(LNK3, "$(P1)$(Q).DO3")
+  field(LNK4, "$(P1)$(Q).DO4")
+  field(LNK5, "$(P1)$(Q).DO5")
+  field(LNK6, "$(P1)$(Q).DO6")
+  field(LNK7, "$(P1)$(Q).DO7")
+  field(LNK8, "$(P1)$(Q).DO8")
+  field(LNK9, "$(P1)$(Q).DO9")
+  field(LNKA, "$(P1)$(Q).DOA PP")
+ 
+ 
+
+  field(DO2, "0.01")
+  field(DO3, "0")
+  field(DO4, "0")
+  field(DO5, "10")
+  field(DO6, "0.01")
+  field(DO7, "0")
+  field(DO8, "0")
+  field(DO9, "10")
+  field(DOA, "0.01311")
+  field(SELM, "All")
+  field(PREC, "4")
+ 
+}
+
+
+# record(sseq, "$(P1)$(Q)4") {
+#  field(LNK1, "$(P1)$(Q).STR1")
+#  field(LNK2, "$(P1)$(Q).DO2")
+#  field(LNK3, "$(P1)$(Q).DO3")
+#  field(LNK4, "$(P1)$(Q).DO4 PP")
+##  field(STR1, "Position 5")
+#  field(DO2, "999")
+#  field(DO3, "999")
+#  field(DO4, "999")
+#  field(SELM, "All")
+#  field(PREC, "3")
+#}
+
+#record(sseq, "$(P1)$(Q)5") {
+#  field(LNK1, "$(P1)$(Q).STR1")
+#  field(LNK2, "$(P1)$(Q).DO2")
+#  field(LNK3, "$(P1)$(Q).DO3")
+#  field(LNK4, "$(P1)$(Q).DO4 PP")
+##  field(STR1, "Position 6")
+#  field(DO2, "999")
+#  field(DO3, "999")
+#  field(DO4, "999")
+#  field(SELM, "All")
+#  field(PREC, "3")
+#}
+
+
+record(stringout, "$(P1)$(Q)0Name") {
+  field(OUT, "$(P1)$(Q)_Select.ZRST")
+  field(VAL, "STANDARD MONO")
+}
+
+record(stringout, "$(P1)$(Q)1Name") {
+  field(OUT, "$(P1)$(Q)_Select.ONST")
+  field(VAL, "PULSED MONO 83")
+}
+
+record(stringout, "$(P1)$(Q)2Name") {
+  field(OUT, "$(P1)$(Q)_Select.TWST")
+  field(VAL, "PULSED MONO 1K")
+}
+
+record(stringout, "$(P1)$(Q)3Name") {
+  field(OUT, "$(P1)$(Q)_Select.THST")
+  field(VAL, "Position 4")
+}
+
+#record(stringout, "$(P1)$(Q)4Name") {
+#  field(OUT, "$(P1)$(Q)_Select.FRST")
+#  field(VAL, "Position 5")
+#}
+
+#record(stringout, "$(P1)$(Q)5Name") {
+#  field(OUT, "$(P1)$(Q)_Select.FVST")
+#  field(VAL, "Position 6")
+#}
+
+
+#record(transform,"$(P1)$(Q)X0") {
+#  field(DESC,"X0 position")
+#  field(DISV,"0")
+#  field(SDIS,"$(P1)$(Q)X0_enable.VAL")
+#}
+
+#record(bo, "$(P1)$(Q)X0_enable") {
+#        field(OMSL, "closed_loop")
+#        field(ZNAM, "Disable")
+#        field(ONAM, "Enable")
+#        field(VAL,"1")
+#}

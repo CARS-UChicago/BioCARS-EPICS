@@ -1,0 +1,14 @@
+# 14ID-EPS_2K10_1d-INP.db
+# for each input, the "PV name" will be -- 14IDA:eps_[Symbol]
+# non-standard binary inputs received from Allen-Bredley DCM model
+grecord(bi,"$(P)eps_$(Symbol)")
+{
+	field(SCAN,"I/O Intr")
+	field(DTYP,"AB-16 bit BI")
+	field(INP,"#L0 A$(A) C$(C) S$(S) F0 @")
+	field(ZSV,"$(ZSV)")
+	field(OSV,"$(OSV)")
+	field(ZNAM,"$(ZNAM)")
+	field(ONAM,"$(ONAM)")    
+}
+

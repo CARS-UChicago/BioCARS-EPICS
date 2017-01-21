@@ -1,0 +1,119 @@
+#
+# Database for Acurite 6-axis encoder readout
+#
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)1_ReadPos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I1")
+	field(FLNK,"$(P)$(ENCODER)1_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)1_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)1_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+#	field(FLNK,"$(P)$(ENCODER)2_ReadPos PP MS")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)2_ReadPos")
+{
+	field(DESC,"Channel 2")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I2")
+	field(FLNK,"$(P)$(ENCODER)2_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)2_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)2_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+#	field(FLNK,"$(P)$(ENCODER)3_ReadPos PP MS")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)3_ReadPos")
+{
+	field(DESC,"Channel 3")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I3")
+	field(FLNK,"$(P)$(ENCODER)3_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)3_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)3_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)4_ReadPos")
+{
+	field(DESC,"Channel 4")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I4")
+	field(FLNK,"$(P)$(ENCODER)4_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)4_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)4_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)5_ReadPos")
+{
+	field(DESC,"Channel 5")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I5")
+	field(FLNK,"$(P)$(ENCODER)5_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)5_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)5_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)6_ReadPos")
+{
+	field(DESC,"Channel 6")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I6")
+	field(FLNK,"$(P)$(ENCODER)6_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)6_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)6_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}

@@ -1,0 +1,183 @@
+#created as a database for MS Shutter interface using 7023 card Timing module  to open/clse MS shutter
+#and motor record to operate Phi motion
+
+#This database consistes of records needed for the xxx state notation code for the MS Shutter interface.
+
+#	       This will be used in IDB.
+#               use not inverted signal
+#               OMS channel 1   000100110000000 200
+#               OMS channel 8   111100110000000 207
+#               trigger channel2-none, int clc, 0000001000000000 64 
+# 	with 11 inverted
+#		OMS channel 1	2248
+#		OMS channel 2	2249
+#		OMS channel 3	2250
+#		OMS channel 4	2251
+#		OMS channel 5	2252
+#		OMS channel 6	2253
+#		OMS channel 7	2254 Omega
+#		OMS channel 8	2255 Phi
+
+
+# reads 7023 status once every 0.1 second
+grecord(vme,"$(P)MSShutter")
+{
+	field(ADDR,"0x8f000A")
+	field(AMOD,"A24")
+	field(RDWT,"Read")
+	field(SCAN,".1 second")
+}
+
+# set counter 1 address PV
+grecord(vme,"$(P)MSShutterCN1")
+{
+	field(ADDR,"0x8f0002")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set counter 2 address PV
+grecord(vme,"$(P)MSShutterCN2")
+{
+	field(ADDR,"0x8f0004")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set counter 3 address PV
+grecord(vme,"$(P)MSShutterCN3")
+{
+	field(ADDR,"0x8f0006")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set a PV for counter control address for the clock source
+grecord(vme,"$(P)MSShutterControl")
+{
+	field(ADDR,"0x8f0008")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# set internal trigger address PV
+grecord(vme,"$(P)MSShutterWR")
+{
+	field(ADDR,"0x8f000c")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+#close or open the shutter at the command(???)
+#of a manual operator
+grecord(vme,"$(P)SetMSShutter")
+{
+	field(ADDR,"0x8f000a")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# counter divider address to handle large exposure time range- do I need this???
+# using limited counter precision
+grecord(vme,"$(P)SetMSDivider")
+{
+	field(ADDR,"0x8f000e")
+	field(AMOD,"A24")
+	field(RDWT,"Write")
+}
+
+# Parameters needed for the SnapShot
+
+
+# Oscillation Width
+
+grecord(ao, "$(P)OscWidth")
+{
+	field(DESC,"Osc Width")
+	field(PREC, "3")
+	field(VAL, "1.0")
+
+}
+
+# Exposure time
+
+grecord(ao, "$(P)ExpTime")
+{
+	field(DESC,"Exposure Time")
+	field(PREC, "3")
+	field(VAL, "2")
+
+}
+
+# Manual Exposure time
+
+grecord(ao, "$(P)ExpTimeMan")
+{
+	field(DESC,"Manual Exposure Time")
+	field(PREC, "3")
+	field(VAL, "2")
+
+}
+
+# Status of the Shutter, busy or not
+
+grecord(busy, "$(P)MSShutterBusy")
+{
+	field(VAL,"0")
+}
+
+#
+#Error String
+
+grecord(stringin, "$(P)Error_String")
+{
+	field(DESC, "Use for Error message")
+	field(VAL, " ")
+}
+
+# Abort Shutter Button
+
+grecord(ao, "$(P)AbortMSShutter")
+{
+	field(DESC,"Abort Shutter")
+	field(VAL, "0")
+
+}
+
+# Expose Shutter Button
+
+grecord(ao, "$(P)ExposeMSShutter")
+{
+	field(DESC,"Expose Shutter")
+	field(VAL, "0")
+
+}
+
+# Open Shutter Button
+
+grecord(ao, "$(P)OpenMSShutter")
+{
+	field(DESC,"Open Shutter")
+	field(VAL, "0")
+
+}
+
+# Close Shutter Button
+
+grecord(ao, "$(P)CloseMSShutter")
+{
+	field(DESC,"Close Shutter")
+	field(VAL, "0")
+
+}
+
+# Start Snapshot Button
+
+grecord(busy, "$(P)StartSnapShot")
+{
+	field(DESC,"Start Snapshot")
+	field(VAL, "0")
+
+}
+
+

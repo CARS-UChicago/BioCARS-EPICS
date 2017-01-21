@@ -1,0 +1,15 @@
+record(calcout,"$(P)Micro_Screen") {
+    field(DOPT,"Use CALC")
+    field(INPA,"$(P)B1Bi7.VAL CP MS")
+    field(CALC,"A = 1 ? 0 : 1")
+    field(OCAL,"0")
+    field(OUT,"$(P)allstop.VAL PP NMS")
+    field(SCAN,".1 second")
+}
+
+record(bo,"$(P)Micro_Screen_Use") {
+    field(VAL,"0")
+    field(ZNAM,"Enable")
+    field(ONAM,"Disable")
+    field(OUT,"$(P)Micro_Screen.DOPT PP NMS")
+}

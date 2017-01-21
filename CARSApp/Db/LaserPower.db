@@ -1,0 +1,138 @@
+record(longout,"$(P)Laser_Scan") {
+	field(DESC,"Start scan")
+	field(VAL,"0")
+}
+
+record(longout,"$(P)Laser_Stop") {
+	field(DESC,"Stop scan")
+	field(VAL,"0")
+}
+
+record(longout,"$(P)Laser_Scanning") {
+	field(DESC,"Scan in Progress?")
+	field(VAL,"0")
+}
+
+#record(longout,"$(P)Laser_Num") {
+#	field(DESC,"Current step")
+#}
+
+record(longout,"$(P)Laser_avg") {
+	field(DESC,"Laser pulses to ave")
+	field(VAL,"10")
+}
+
+record(ao,"$(P)LaserX_size") {
+	field(DESC,"Laser beam size in X dir")
+}
+
+record(ao,"$(P)LaserZ_size") {
+	field(DESC,"Laser beam size in Z dir")
+	field(PREC,"1")
+}
+
+record(ao,"$(P)Laser_desired") {
+	field(DESC,"Desired LP per area")
+	field(PREC,"3")
+}
+
+record(ao,"$(P)Laser_calc") {
+	field(DESC,"Calculated LP per area")
+	field(PREC,"1")
+}
+
+record(ao,"$(P)Laser_max") {
+	field(DESC,"Maximum LP per area")
+	field(PREC,"3")
+}
+
+record(ao,"$(P)Laser_min") {
+	field(DESC,"Minimum LP per area")
+	field(PREC,"3")
+}
+
+record(ao,"$(P)Laser_VNcalc") {
+	field(DESC,"Calculated VN positoin")
+	field(PREC,"1")
+}
+
+record(ao,"$(P)Laser_VNstart") {
+	field(DESC,"Start position of VN filter")
+	field(VAL,"0")
+}
+
+record(ao,"$(P)Laser_VNend") {
+	field(DESC,"End position of VN filter")
+	field(VAL,"200")
+}
+
+record(transform,"$(P)Laser_size") {
+	field(DESC,"Laser size")
+	field(PREC,"3")
+	field(INPA,"$(P)LaserX_size CP NMS")
+	field(INPB,"$(P)LaserZ_size CP NMS")
+	field(CLCC,"((A/2)*(B/2)*PI)/1000000")
+}
+
+record(transform,"$(P)Laser_power_area") {
+	field(DESC,"Laser power per area")
+	field(PREC,"1")
+	field(INPA,"$(P)Laser_size.C CP NMS")
+	field(INPB,"$(P)sigmaMeterPri CP NMS")
+	field(CLCC,"B/A*1000")
+}
+
+record(waveform,"$(P)Laser_VN_pos") {
+	field(DESC,"Filter position")
+	field(NELM,"30")
+	field(PREC,"1")
+	field(FTVL,"DOUBLE")
+}
+
+record(waveform,"$(P)Laser_VN_en") {
+	field(DESC,"Energy at filter position")
+	field(NELM,"30")
+	field(PREC,"8")
+	field(FTVL,"DOUBLE")
+}
+
+record(waveform,"$(P)Laser_VN_pow") {
+	field(DESC,"Power at filter position")
+	field(NELM,"30")
+	field(PREC,"3")
+	field(FTVL,"DOUBLE")
+}
+
+record(longout,"$(P)LPDebugLevel") {
+	field(DESC,"Debug laserPower")
+}
+
+record(stringin,"$(P)Laser_Time") {
+	field(DESC,"Time of last scan")
+	field(DTYP,"Soft Timestamp")
+	field(INP, "@%Y-%m-%d %H:%M:%S.%01f")
+}
+record(subArray,"$(P)Laser_VN_pos_sub"){
+	field(DESC,"Array of filter postions")
+	field(INP,"$(P)Laser_VN_pos")
+	field(DTYP,"Soft Channel")
+	field(FTVL,"DOUBLE")
+	field(MALM,"31")
+	field(NELM,"21")
+}
+record(subArray,"$(P)Laser_VN_en_sub"){
+	field(DESC,"Array of energies")
+	field(INP,"$(P)Laser_VN_en")
+	field(DTYP,"Soft Channel")
+	field(FTVL,"DOUBLE")
+	field(MALM,"31")
+	field(NELM,"21")
+}
+record(subArray,"$(P)Laser_VN_pow_sub"){
+	field(DESC,"Array of powers")
+	field(INP,"$(P)Laser_VN_pow")
+	field(DTYP,"Soft Channel")
+	field(FTVL,"DOUBLE")
+	field(MALM,"31")
+	field(NELM,"21")
+}

@@ -1,0 +1,144 @@
+# 14ID-EPS_2K10_3d-INP.db
+# -------------------------
+# The records below create PVs for displaying multi-info (Status,OVRD and Latched)
+#   of each of the "standard" type of PLC inputs on the MEDM screen.
+
+# Any Input in "standard" type flips to ZERO will cause EPS trip. Most of the EPS
+#   inputs belong to this category.
+
+# To transmit multi-info with the limited capacity of DCMs, same sets of addresses
+#   will be sequencially used to carry each kind of data.
+
+# To identify which kind of data is being sending, other 2-bits on DCM give the ID.
+
+# The ID number is transmitted together with EPS "non-standard" inputs or global data.
+
+#=======================================================
+record(longin,"$(P)eps_TransID")
+
+{
+	field(DESC,"from DCM-B_OUT-7 -- O:7.7")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"I/O Intr")
+     field(INP,"#L0 A0 C14 S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"65535")
+     field(LOPR,"0")
+     field(FLNK,"$(P)eps_blink.PROC")
+}
+
+# Get "stdIN_ID" to identify STATUS-OVRD-LTCHD data type
+#   --by extract bit0 & bit1 of eps_TransID
+
+record(calc,"$(P)eps_stdIN_ID")
+{
+	field(INPA,"$(P)eps_TransID.VAL CP NMS")
+	field(CALC,"A & 3")	
+}
+
+#----------------------------------------------
+# binary inputs received from Allen-Bredley DCM model
+grecord(bi,"$(P)eps_$(NAME)")
+{
+	field(SCAN,"I/O Intr")
+	field(DTYP,"AB-16 bit BI")
+	field(INP,"#L0 A$(A) C$(C) S$(S) F0 @")
+#	field(NAM,"$(NAME)")
+}
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Refresh "Status" data for specified NAMEed bit when stdIN_ID=0
+
+grecord(calcout,"$(P)eps_$(NAME)_Scalc")
+{
+	field(INPA,"$(P)eps_stdIN_ID.VAL CP NMS")
+	field(INPB,"$(P)eps_$(NAME).VAL PP NMS")
+	field(OUT,"$(P)eps_$(NAME)_STAT.VAL PP NMS")
+	field(CALC,"(A=0)? B:VAL")
+}
+
+grecord(bo,"$(P)eps_$(NAME)_STAT")
+{	
+	field(ZSV,"$(ZSV)")
+	field(OSV,"$(OSV)")
+}
+#---------------------------------------------------
+# Refresh "OVRD" data for specified NAMEed bit when stdIN_ID=1
+
+grecord(calc,"$(P)eps_$(NAME)_OVRD")
+{
+	field(INPA,"$(P)eps_stdIN_ID.VAL CP NMS")
+	field(INPB,"$(P)eps_$(NAME).VAL PP NMS")
+	field(CALC,"(A=1)? B:VAL")
+}
+
+#-----------------------------------------------------
+# Refresh "LTHD" data for specified NAMEed bit when stdIN_ID=2
+
+grecord(calc,"$(P)eps_$(NAME)_LTHD")
+{
+	field(INPA,"$(P)eps_stdIN_ID.VAL CP NMS")
+	field(INPB,"$(P)eps_$(NAME).VAL PP NMS")
+	field(CALC,"(A=2)? B:VAL")
+}
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+record(calcout,"$(P)eps_FB_TransID_calc")
+{
+	field(INPA,"$(P)eps_TransID.VAL CP NMS")
+	field(OUT,"$(P)eps_TransID_FB.VAL PP NMS")
+	field(CALC,"A")
+}
+
+record(longout,"$(P)eps_TransID_FB")
+
+{
+	field(DESC,"to DCM-B_IN-7 -- I:7.7")
+#	field(DOL,"$(P)eps_TransID")
+#	field(OMSL,"CLOSED_LOOP")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"Passive")
+     field(OUT,"#L0 A0 C15 S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"65535")
+     field(LOPR,"0")
+#     field(FLNK,"$(P)eps_blink.PROC")
+}
+
+grecord(seq,"$(P)$(NAME)_3d-INP_seq")
+{
+	field(DESC,"Sequencer for 3d-INP_trans")
+	field(PINI,"YES")
+	field(DLY1,"6")
+	field(DOL1,"1")
+	field(LNK1,"$(P)eps_stdIN_ID.PROC")
+	field(DLY2,"0")
+	field(DOL2,"1")
+	field(LNK2,"$(P)eps_$(NAME)_Scalc.PROC")
+	field(DLY3,"0")
+	field(DOL3,"1")
+	field(LNK3,"$(P)eps_$(NAME)_OVRD.PROC")
+	field(DLY4,"0")
+	field(DOL4,"1")
+	field(LNK4,"$(P)eps_$(NAME)_LTHD.PROC")
+	field(DLY5,"3")
+	field(DOL5,"1")
+	field(LNK5,"$(P)eps_FB_TransID_calc.PROC")
+        field(DLY6,"0")
+	field(DOL6,"1")
+	field(LNK6,"$(P)eps_blink.PROC")
+
+}
+#-----------------------------------------------
+
+# --OSC generator for blinking indication
+
+grecord(calc,"$(P)eps_blink")
+{
+	field(INPA,"$(P)eps_TransID.VAL CP NMS")
+	field(INPB,"$(P)eps_TransID_FB.VAL CP NMS")
+	field(INPC,"$(P)eps_blink.VAL NPP NMS")	
+# Changed CALC to always set eps_blink to 0 to stop the blinking. This is not used with the APS version of the EPS. RH 160930
+#	field(CALC,"(!(A==B))? !C:VAL")
+	field(CALC,"0")
+}
+

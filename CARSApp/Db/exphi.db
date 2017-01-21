@@ -1,0 +1,389 @@
+#
+# I am an EPICS interface to the exphi PLC program running on a Delta Tau PMAC
+# controller, and I am an EPICS interface to the exposure shutter digital
+# output and the exposure trigger digital output of the same controller.
+#
+# Parameters:
+#   P     PV prefix (e.g. 17idb:)
+#   E     Exphi name (e.g. Exphi)
+#   PORT  ASYN port name for ASCII communication with PMAC (e.g. pmacClipper)
+#   TMOT  Timeout in seconds for reads and writes on PORT (e.g. 3.0)
+#   AV    Armed PMAC variable (e.g. P1)
+#   OPV   Open position PMAC variable (e.g. P2)
+#   CPV   Close position PMAC variable (e.g. P3)
+#   EPEV  Exposure trigger position enable PMAC variable (e.g. P4)
+#   EPV   Exposure trigger position PMAC variable (e.g. P5)
+#   MTV   Max exposure time PMAC variable (e.g. P6)
+#   SV    Shutter PMAC variable (e.g. P7)
+#   EV    Exposure trigger PMAC variable (e.g. P8)
+#   SP    Motor to drive scale precision (e.g. 8)
+#   OP    Motor to drive offset precision (e.g. 3)
+#   PP    Motor position precision (e.g. 3)
+#   DESC  Description of this exphi software (e.g. 17-ID-B)
+#
+
+# Description
+
+record(stringin, "$(P)$(E):Desc") {
+  field(VAL, "$(DESC)")
+  field(PINI, "YES")
+}
+
+# Configuration
+
+record(ao, "$(P)$(E):Poll") {
+  field(SCAN, "1 second")
+  field(FLNK, "$(P)$(E):OpenPosRbvRaw")
+}
+
+record(ao, "$(P)$(E):MtrToDrvScale") {
+  field(VAL, "1")
+  field(PREC, "$(SP)")
+  field(FLNK, "$(P)$(E):UpdPosCts")
+  field(PINI, "YES")
+}
+
+record(ao, "$(P)$(E):MtrToDrvOffset") {
+  field(VAL, "0")
+  field(PREC, "$(OP)")
+  field(FLNK, "$(P)$(E):UpdPosCts")
+  field(PINI, "YES")
+}
+
+# Configuration Support
+
+record(fanout, "$(P)$(E):UpdPosCts") {
+  field(LNK1, "$(P)$(E):OpenPosCts")
+  field(LNK2, "$(P)$(E):ClosePosCts")
+  field(LNK3, "$(P)$(E):ExpTrPosCts")
+}
+
+# Status
+
+record(asyn, "$(P)$(E):OpenPosRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(OPV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ClosePosRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ClosePosRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(CPV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrEnaRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ExpTrEnaRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(EPEV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrPosRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ExpTrPosRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(EPV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ArmedRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ArmedRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(AV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):MaxExpTmRbvRaw")
+}
+
+record(asyn, "$(P)$(E):MaxExpTmRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(MTV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ShutterRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ShutterRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(SV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrigRbvRaw")
+}
+
+record(asyn, "$(P)$(E):ExpTrigRbvRaw") {
+  field(PORT, "$(PORT)")
+  field(AOUT, "$(EV)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):OpenPosRbvHw")
+}
+
+record(scalcout, "$(P)$(E):OpenPosRbvHw") {
+  field(INAA, "$(P)$(E):OpenPosRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ClosePosRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ClosePosRbvHw") {
+  field(INAA, "$(P)$(E):ClosePosRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ExpTrEnaRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ExpTrEnaRbvHw") {
+  field(INAA, "$(P)$(E):ExpTrEnaRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ExpTrPosRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ExpTrPosRbvHw") {
+  field(INAA, "$(P)$(E):ExpTrPosRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ArmedRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ArmedRbvHw") {
+  field(INAA, "$(P)$(E):ArmedRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):MaxExpTmRbvHw")
+}
+
+record(scalcout, "$(P)$(E):MaxExpTmRbvHw") {
+  field(INAA, "$(P)$(E):MaxExpTmRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ShutterRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ShutterRbvHw") {
+  field(INAA, "$(P)$(E):ShutterRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):ExpTrigRbvHw")
+}
+
+record(scalcout, "$(P)$(E):ExpTrigRbvHw") {
+  field(INAA, "$(P)$(E):ExpTrigRbvRaw.AINP NPP MS")
+  field(CALC, "AA")
+  field(FLNK, "$(P)$(E):OpenPosRbv")
+}
+
+record(ai, "$(P)$(E):OpenPosRbv") {
+  field(INP, "$(P)$(E):OpenPosRbvHw.VAL NPP MS")
+  field(FLNK, "$(P)$(E):ClosePosRbv")
+}
+
+record(ai, "$(P)$(E):ClosePosRbv") {
+  field(INP, "$(P)$(E):ClosePosRbvHw.VAL NPP MS")
+  field(FLNK, "$(P)$(E):ExpTrEnaRbv")
+}
+
+record(bi, "$(P)$(E):ExpTrEnaRbv") {
+  field(INP, "$(P)$(E):ExpTrEnaRbvHw.VAL NPP MS")
+  field(ZNAM, "Disabled")
+  field(ONAM, "Enabled")
+  field(FLNK, "$(P)$(E):ExpTrPosRbv")
+}
+
+record(ai, "$(P)$(E):ExpTrPosRbv") {
+  field(INP, "$(P)$(E):ExpTrPosRbvHw.VAL NPP MS")
+  field(FLNK, "$(P)$(E):ArmedRbv")
+}
+
+record(bi, "$(P)$(E):ArmedRbv") {
+  field(INP, "$(P)$(E):ArmedRbvHw.VAL NPP MS")
+  field(ZNAM, "Disarmed")
+  field(ONAM, "Armed")
+  field(FLNK, "$(P)$(E):MaxExpTmRbv")
+}
+
+record(longin, "$(P)$(E):MaxExpTmRbv") {
+  field(INP, "$(P)$(E):MaxExpTmRbvHw.VAL NPP MS")
+  field(FLNK, "$(P)$(E):ShutterRbv")
+}
+
+record(bi, "$(P)$(E):ShutterRbv") {
+  field(INP, "$(P)$(E):ShutterRbvHw.VAL NPP MS")
+  field(ZNAM, "Closed")
+  field(ONAM, "Open")
+  field(FLNK, "$(P)$(E):ExpTrigRbv")
+}
+
+record(bi, "$(P)$(E):ExpTrigRbv") {
+  field(INP, "$(P)$(E):ExpTrigRbvHw.VAL NPP MS")
+  field(ZNAM, "Low")
+  field(ONAM, "High")
+}
+
+# Control
+
+record(ao, "$(P)$(E):OpenPos") {
+  field(VAL, "0")
+  field(EGU, "deg")
+  field(PREC, "$(PP)")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(E):OpenPosCts")
+}
+
+record(calc, "$(P)$(E):OpenPosCts") {
+  field(INPA, "$(P)$(E):OpenPos.VAL NPP MS")
+  field(INPB, "$(P)$(E):MtrToDrvOffset.VAL NPP MS")
+  field(INPC, "$(P)$(E):MtrToDrvScale.VAL NPP MS")
+  field(CALC, "C=0?0:(-A-B)/C")
+  field(FLNK, "$(P)$(E):OpenPosCmd")
+}
+
+record(scalcout, "$(P)$(E):OpenPosCmd") {
+  field(INPA, "$(P)$(E):OpenPosCts.VAL NPP MS")
+  field(CALC, "$P('$(OPV)=%d',A)")
+  field(OUT, "$(P)$(E):SetOpenPosRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetOpenPosRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):OpenPosRbvRaw")
+}
+
+record(ao, "$(P)$(E):ClosePos") {
+  field(VAL, "0")
+  field(EGU, "deg")
+  field(PREC, "$(PP)")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(E):ClosePosCts")
+}
+
+record(calc, "$(P)$(E):ClosePosCts") {
+  field(INPA, "$(P)$(E):ClosePos.VAL NPP MS")
+  field(INPB, "$(P)$(E):MtrToDrvOffset.VAL NPP MS")
+  field(INPC, "$(P)$(E):MtrToDrvScale.VAL NPP MS")
+  field(CALC, "C=0?0:(-A-B)/C")
+  field(FLNK, "$(P)$(E):ClosePosCmd")
+}
+
+record(scalcout, "$(P)$(E):ClosePosCmd") {
+  field(INPA, "$(P)$(E):ClosePosCts.VAL NPP MS")
+  field(CALC, "$P('$(CPV)=%d',A)")
+  field(OUT, "$(P)$(E):SetClosePosRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetClosePosRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ClosePosRbvRaw")
+}
+
+record(bo, "$(P)$(E):ExpTrEna") {
+  field(ZNAM, "Disable")
+  field(ONAM, "Enable")
+  field(FLNK, "$(P)$(E):ExpTrEnaCmd")
+}
+
+record(scalcout, "$(P)$(E):ExpTrEnaCmd") {
+  field(INPA, "$(P)$(E):ExpTrEna.VAL NPP MS")
+  field(CALC, "$P('$(EPEV)=%d',A)")
+  field(OUT, "$(P)$(E):SetExpTrEnaRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetExpTrEnaRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrEnaRbvRaw")
+}
+
+record(ao, "$(P)$(E):ExpTrPos") {
+  field(VAL, "0")
+  field(EGU, "deg")
+  field(PREC, "$(PP)")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(E):ExpTrPosCts")
+}
+
+record(calc, "$(P)$(E):ExpTrPosCts") {
+  field(INPA, "$(P)$(E):ExpTrPos.VAL NPP MS")
+  field(INPB, "$(P)$(E):MtrToDrvOffset.VAL NPP MS")
+  field(INPC, "$(P)$(E):MtrToDrvScale.VAL NPP MS")
+  field(CALC, "C=0?0:(-A-B)/C")
+  field(FLNK, "$(P)$(E):ExpTrPosCmd")
+}
+
+record(scalcout, "$(P)$(E):ExpTrPosCmd") {
+  field(INPA, "$(P)$(E):ExpTrPosCts.VAL NPP MS")
+  field(CALC, "$P('$(EPV)=%d',A)")
+  field(OUT, "$(P)$(E):SetExpTrPosRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetExpTrPosRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrPosRbvRaw")
+}
+
+record(bo, "$(P)$(E):Armed") {
+  field(ZNAM, "Disarm")
+  field(ONAM, "Arm")
+  field(FLNK, "$(P)$(E):ArmedCmd")
+}
+
+record(scalcout, "$(P)$(E):ArmedCmd") {
+  field(INPA, "$(P)$(E):Armed.VAL NPP MS")
+  field(CALC, "$P('$(AV)=%d',A)")
+  field(OUT, "$(P)$(E):SetArmedRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetArmedRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ArmedRbvRaw")
+}
+
+record(longout, "$(P)$(E):MaxExpTm") {
+  field(VAL, "0")
+  field(EGU, "msec")
+  field(PINI, "YES")
+  field(FLNK, "$(P)$(E):MaxExpTmCmd")
+}
+
+record(scalcout, "$(P)$(E):MaxExpTmCmd") {
+  field(INPA, "$(P)$(E):MaxExpTm.VAL NPP MS")
+  field(CALC, "$P('$(MTV)=%d',MAX(0,A))")
+  field(OUT, "$(P)$(E):SetMaxExpTmRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetMaxExpTmRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):MaxExpTmRbvRaw")
+}
+
+record(bo, "$(P)$(E):Shutter") {
+  field(ZNAM, "Close")
+  field(ONAM, "Open")
+  field(FLNK, "$(P)$(E):ShutterCmd")
+}
+
+record(scalcout, "$(P)$(E):ShutterCmd") {
+  field(INPA, "$(P)$(E):Shutter.VAL NPP MS")
+  field(CALC, "$P('$(SV)=%d',A)")
+  field(OUT, "$(P)$(E):SetShutterRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetShutterRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ShutterRbvRaw")
+}
+
+record(bo, "$(P)$(E):ExpTrig") {
+  field(ZNAM, "Low")
+  field(ONAM, "High")
+  field(FLNK, "$(P)$(E):ExpTrigCmd")
+}
+
+record(scalcout, "$(P)$(E):ExpTrigCmd") {
+  field(INPA, "$(P)$(E):ExpTrig.VAL NPP MS")
+  field(CALC, "$P('$(EV)=%d',A)")
+  field(OUT, "$(P)$(E):SetExpTrigRaw.AOUT PP MS")
+}
+
+record(asyn, "$(P)$(E):SetExpTrigRaw") {
+  field(PORT, "$(PORT)")
+  field(TMOT, "$(TMOT)")
+  field(FLNK, "$(P)$(E):ExpTrigRbvRaw")
+}

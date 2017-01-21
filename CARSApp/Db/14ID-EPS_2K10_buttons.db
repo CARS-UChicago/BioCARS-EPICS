@@ -1,0 +1,36 @@
+#14ID-EPS_2K10_buttons.db
+
+grecord(bi,"$(P)$(NAME)_permit")
+{
+	field(DESC,"$(ACTION)")
+	field(SCAN,"I/O Intr")
+	field(DTYP,"AB-16 bit BI")
+	field(INP,"#L0 A$(A_PRMT) C$(C_PRMT) S$(S_PRMT) F0 @")
+	field(ZNAM,"Disabled")
+	field(ZSV, "INVALID")
+	field(ONAM,"Enabled")
+	field(OSV, "NO_ALARM")
+	field(FLNK,"$(P)$(NAME)_request.PROC")
+}
+
+grecord(bo,"$(P)$(NAME)_request")
+{
+	field(DESC,"$(ACTION)")
+	field(DTYP,"AB-16 bit BO")
+	field(OUT, "#L0 A$(A_RQ) C$(C_RQ) S$(S_RQ) F0 @")
+	field(ZNAM,"_off")
+	field(ZSV, "NO_ALARM")
+	field(ONAM,"_on")
+	field(OSV,"NO_ALARM")
+	field(DISV,"99")
+	field(SDIS,"$(P)$(NAME)_permit.VAL NPP MS")
+}
+
+grecord(seq,"$(P)$(NAME)_seq")
+{
+	field(DESC,"Sequencer for valve records")
+        field(PINI,"YES")
+	field(DLY1,"0")
+	field(DOL1,"1")
+	field(LNK1,"$(P)$(NAME)_request.PROC")
+}

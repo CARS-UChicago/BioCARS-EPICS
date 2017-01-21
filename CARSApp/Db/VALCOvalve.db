@@ -1,0 +1,124 @@
+#
+#	Database for Irena
+#	This is a database to communicate with  VALCO liquid/gas delivery valve
+#    
+#	call from st.cmd : dbLoadRecords("VALCOvalve.db", "P=14LAB:,DEVICE=V10,PORT=serial4")
+#
+#
+#	Parameters
+#	P	Pv name example 14ID
+#	PORT	async (serial) port name example serial4
+#	DEVICE V10
+#
+#
+#
+
+#
+
+ # Dispense deliver A to Bby default the valve moves by the shortest way; home position is 1
+
+grecord(seq, "$(P)$(DEVICE):InitRead")  {
+	field(DESC, "Initialize-ReadValve")
+	field(DO1,"1")
+	field(LNK1,"$(P)$(DEVICE):SerialWR.PROC PP NMS")
+}
+
+grecord(busy, "$(P)$(DEVICE):GO"){
+	field(DESC, " Busy Go -Valve Pos")
+	field(VAL, "0")
+	field(TPRO,"1")
+
+}
+
+grecord(scalcout,"$(P)$(DEVICE):CheckBusy")
+{
+	field(INAA,"$(P)$(DEVICE):GO.VAL NPP NMS")
+	field(CALC, "AA")
+	field(SCAN, ".1 second")
+	field(OCAL, "PRINTF('%s',AA)")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "On Change")	
+
+}
+grecord(scalcout,"$(P)$(DEVICE):WatchGo")
+{
+	field(INPA,"$(P)$(DEVICE):GO.VAL NPP NMS")
+	field(CALC, "A")
+	field(SCAN, ".1 second")
+#	field(SCAN, "1 second")
+	field(OOPT, "On Change")	
+	field(OUT, "$(P)$(DEVICE):SendValve.PROC PP MS")
+}
+
+
+grecord(ao, "$(P)$(DEVICE):Position")  {
+	field(DESC, "Requested Position")
+	field(VAL, "1")
+	field(DRVH, "10")
+	field(DRVL,"1")
+	field(PREC, "0")
+#	field(TPRO,"1")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):SendValve")
+{
+	field(INPA,"$(P)$(DEVICE):Position.VAL NPP NMS")
+	field(INPB,"$(P)$(DEVICE):GO.VAL NPP NMS")
+	field(CALC, "B")	
+	field(OCAL, "PRINTF('GO%i',A)")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "When Non-zero")
+	#field(TPRO,"1")
+	field(OUT, "$(P)$(DEVICE):SerialW.AOUT PP MS")
+}
+
+
+grecord(asyn,"$(P)$(DEVICE):SerialW") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+	field(TMOD, "Write")
+        field(SCAN, "Passive")
+	field(TMOT, "1.0")
+	#field(TPRO,"1")
+	field(FLNK,"$(P)$(DEVICE):SerialWR PP NMS") 
+}
+
+
+
+grecord(asyn,"$(P)$(DEVICE):SerialWR") {
+	field(PORT, "$(PORT)")
+	field(TMOD, "Write/Read")
+	field(AOUT, "CP")
+        field(SCAN, "Passive")
+	field(TMOT, "1.0")
+	#field(TPRO,"1")
+	field(FLNK,"$(P)$(DEVICE):ReadPosition PP NMS") 
+}
+
+grecord(seq,"$(P)$(DEVICE):SerialDone"){
+	field(DO1,"0")
+	field(LNK1,"$(P)$(DEVICE):GO.VAL CP NMS")
+	field(TPRO,"1")
+
+
+
+}
+
+
+
+# Parce string for polling of the Valve position Position  = 1
+grecord(scalcout,"$(P)$(DEVICE):ReadPosition") 
+{
+	field(INAA,"$(P)$(DEVICE):SerialWR.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*14c%1f')")
+	field(PREC,"0")
+	#field(TPRO,"1")
+	field(FLNK,"$(P)$(DEVICE):SerialDone PP NMS") 
+
+}
+
+
+
+
+
+

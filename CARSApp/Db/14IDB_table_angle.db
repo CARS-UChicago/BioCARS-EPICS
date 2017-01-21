@@ -1,0 +1,64 @@
+# Soft motor which converts table angle from degrees to mrad
+record(motor,"$(P)AX_deg") {
+        field(DESC,"AX angle in mrad")
+        field(DTYP,"Soft Channel")
+        field(OUT,"$(P)AXmrad2deg.A PP MS")
+        field(RDBL,"$(P)AXdeg2mrad.VAL NPP MS")
+        field(URIP,"Yes")
+        field(STOO,"$(P)Table1:stop.VAL PP MS")
+        field(DINP,"$(P)Table1:done.VAL NPP MS")
+        field(MRES,"0.001")
+        field(RRES,"1.0")
+        field(PREC,"3")
+        field(DHLM,"100000")
+        field(DLLM,"-100000")
+        field(TWV,"0.1")
+        field(EGU,"mrad")
+#	field(NTM,"No")
+}
+
+record(calcout,"$(P)AXdeg2mrad") {
+        field(DESC,"Convert degree to mrad")
+        field(INPA,"$(P)table1.EAX CP MS")
+        field(CALC,"A*pi/180*1000")
+        field(PREC,"3")
+}
+
+record(calcout,"$(P)AXmrad2deg") {
+        field(DESC,"Convert mrad to degree")
+        field(CALC,"A*180/pi/1000")
+        field(OUT,"14IDB:table1.AX PP MS")
+        field(PREC,"3")
+}
+
+record(motor,"$(P)AY_deg") {
+        field(DESC,"AY angle in mrad")
+        field(DTYP,"Soft Channel")
+        field(OUT,"$(P)AYmrad2deg.A PP MS")
+        field(RDBL,"$(P)AYdeg2mrad.VAL NPP MS")
+        field(URIP,"Yes")
+        field(STOO,"$(P)Table1:stop.VAL PP MS")
+        field(DINP,"$(P)Table1:done.VAL NPP MS")
+        field(MRES,"0.001")
+        field(RRES,"1.0")
+        field(PREC,"3")
+        field(DHLM,"100000")
+        field(DLLM,"-100000")
+        field(TWV,"0.1")
+        field(EGU,"mrad")
+#	field(NTM,"No")
+}
+
+record(calcout,"$(P)AYdeg2mrad") {
+        field(DESC,"Convert degree to mrad")
+        field(INPA,"$(P)table1.EAY CP MS")
+        field(CALC,"A*pi/180*1000")
+        field(PREC,"3")
+}
+
+record(calcout,"$(P)AYmrad2deg") {
+        field(DESC,"Convert mrad to degree")
+        field(CALC,"A*180/pi/1000")
+        field(OUT,"14IDB:table1.AY PP MS")
+        field(PREC,"3")
+}

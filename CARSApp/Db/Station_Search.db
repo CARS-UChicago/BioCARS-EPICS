@@ -1,0 +1,16 @@
+#
+#
+#	Station Searched Database
+#
+#  $(N) - "PA:14ID:" ;  $(P) - "14IDB:"  station $(S) "B" station string $(B) output number "B1Bo"; $R - "6" number for Binary output
+#
+
+grecord(calcout,"$(P)SearchStationStatus")
+{
+	field(INPA,"$(N)$(S)_SEARCHED.VAL CP NMS")
+	field(CALC,"A=1?1:0")
+        field(SCAN, "1 second")
+        field(OOPT, "On Change")
+	field(OUT,"$(P)$(B)$(R) PP NMS")
+}
+

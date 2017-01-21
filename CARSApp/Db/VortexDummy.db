@@ -1,0 +1,11 @@
+record(ao,"$(D):mca1.IDTIM") {
+	field(DESC,"Dummy PV")
+	field(PINI, "YES")
+	field(VAL,"0.1")
+}
+
+record(ao,"$(D):mca1.PRTM") {
+	field(DESC,"Dummy PV")
+	field(PINI, "YES")
+	field(VAL,"0.1")
+}

@@ -1,0 +1,31 @@
+# 14IDA-EPS_2K10_login.db
+#-------------------------------
+# for login as Valve Operator
+# Single User
+# ---------------------------------------
+# for log-in as VlvADM 
+
+record(stringin,"$(P)eps_usrID_inp") {}
+record(stringin,"$(P)eps_pwd_inp") {}
+	  	   						   
+record(bi,"$(P)eps_sign_board")  {}
+record(bi,"$(P)eps_quitADM-RQ")
+{	
+	field(ZNAM,"_off")
+	field(ONAM,"_on")
+}
+
+#-------
+# inform PLC (via I:7.6/9) that login_procedure at MEDM has passed
+record(bo,"$(P)eps_login_OK")
+{
+	field(DTYP,"AB-16 bit BO")
+	field(OUT,"#L0 A0 C13 S9 F0 @")
+	field(ZNAM,"login-FAIL")
+	field(ZSV, "NO_ALARM")
+	field(ONAM,"login-OK")
+	field(OSV,"MINOR")
+}
+
+# "login_OK" confirmed by PLC at (O:8.4/0, ACS:1,8,0), defined as
+# record(bi,"$(P)eps_VlvADM_MEDM)-- in 14IDA-EPS_2K10_1d-INP.template

@@ -1,0 +1,84 @@
+grecord(asyn,"$(P)$(R)_TEMP_CH1")
+{
+	field(DESC,"SR630 Chan 1")
+	field(PORT,"$(PORT)")
+	field(SCAN, "10 second")
+	field(AOUT,"MEAS?1")
+	field(FLNK, "$(P)$(R)_TEMP_CH2.PROC")
+}
+
+grecord(asyn,"$(P)$(R)_TEMP_CH2")
+{
+	field(DESC,"SR630 Chan 2")
+	field(PORT,"$(PORT)")
+	field(AOUT,"MEAS?2")
+	field(FLNK, "$(P)$(R)_TEMP_CH3.PROC")
+}
+
+grecord(asyn,"$(P)$(R)_TEMP_CH3")
+{
+	field(DESC,"SR630 Chan 3")
+	field(PORT,"$(PORT)")
+	field(AOUT,"MEAS?3")
+	field(FLNK, "$(P)$(R)_TEMP_CH4.PROC")
+}
+
+grecord(asyn,"$(P)$(R)_TEMP_CH4")
+{
+	field(DESC,"SR630 Chan 4")
+	field(PORT,"$(PORT)")
+	field(AOUT,"MEAS?4")
+	field(FLNK, "$(P)$(R)_TEMP_CH5.PROC")
+}
+
+grecord(asyn,"$(P)$(R)_TEMP_CH5")
+{
+	field(DESC,"SR630 Chan 5")
+	field(PORT,"$(PORT)")
+	field(AOUT,"MEAS?5")
+	field(FLNK, "$(P)$(R)_CH1.PROC")
+}
+
+grecord(scalcout,"$(P)$(R)_CH1")
+{
+	field(DESC,"First Crystal")
+	field(INPA,"$(P)$(R)_TEMP_CH1.AINP NPP NMS")
+	field(CALC,"A")
+	field(PREC,"1")
+	field(FLNK, "$(P)$(R)_CH2")
+}
+
+grecord(scalcout,"$(P)$(R)_CH2")
+{
+	field(DESC,"First Stage")
+	field(INPA,"$(P)$(R)_TEMP_CH2.AINP NPP NMS")
+	field(CALC,"A")
+	field(PREC,"1")
+	field(FLNK, "$(P)$(R)_CH3")
+}
+
+grecord(scalcout,"$(P)$(R)_CH3")
+{
+	field(DESC,"Second Crystal")
+	field(INPA,"$(P)$(R)_TEMP_CH3.AINP NPP NMS")
+	field(CALC,"A")
+	field(PREC,"1")
+	field(FLNK, "$(P)$(R)_CH4")
+}
+
+grecord(scalcout,"$(P)$(R)_CH4")
+{
+	field(DESC,"Second Stage")
+	field(INPA,"$(P)$(R)_TEMP_CH4.AINP NPP NMS")
+	field(CALC,"A")
+	field(PREC,"1")
+	field(FLNK, "$(P)$(R)_CH5")
+}
+
+grecord(scalcout,"$(P)$(R)_CH5")
+{
+	field(DESC,"Compton Shield")
+	field(INPA,"$(P)$(R)_TEMP_CH5.AINP NPP NMS")
+	field(CALC,"A")
+	field(PREC,"1")
+}

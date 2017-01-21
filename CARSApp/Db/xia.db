@@ -1,0 +1,9 @@
+grecord(transform, "$(P)test")
+{
+	field(CLCP,"N")
+}
+
+grecord(transform, "$(P)test2")
+{
+	field(CLCP,"L")
+}

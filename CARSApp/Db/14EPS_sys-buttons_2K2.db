@@ -1,0 +1,31 @@
+grecord(bi,"$(P)$(btnNAME)_permit")
+{
+	field(DESC,"$(DESC)")
+	field(SCAN,"I/O Intr")
+	field(DTYP,"AB-16 bit BI")
+	field(INP,"#L0 A$(A_PRMT) C$(C_PRMT) S$(S_PRMT) F0 @")
+	field(ZNAM,"Disabled")
+	field(ZSV, "INVALID")
+	field(ONAM,"Enabled")
+	field(OSV, "NO_ALARM")
+	field(FLNK,"$(P)$(btnNAME)_request.PROC")
+}
+grecord(bo,"$(P)$(btnNAME)_request")
+{
+	field(DESC,"$(DESC)")
+	field(DTYP,"AB-16 bit BO")
+	field(OUT,"#L0 A$(A_RQ) C$(C_RQ) S$(S_RQ) F0 @")
+	field(ZNAM,"Enable")
+	field(ZSV, "NO_ALARM")
+	field(ONAM,"Disable")
+	field(OSV,"MAJOR")
+	field(DISV,"99")
+	field(SDIS,"$(P)$(btnNAME)_permit.VAL  NPP MS")
+}
+grecord(seq,"$(P)$(btnNAME)_seq")
+{
+	field(PINI,"YES")
+	field(DLY1,"1")
+	field(DOL1,"2")
+	field(LNK1,"$(P)$(btnNAME)_request.PROC")
+}

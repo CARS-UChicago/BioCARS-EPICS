@@ -1,0 +1,7 @@
+# PV's which can seen by the APS in order to optimize the incoming beam.
+# These PV's can be 
+
+grecord(ai,"ID14:SteeringGoodness") {
+        field(DESC,"APS Optimization PV1")
+	field(PREC, "3")
+}

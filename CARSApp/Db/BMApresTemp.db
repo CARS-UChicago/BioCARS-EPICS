@@ -1,0 +1,43 @@
+# readings of pressures and tempertures for the BM lines
+# helium pressure for BMC MONO
+grecord(calcout,"14BMC_MONO_HELIUM_PRESSURE")  {
+	field(INPA,"14BMA:DVX_5.VAL")
+	field(CALC,"(-A-0.5)*600.0")
+	field(SCAN,"10 second")
+	field(DESC,"BMC Mono He pressure (psi)")
+}
+
+# helium gas pressure for BMC
+grecord(calcout,"14BMC_HELIUM_PRESSURE")  {
+	field(INPA,"$(P):DVX_6.VAL")
+	field(CALC,"(A-0.5)*600.0")
+	field(SCAN,"10 second")
+	field(DESC,"BMC He pressure (psi)")
+}
+
+# helium pressure for BMD
+grecord(calcout,"14BMD_HELIUM_PRESSURE")  {
+	field(INPA,"$(P):DVX_7.VAL")
+	field(CALC,"(A-0.5)*600")
+	field(SCAN,"10 second")
+	field(DESC,"BMD He pressure (psi)")
+}
+
+# BMA mirror tank vacuum
+grecord(calcout,"$(P):HOTCATHODE")  {
+	field(INPA,"$(P):DVX_3.VAL")
+	field(CALC,"10^(-A-11)")
+	field(SCAN,"1 second")
+	field(DESC,"mirror tank vacuum in torr")
+	field(PREC,"1")
+}
+
+# BMA mirror tank ion pump current
+# I = V x 100 
+grecord(calcout,"$(P):IP_CURRENT")  {
+        field(INPA,"$(P):DVX_1.VAL")
+        field(CALC,"A*100")
+        field(SCAN,".1 second")
+        field(DESC,"mirror tank current in uA")
+        field(PREC,"4")
+}

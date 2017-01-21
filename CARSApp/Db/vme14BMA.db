@@ -1,0 +1,15 @@
+grecord(vme,"14BMA:avme9440")
+{
+	field(ADDR,"0xa00000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14BMA:avme9210")
+{
+	field(ADDR,"0x1000")
+	field(AMOD,"A16")
+}
+grecord(vme,"14BMA:dvx2503")
+{
+	field(ADDR,"0xc000")
+	field(AMOD,"A16")
+}

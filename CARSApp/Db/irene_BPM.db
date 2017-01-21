@@ -1,0 +1,602 @@
+#
+#	Database for Irena
+#	This is an attempt to write a database to communicate with Oxford QBPM
+#	I use info from databases written by Tim Graber, Rob Henning and Lewis Muir. 
+#
+#	Parameters
+#	P	Pv name examplr 14LAB
+#	DEVICE	Pv name for specific device BPM1
+#	PORT	async (serial) port name example serial1
+#	DESC	descroption of device ( Pink Beam QBPM)
+#
+#
+#
+grecord(stringin, "S(P)$(DEVICE):DESC") {
+	field(DESC, "Description of the device")
+	field(VAL, "$(DESC)")
+	field(PINI, "YES")
+}
+
+
+grecord(ao,"S(P)$(DEVICE):Poll") {
+	field(SCAN, "1")
+	field(FLNK, "S(P)$(DEVICE):ALL_CURR")
+}
+
+grecord(asyn,"$(P)$(DEVICE):ALL_CURR") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":READ0:CURRALL?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):ALL_CURR_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):ALL_CURR_STR") {
+	field(INP,"$(P)$(DEVICE):ALL_CURR.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):CURR_1")
+}
+grecord(scalcout,"$(P)$(DEVICE):CURR_1") {
+	field(INAA,"$(P)$(DEVICE):ALL_CURR_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+	field(FLNK,"$(P)$(DEVICE):CURR_2")
+}
+grecord(scalcout,"$(P)$(DEVICE):CURR_2") {
+	field(INAA,"$(P)$(DEVICE):ALL_CURR_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%*d %d')")
+	field(FLNK,"$(P)$(DEVICE):CURR_3")
+}
+grecord(scalcout,"$(P)$(DEVICE):CURR_3") {
+	field(INAA,"$(P)$(DEVICE):ALL_CURR_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%*d %*d %d')")
+	field(FLNK,"$(P)$(DEVICE):CURR_4")
+}
+grecord(scalcout,"$(P)$(DEVICE):CURR_4") {
+	field(INAA,"$(P)$(DEVICE):ALL_CURR_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%*d %*d %*d %d')")
+	field(FLNK,"$(P)$(DEVICE):CURR_SUM")
+}
+grecord(calcout,"$(P)$(DEVICE):CURR_SUM") {
+	field(INPA,"$(P)$(DEVICE):CURR_1 NPP NMS")
+	field(INPB,"$(P)$(DEVICE):CURR_2 NPP NMS")
+	field(INPC,"$(P)$(DEVICE):CURR_3 NPP NMS")
+	field(INPD,"$(P)$(DEVICE):CURR_4 NPP NMS")
+	field(CALC,"A+B+C+D")
+}
+#---------------------------------------------
+#Reads position of X, and Y
+grecord(asyn,"$(P)$(DEVICE):READ_POSX") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":READ0:POSX?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):POSX_STR")
+}
+
+
+grecord(stringin,"$(P)$(DEVICE):POSX_STR") {
+	field(INP,"$(P)$(DEVICE):READ_POSX.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):POSX")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):POSX") {
+	field(INAA,"$(P)$(DEVICE):POSX_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%6f')")
+	field(PREC, "3")
+}
+
+grecord(asyn,"$(P)$(DEVICE):READ_POSY") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":READ0:POSY?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):POSY_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):POSY_STR") {
+	field(INP,"$(P)$(DEVICE):READ_POSY.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):POSY")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):POSY") {
+	field(INAA,"$(P)$(DEVICE):POSY_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%6f')")
+	field(PREC, "3")
+}
+
+#
+# Read current input range
+#
+grecord(asyn,"$(P)$(DEVICE):READ_CURR_RG") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:CURR:RANG?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):CURR_RG_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):CURR_RG_STR") {
+	field(INP,"$(P)$(DEVICE):READ_CURR_RG.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):CURR_RG")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):CURR_RG") {
+	field(INAA,"$(P)$(DEVICE):CURR_RG_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#Set current input range
+#
+
+grecord(ao,"$(P)$(DEVICE):CURR_RG_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_CURR_RG" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_CURR_RG") {
+	field(INPA,"$(P)$(DEVICE):CURR_RG_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:CURR:RANG %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RG.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RG" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_RG") {
+	field(PORT, "$(PORT)")
+	#field(AOUT, "$(P)$(DEVICE):SET_CURR_RG.SVAL")
+	field(TMOT, "1.0")
+}
+
+
+#
+# Read Gx 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_GX") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:GX?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):GX_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):GX_STR") {
+	field(INP,"$(P)$(DEVICE):READ_GX.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):GX")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):GX") {
+	field(INAA,"$(P)$(DEVICE):GX_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  GX
+#
+
+grecord(ao,"$(P)$(DEVICE):GX_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_GX" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_GX") {
+	field(INPA,"$(P)$(DEVICE):GX_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:GX %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_GX.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_GX" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_GX") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+# Read GY 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_GY") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:GY?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):GY_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):GY_STR") {
+	field(INP,"$(P)$(DEVICE):READ_GY.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):GY")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):GY") {
+	field(INAA,"$(P)$(DEVICE):GY_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  GY
+#
+
+grecord(ao,"$(P)$(DEVICE):GY_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_GY" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_GY") {
+	field(INPA,"$(P)$(DEVICE):GY_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:GY %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_GY.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_GY" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_GY") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read A1 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_A1") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:A1?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):A1_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):A1_STR") {
+	field(INP,"$(P)$(DEVICE):READ_A1.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):A1")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):A1") {
+	field(INAA,"$(P)$(DEVICE):A1_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  A1
+#
+
+grecord(ao,"$(P)$(DEVICE):A1_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_A1" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_A1") {
+	field(INPA,"$(P)$(DEVICE):A1_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:A1 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_A1.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_A1" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_A1") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read A2 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_A2") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:A2?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):A2_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):A2_STR") {
+	field(INP,"$(P)$(DEVICE):READ_A2.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):A2")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):A2") {
+	field(INAA,"$(P)$(DEVICE):A2_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  A2
+#
+
+grecord(ao,"$(P)$(DEVICE):A2_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_A2" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_A2") {
+	field(INPA,"$(P)$(DEVICE):A2_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:A2 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_A2.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_A2" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_A2") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read B1 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_B1") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:B1?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):B1_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):B1_STR") {
+	field(INP,"$(P)$(DEVICE):READ_B1.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):B1")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):B1") {
+	field(INAA,"$(P)$(DEVICE):B1_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  B1
+#
+
+grecord(ao,"$(P)$(DEVICE):B1_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_B1" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_B1") {
+	field(INPA,"$(P)$(DEVICE):B1_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:B1 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_B1.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_B1" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_B1") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read B2 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_B2") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:B2?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):B2_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):B2_STR") {
+	field(INP,"$(P)$(DEVICE):READ_B2.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):B2")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):B2") {
+	field(INAA,"$(P)$(DEVICE):B2_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  B2
+#
+
+grecord(ao,"$(P)$(DEVICE):B2_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_B2" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_B2") {
+	field(INPA,"$(P)$(DEVICE):B2_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:B2 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_B2.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_B2" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_B2") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read C1 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_C1") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:C1?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):C1_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):C1_STR") {
+	field(INP,"$(P)$(DEVICE):READ_C1.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):C1")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):C1") {
+	field(INAA,"$(P)$(DEVICE):C1_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  C1
+#
+
+grecord(ao,"$(P)$(DEVICE):C1_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_C1" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_C1") {
+	field(INPA,"$(P)$(DEVICE):C1_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:C1 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_C1.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_C1" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_C1") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read C2 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_C2") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:C2?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):C2_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):C2_STR") {
+	field(INP,"$(P)$(DEVICE):READ_C2.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):C2")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):C2") {
+	field(INAA,"$(P)$(DEVICE):C2_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  C2
+#
+
+grecord(ao,"$(P)$(DEVICE):C2_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_C2" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_C2") {
+	field(INPA,"$(P)$(DEVICE):C2_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:C2 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_C2.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_C2" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_C2") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read D1 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_D1") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:D1?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):D1_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):D1_STR") {
+	field(INP,"$(P)$(DEVICE):READ_D1.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):D1")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):D1") {
+	field(INAA,"$(P)$(DEVICE):D1_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  D1
+#
+
+grecord(ao,"$(P)$(DEVICE):D1_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_D1" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_D1") {
+	field(INPA,"$(P)$(DEVICE):D1_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:D1 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_D1.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_D1" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_D1") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+#
+# Read D2 
+#
+grecord(asyn,"$(P)$(DEVICE):READ_D2") {
+	field(PORT, "$(PORT)")
+	field(AOUT, ":CONF0:D2?")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)$(DEVICE):D2_STR")
+}
+
+grecord(stringin,"$(P)$(DEVICE):D2_STR") {
+	field(INP,"$(P)$(DEVICE):READ_D2.AINP NPP NMS")
+	field(FLNK,"$(P)$(DEVICE):D2")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):D2") {
+	field(INAA,"$(P)$(DEVICE):D2_STR NPP NMS")
+	field(CALC,"SSCANF(AA,'%*c%d')")
+}
+#
+#
+#Set  D2
+#
+
+grecord(ao,"$(P)$(DEVICE):D2_SET") {
+	field(DESC, "USE FOR SET RANGE")
+	field(PREC,"0")
+	field(VAL, "4")
+	field(FLNK,"$(P)$(DEVICE):SET_D2" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_D2") {
+	field(INPA,"$(P)$(DEVICE):D2_SET NPP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CONF0:D2 %1.0f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_D2.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_D2" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_D2") {
+	field(PORT, "$(PORT)")
+	field(TMOT, "1.0")
+}
+#
+	
+

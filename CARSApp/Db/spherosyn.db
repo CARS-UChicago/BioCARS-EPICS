@@ -1,0 +1,70 @@
+# Database for Spherosyn encoder
+# Copied from CARSApp and modified on 1/13/04.  RH
+# Added Distance PV and DESC for VAL.
+# Also "Use encoder" code.  Moved from BMC_encoders
+
+record(asyn, $(P)$(E)U) {
+   field(TMOD,"Write")
+   field(AOUT,"U")
+   field(PORT,"$(PORT)")
+}
+record(asyn, $(P)$(E)R) {
+   field(TMOD,"Write")
+   field(AOUT,"R")
+   field(PORT,"$(PORT)")
+}
+record(asyn, $(P)$(E)P) {
+   field(TMOD,"Write")
+   field(AOUT,"P")
+   field(PORT,"$(PORT)")
+}
+record(asyn, $(P)$(E)Read) {
+   field(TMOD,"Write/Read")
+   field(NRRD,"10")
+   field(AOUT,"\r")
+   field(PORT,"$(PORT)")
+}
+record(seq, $(P)$(E)Seq) {
+   field(SCAN, ".1 second")
+   field(LNK1, "$(P)$(E)U PP MS")
+   field(DLY2, ".035")
+   field(LNK2, "$(P)$(E)R PP MS")
+   field(DLY3, ".035")
+   field(LNK3, "$(P)$(E)P PP MS")
+   field(DLY4, ".035")
+   field(LNK4, "$(P)$(E)Read PP MS")
+   field(FLNK, "$(P)$(E)Val")
+}
+record(scalcout, "$(P)$(E)Val") {
+   field(INAA, "$(P)$(E)Read.AINP NPP NMS")
+   field(CALC, "SSCANF(AA, 'U%f')")
+   field(PREC, "0")
+   field(DESC, "$(E)")
+   field(FLNK, "$(P)$(E)Distance")
+}
+record(calcout, "$(P)$(E)Distance") {
+   field(INPA, "$(P)$(E)Val")
+   field(INPB, "$(B)")
+   field(INPC, "$(D)")
+   field(CALC, "(A-B)/C")
+   field(PREC, "2")
+}
+record(calcout, "$(P)$(E)Error") {
+    field(INPA,"$(P)$(E)Distance.VAL CP")
+    field(INPB,"$(P)$(E).RBV CP")
+    field(INPC,"5")
+    field(CALC,"(A<=(B+C))&&(A>=(B-C))?0:1")
+    field(OUT, "$(P)$(STOP).STOP PP MS")
+    field(OCAL,"0")
+    field(OOPT,"0")
+}
+# Changed default value for UseEncoder from Yes to No. 
+# This was done because the Moxa unit is not reading out properly. 
+# Need to change back to Yes when communication is fixed.
+# RH 11/28/06
+record(bo, "$(P)$(E)UseEncoder") {
+    field(ZNAM,"Yes")
+    field(ONAM,"No")
+    field(VAL,"1")
+    field(OUT,"$(P)$(E)Error.DOPT")
+}

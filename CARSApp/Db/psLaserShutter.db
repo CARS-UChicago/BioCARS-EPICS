@@ -1,0 +1,15 @@
+record(sseq,"$(P)lshutter") {
+	field(STR1,"1")
+	field(LNK1,"$(P)B1Bo0 PP NMS")
+	field(DLY2,"1")
+	field(STR2,"0")
+	field(LNK2,"$(P)B1Bo0 PP NMS")
+}
+
+record(mbbo,"$(P)lshutter_auto") {
+	field(DTYP, "Raw Soft Channel")
+	field(ZRVL,"0")
+	field(ZRST,"Disabled")
+	field(ONVL,"1")
+	field(ONST,"Enabled")
+}

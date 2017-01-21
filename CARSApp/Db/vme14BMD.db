@@ -1,0 +1,21 @@
+grecord(vme,"14BMD:timingModule")
+{
+	field(ADDR,"0xff0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14BMD:pmon")
+{
+	field(ADDR,"0x7f0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14BMD:otm")
+{
+	field(ADDR,"0x8f0000")
+	field(AMOD,"A24")
+}
+grecord(vme,"14BMD:avme9440")
+{
+	field(ADDR,"0xa00000")
+	field(AMOD,"A24")
+	field(NUSE,"1")
+}

@@ -1,0 +1,48 @@
+# Database for Irena
+# this is database to set parameters for AutoSampler to communicate with lauer collect
+#
+#call from st.cmd : dbLoadRecords("Sampler.db, "P=14AutoSampler:")
+#
+#
+#
+#
+#
+#
+grecord(ao, "$(P)Collect")  {
+	field(DESC, "Is Collecting")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+	field(PREC, "1")
+	field(SCAN, "2 second")
+}
+grecord(ao, "$(P)Volume")  {
+	field(DESC, "Volume Delivered")
+	field(VAL, "0")
+	#field(DRVH, "150")
+	#field(DRVL,"0.0001")
+	field(PREC, "4")
+	field(EGU, "uL")
+}
+grecord(ao, "$(P)Speed")  {
+	field(DESC, "Speed to cycle in ul/sec")
+	field(VAL, "0")
+	field(DRVH, "150")
+	field(DRVL,"0.0001")
+	field(PREC, "4")
+	field(EGU, "uL")
+}
+grecord(ao, "$(P)Cycle")  {
+	field(DESC, "Is Cycling")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+	field(PREC, "1")
+}
+grecord(ao, "$(P)Delivered")  {
+	field(DESC, "Is Delivered")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+	field(PREC, "1")
+}

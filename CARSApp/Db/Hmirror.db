@@ -1,0 +1,117 @@
+#
+#	This is the SASSO Mirror data base it is to be used in conjunction 
+#	with the state notation language program mirror.st found in 
+#	/epics_local/ChemMat/ChemMatApp/src.  It also needs to have 
+#	pseudomotors loaded.  It is devided into two parts.  The Y-translation 
+#	motors and any motion using these motors uses the mirror.st program.
+#	The X-translations are achieved using just a database.
+#
+#	Timothy Graber June 7,2001
+#
+#	Modified to be used for the horizontal mirror at 14-ID
+#	
+#	Robert Henning March 2007
+#
+
+grecord(ai,"$(P)$(MIR)debugLevel") {
+	field(VAL,"0")
+}
+
+# These three records are where the soft motors write their output.
+grecord(ao,"$(P)$(MIR)YMove") {}
+grecord(ao,"$(P)$(MIR)XMove") {}
+grecord(ao,"$(P)$(MIR)ThMove") {}
+grecord(ao,"$(P)$(MIR)ChiMove") {}
+grecord(ao,"$(P)$(MIR)VangleMove") {}
+
+
+# These records hold the readback positions of the soft motors
+grecord(ao,"$(P)$(MIR)YRdbk") {}
+grecord(ao,"$(P)$(MIR)XRdbk") {}
+grecord(ao,"$(P)$(MIR)ThRdbk") {}
+grecord(ao,"$(P)$(MIR)ChiRdbk") {}
+grecord(ao,"$(P)$(MIR)VangleRdbk") {}
+
+# This record processes if either of the soft motor STOP fields is set.
+grecord(dfanout,"$(P)$(MIR)YStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)XStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(X1).STOP PP MS")
+        field(OUTB,"$(P)$(X2).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)ThStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(X1).STOP PP MS")
+        field(OUTB,"$(P)$(X2).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)ChiStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+grecord(dfanout,"$(P)$(MIR)VangleStop") {
+        field(VAL,"1")
+        field(OUTA,"$(P)$(Y1).STOP PP MS")
+        field(OUTB,"$(P)$(Y2).STOP PP MS")
+        field(OUTC,"$(P)$(Y3).STOP PP MS")
+}
+#
+# This record computes whether the compound motors are done moving.  
+# It goes to 1 when all of the real motors are done moving.
+#
+grecord(calcout,"$(P)$(MIR)CompDone") {
+        field(INPA,"$(P)$(Y1).DMOV CP NMS")
+        field(INPB,"$(P)$(Y2).DMOV CP NMS")
+        field(INPC,"$(P)$(Y3).DMOV CP NMS")
+        field(INPD,"$(P)$(X1).DMOV CP NMS")
+        field(INPE,"$(P)$(X2).DMOV CP NMS")
+        field(CALC,"A&B&C&D&E")
+}
+grecord(ao,"$(P)$(MIR)PseudoDone") {
+		field(VAL, "1")
+}
+
+grecord(transform,"$(P)$(MIR)AllStop") {
+		field(PREC,"6")
+		field(CLCA,"0")
+		field(OUTA,"$(P)$(Y1).SPMG PP NMS")
+		field(CLCB,"0")
+		field(OUTB,"$(P)$(Y2).SPMG PP NMS")
+		field(CLCC,"0")
+		field(OUTC,"$(P)$(Y3).SPMG PP NMS")
+		field(CLCD,"0")
+		field(OUTD,"$(P)$(X1).SPMG PP NMS")
+		field(CLCE,"0")
+		field(OUTE,"$(P)$(X2).SPMG PP NMS")
+}
+#  These AI records hold data for the mirror the values are initialized
+#  the mirror A parameters.  The State Notation Language program that 
+#  runs the Y, Theta, and Chi motions will reset the values for each 
+#  mirror when it is started up.
+
+grecord(ai,"$(P)$(MIR)yPosZ") {
+	field(DESC, "Z Jack Sep")
+	field(VAL, "840.")
+	field(EGU, "mm")
+}
+grecord(ai,"$(P)$(MIR)CntLength") {
+	field(DESC, "Mirror Center")
+	field(VAL, "425.")
+	field(EGU, "mm")
+}
+grecord(ai,"$(P)$(MIR)yPosX") {
+	field(DESC, "X Jack Sep")
+	field(VAL, "240.")
+	field(EGU, "mm")
+}
+
+
+
+
+

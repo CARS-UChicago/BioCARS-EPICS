@@ -1,0 +1,460 @@
+#
+#	Database for Irena
+#	This is a database to communicate with KEITHLEY MODEL 6485
+#     Modifications are done for st notation.
+#	call from st.cmd : dbLoadRecords("keithley6485st.db", "P=14Cygwin:,DEVICE=Keithley,PORT=serial4,DESC='KEITHLEY'")
+#
+#
+#	Parameters
+#	P	Pv name example 14ID
+#	DEVICE	Pv name for specific device example Keithley, Keithley1
+#	PORT	async (serial) port name example serial1
+#	DESC	description of device ( Keihtley)
+#
+#
+#
+grecord(stringin, "S(P)$(DEVICE):DESC") {
+	field(DESC, "Description device")
+	field(VAL, "$(DESC)")
+	field(PINI, "YES")
+}
+
+#Set  INIT
+#
+
+grecord(ao,"$(P)$(DEVICE):INIT_DEV") {
+	field(DESC, "USE FOR DEVICE INIT")
+	field(PREC,"0")
+	field(VAL, "0")
+	field(PINI, "YES")
+}
+grecord(asyn,"$(P)$(DEVICE):READ_CURR") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+      field(SCAN, "Passive")
+	field(OFMT, "ASCII")
+	field(IFMT, "Hybrid")
+	field(IMAX, "400")
+	field(NRRD, "400")
+	field(TMOT, "10.0")
+}
+
+grecord(asyn,"$(P)$(DEVICE):WRITE") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+	field(TMOD, "Write")
+      field(SCAN, "Passive")
+	field(OFMT, "ASCII")
+	field(IFMT, "Hybrid")
+	field(IMAX, "400")
+	field(NRRD, "400")
+	field(TMOT, "1.0")
+}
+
+
+grecord(ao, "$(P)$(DEVICE):AcqNumS")  {
+	field(DESC, "Number of Samples to Collect")
+	field(VAL, "1")
+	field(DRVH, "15")
+	field(DRVL,"1")
+}
+
+
+grecord(ao,"$(P)$(DEVICE):AcqTotal") {
+	field(DESC, " MEASURED CURRENT")
+	field(VAL, "0")
+	field(PREC, "10")
+	field(FLNK,"$(P)$(DEVICE):AcqTotalF")
+	}
+
+grecord(ao,"$(P)$(DEVICE):AcqMin") {
+	field(DESC, " MIN MEASURED CURRENT")
+	field(VAL, "0")
+	field(PREC, "10")
+	}
+
+grecord(ao,"$(P)$(DEVICE):AcqMax") {
+	field(DESC, " MAX MEASURED CURRENT")
+	field(VAL, "0")
+	field(PREC, "10")
+	}
+
+grecord(ao,"$(P)$(DEVICE):Monitor") {
+	field(DESC, " SET TO 1 WHEN MONITORING")
+	field(VAL, "0")
+	}
+
+grecord(ao,"$(P)$(DEVICE):StopMonitor") {
+	field(DESC, " SET TO 1 TO STOP MONITOR")
+	field(VAL, "0")
+	}
+	 
+grecord(seq, "$(P)$(DEVICE):Start")  {
+	#field(VAL, "0")
+	field(DO1, "1")
+	field(LNK1, "$(P)$(DEVICE):BusyAcq.VAL PP MS") 	
+}
+grecord(busy,"$(P)$(DEVICE):BusyAcq") { 
+	field(VAL, "0")
+}
+#
+#
+grecord(stringin,"$(P)$(DEVICE):ERROR_STRING") {
+	field(DESC, "USE FOR ERROR MESSAGE")
+	field(VAL, " ")
+	}
+
+# This is a variable for selections of Gain Ranges
+# An MBBO record which provides the menu and gain values
+#
+grecord(mbbo,"$(P)$(DEVICE):SelectGain") {
+        field(ZRVL,"0")
+        field(ZRST,"2E-2")
+        field(ONVL,"1")
+        field(ONST,"2E-3")
+        field(TWVL,"2")
+        field(TWST,"2E-4")
+        field(THVL,"3")
+        field(THST,"2E-5")
+	field(FRVL,"4")
+        field(FRST,"2E-6")
+	field(FVVL,"5")
+        field(FVST,"2E-7")
+	field(SXVL,"6")
+        field(SXST,"2E-8")
+	field(SVVL,"7")
+        field(SVST,"2E-9")
+	field(PINI, "YES")
+}
+#
+
+#
+
+grecord(ao, "$(P)$(DEVICE):SelectAvrgOn")  {
+	field(DESC, "Average Filter On/Off")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+}
+
+#
+# This is a variable for selections of Filter 
+# An MBBO record which provides the menu and on and off values
+#
+grecord(mbbo,"$(P)$(DEVICE):SelectFilter") {
+        field(ZRVL,"0")
+        field(ZRST,"REP")
+        field(ONVL,"1")
+        field(ONST,"MOV")        
+}
+#
+#
+# This is a variable for selections of Filter Averaging Count 
+
+#
+grecord(ao, "$(P)$(DEVICE):SlctFltCn")  {
+	field(DESC, "Number of Samples to Collect")
+	field(VAL, "1")
+	field(DRVH, "15")
+	field(DRVL,"1")
+}
+#
+#
+
+grecord(ao, "$(P)$(DEVICE):SelectMedOn")  {
+	field(DESC, "Median Filter On/Off")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+}
+
+#
+grecord(ao, "$(P)$(DEVICE):SlctMedRank")  {
+	field(DESC, "Median Rank 1 to 5")
+	field(VAL, "1")
+	field(DRVH, "5")
+	field(DRVL,"1")
+}
+
+#
+#
+#
+# This is a variable for selections of choice Zero Check on and off
+
+#
+grecord(ao, "$(P)$(DEVICE):SelectZrCkOn")  {
+	field(DESC, "Zero Check On/Off")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+}
+
+#
+#
+# This is a variable for selections of choice Zero Correct on and off
+
+#
+grecord(ao, "$(P)$(DEVICE):SelectZrCrOn")  {
+	field(DESC, "Zero Current On/Off")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+}
+
+#
+#
+#AQUIRE a ZERO READING FOR ZERO CORRECT
+#
+grecord(stringin,"$(P)$(DEVICE):ZEROCR_IN") {
+	field(DESC, "TURN ON OFF ZERO CORRECT")
+	field(VAL, "INIT")
+}
+#
+#
+#RESET UNIT TO A DEFAULT VALUES
+#
+grecord(stringin,"$(P)$(DEVICE):RESET") {
+	field(DESC, "RESET DEF STATE")
+	field(VAL, "*RST")
+}
+#
+#AUTORANGE SETTING AND CONFIGURATION
+#
+grecord(ao,"$(P)$(DEVICE):SET_UP") {
+	field(DESC, "USE FOR AUTOR UP LIM")
+	field(PREC,"5")
+	field(VAL, "0.02")
+	field(FLNK,"$(P)$(DEVICE):SET_UPAU")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):SET_UPAU") {
+	field(INPA,"$(P)$(DEVICE):SET_UP PP MS")
+	field(CALC, "A")
+	#field(OCAL,"PRINTF(':CURR:RANG:AUTO:ULIM %s', A)")
+	field(OCAL,"PRINTF(':RANG:AUTO:ULIM %f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_AULIM.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_AULIM" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_AULIM") {
+	field(PORT, "$(PORT)")
+	field(NRRD, "400")
+	field(AOUT, "")
+	#field(IMAX, "400")
+	field(TMOT, "1.0")
+}
+#
+grecord(ao,"$(P)$(DEVICE):SET_LW") {
+	field(DESC, "USE FOR AUTOR LW LIM")
+	field(PREC,"5")
+	field(VAL, "-0.02")
+	field(FLNK,"$(P)$(DEVICE):SET_LWAU")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):SET_LWAU") {
+	field(INPA,"$(P)$(DEVICE):SET_LW PP MS")
+	field(CALC, "A")
+	#field(OCAL,"PRINTF(':CURR:RANG:AUTO:LLIM %s', A)")
+	field(OCAL,"PRINTF(':RANG:AUTO:LLIM %f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_AULIM.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_AULIM" )
+}
+#
+#
+#
+#
+# This is a variable for selections of choice AUTORANGE on and off
+
+grecord(ao, "$(P)$(DEVICE):SelectAutoOn")  {
+	field(DESC, "Zero AutoRange  On/Off")
+	field(VAL, "0")
+	field(DRVH, "1")
+	field(DRVL,"0")
+	field(FLNK,"$(P)$(DEVICE):SET_AURG" )
+}
+
+#
+
+grecord(scalcout,"$(P)$(DEVICE):SET_AURG") {
+	field(INPA,"$(P)$(DEVICE):SelectAutoOn PP MS")
+	field(CALC, "A")
+	field(OCAL,"PRINTF(':CURR:RANG:AUTO %s', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_AURG.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_AURG" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_AURG") {
+	field(PORT, "$(PORT)")
+	field(NRRD, "400")
+	#field(IMAX, "400")
+	field(AOUT, "")
+	field(TMOT, "1.0")
+}
+#
+#
+#
+#
+# This is a variable for selections of Rate
+# An MBBO record which provides the menu and the Rate values
+#
+grecord(mbbo,"$(P)$(DEVICE):SelectRate") {
+	field(NOBT, "6")
+        field(ZRVL,"0x1")
+        field(ZRST,"6 kHz")
+        field(ONVL,"0x2")
+        field(ONST,"1 kHz")
+        field(TWVL,"0x4")
+        field(TWST,"600 Hz")
+        field(THVL,"0x8")
+        field(THST,"83.3 Hz")
+	field(FRVL,"0x16")
+        field(FRST,"60 Hz") 
+	field(FVVL,"0x32")
+        field(FVST,"10 Hz")  
+        #field(FLNK,"$(P)$(DEVICE):RATE_SET PP MS")
+	field(PINI, "YES")
+	field(FLNK,"$(P)$(DEVICE):RATE_SET_FOUT PP MS")
+}
+#
+#
+grecord(fanout, "$(P)$(DEVICE):RATE_SET_FOUT")  {
+	field(SELM, "Mask")
+	field(SELL, "$(P)$(DEVICE):SelectRate.RVAL NPP MS") ##
+	field(LNK1, "$(P)$(DEVICE):RATE_SET1.VAL PP MS")
+	field(LNK2, "$(P)$(DEVICE):RATE_SET2.VAL PP MS")
+	field(LNK3, "$(P)$(DEVICE):RATE_SET3.VAL PP MS") 
+	field(LNK4, "$(P)$(DEVICE):RATE_SET4.VAL PP MS") 
+	field(LNK5, "$(P)$(DEVICE):RATE_SET5.VAL PP MS") 
+	field(LNK6, "$(P)$(DEVICE):RATE_SET6.VAL PP MS") 
+	#field(FLNK, "$(P)$(DEVICE):RATE_SET")	
+}
+#
+#
+grecord(stringin,"$(P)$(DEVICE):RATE_SET1") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "0.01")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE1" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE1") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET1.VAL PP MS") #############
+	#field(CALC, "A")
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+grecord(stringin,"$(P)$(DEVICE):RATE_SET2") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "0.06")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE2" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE2") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET2.VAL PP MS") #############
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+grecord(stringin,"$(P)$(DEVICE):RATE_SET3") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "0.1")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE3" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE3") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET3.VAL PP MS") #############
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+#
+grecord(stringin,"$(P)$(DEVICE):RATE_SET4") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "0.72")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE4" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE4") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET4.VAL PP MS") #############
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+#
+grecord(stringin,"$(P)$(DEVICE):RATE_SET5") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "1.00")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE5" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE5") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET5.VAL PP MS") #############
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+
+grecord(stringin,"$(P)$(DEVICE):RATE_SET6") {
+	field(DESC, "SELECT RATE")
+	##field(TPRO, "1")
+	field(VAL, "6.00")
+	field(FLNK,"$(P)$(DEVICE):SET_RATE6" )
+}
+grecord(scalcout,"$(P)$(DEVICE):SET_RATE6") {
+	##field(TPRO, "1")
+	field(INAA,"$(P)$(DEVICE):RATE_SET6.VAL PP MS") 
+	field(OCAL,"PRINTF(':CURR:NPLC %s', AA)")
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_RATE.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_RATE" )
+}
+#
+grecord(asyn,"$(P)$(DEVICE):WRITE_RATE") {
+	field(PORT, "$(PORT)")
+	field(NRRD, "45")
+	field(AOUT, "")
+	field(TMOD, "Write")
+	field(FLNK,"$(P)$(DEVICE):POLL_RATE" )
+}
+#
+#
+#
+# Poll for the rate PLC
+
+grecord(asyn,"$(P)$(DEVICE):POLL_RATE") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "CURR:NPLC?")
+	field(FLNK,"$(P)$(DEVICE):INP_POLLRATE" )
+	
+}
+grecord(stringin,"$(P)$(DEVICE):INP_POLLRATE") {
+	field(DESC, "READ POLL RATE")
+	field(INP,"$(P)$(DEVICE):POLL_RATE.AINP NPP MS") 
+	field(FLNK,"$(P)$(DEVICE):READ_RATE" )
+}
+grecord(scalcout,"$(P)$(DEVICE):READ_RATE") {
+	field(INAA,"$(P)$(DEVICE):INP_POLLRATE.VAL NPP MS") 
+	field(CALC,"SSCANF(AA,'%3f')")
+	field(PREC, "3")
+
+}

@@ -1,0 +1,64 @@
+# adsc.db
+# to control adsc detector
+# Dec 12, 2005 - Ning Lei
+
+grecord(bi, "$(P)$(C)TakeDark") {
+  field(DESC, "take dark or not")
+  field(ZNAM, "no")
+  field(ONAM, "yes")
+  field(VAL, "0")
+}
+
+grecord(stringout, "$(P)$(C)Dir") {
+  field(DESC, "image file directory")
+  field(VAL, "/home/lei")
+}
+
+grecord(stringout, "$(P)$(C)Prefix") {
+  field(DESC, "image file prefix")
+  field(VAL, "stTest")
+}
+
+grecord(stringout, "$(P)$(C)DetectorStatus") {
+}
+
+
+grecord(ao, "$(P)$(C)Time") {
+  field(DESC, "exposure time")
+  field(PREC, "4")
+  field(VAL, "2.0")
+}
+
+grecord(bi, "$(P)$(C)BinMode") {
+  field(DESC, "pixel bin mode")
+  field(ZNAM, "1x1")
+  field(ONAM, "2x2")
+  field(VAL, "0")
+}
+
+# this pv is associated with the start button
+grecord(transform, "$(P)$(C)Start") {
+  field(DESC, "start taking images")
+  field(INPA, "1")
+  field(OUTA, "$(P)$(C)StartTakeImage.VAL PP MS")
+}
+
+# this pv is associated with the abort button
+grecord(transform, "$(P)$(C)Abort") {
+  field(DESC, "abort taking images")
+  field(INPA, "1")
+  field(OUTA, "$(P)$(C)AbortTakeImage.VAL PP MS")
+}
+
+grecord(bi, "$(P)$(C)StartTakeImage") {
+  field(DESC, "1: take image; 0: else")
+  field(ZNAM, "0")
+  field(ONAM, "1")
+  field(VAL, "0")
+}
+grecord(bi, "$(P)$(C)AbortTakeImage") {
+  field(DESC, "1: abort take image; 0: else")
+  field(ZNAM, "0")
+  field(ONAM, "1")
+  field(VAL, "0")
+}

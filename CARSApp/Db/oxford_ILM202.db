@@ -1,0 +1,36 @@
+grecord(asyn,"$(P)$(R)1")
+{
+        field(DESC,"ILM202 Vessel Level")
+        field(PORT,"$(PORT)")
+        field(AOUT,"R1")
+        field(SCAN,"3")
+        field(TMOD,"0")
+	field(FLNK,"$(P)$(R)_level1.VAL")
+}
+
+grecord(scalcout,"$(P)$(R)_level1") {
+        field(DESC,"ILM202 Vessel Level")
+        field(INAA,"$(P)$(R)1.TINP NPP NMS")
+        field(CALC,"MIN(105,MAX(0,$S(AA, '%*1c%d')/10))")
+        field(PREC,"1")
+	field(FLNK,"$(P)$(R)2.VAL")
+}
+
+grecord(asyn,"$(P)$(R)2")
+{
+        field(DESC,"ILM202 Buffer Level")
+        field(PORT,"$(PORT)")
+        field(AOUT,"R2")
+#        field(SCAN,"3")
+        field(TMOD,"0")
+	field(FLNK,"$(P)$(R)_level2.VAL")
+}
+
+grecord(scalcout,"$(P)$(R)_level2") {
+        field(DESC,"ILM202 Buffer Level")
+        field(INAA,"$(P)$(R)2.TINP NPP NMS")
+        field(CALC,"MIN(105,MAX(0,$S(AA, '%*1c%d')/10))")
+        field(PREC,"1")
+}
+
+

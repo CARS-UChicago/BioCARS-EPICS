@@ -1,0 +1,608 @@
+#
+# Database for Acurite 6-axis encoder readout
+#
+# Make sure that on the power up serial port is enabled SETUP->USE NEW SETTINGS and unit is put into incremental mode
+# for all axis X->INC->ENTER
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)1_ReadPos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I1")
+	field(FLNK,"$(P)$(ENCODER)1_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)1_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)1_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+	field(FLNK,"$(P)$(ENCODER)2_ReadPos PP MS")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)2_ReadPos")
+{
+	field(DESC,"Channel 2")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I2")
+	field(FLNK,"$(P)$(ENCODER)2_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)2_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)2_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+#	field(FLNK,"$(P)$(ENCODER)3_ReadPos PP MS")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)3_ReadPos")
+{
+	field(DESC,"Channel 3")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I3")
+	field(FLNK,"$(P)$(ENCODER)3_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)3_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)3_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)4_ReadPos")
+{
+	field(DESC,"Channel 4")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I4")
+	field(FLNK,"$(P)$(ENCODER)4_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)4_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)4_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)5_ReadPos")
+{
+	field(DESC,"Channel 5")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I5")
+	field(FLNK,"$(P)$(ENCODER)5_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)5_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)5_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+# Read from encoder
+grecord(asyn,"$(P)$(ENCODER)6_ReadPos")
+{
+	field(DESC,"Channel 6")
+	field(PORT,"$(PORT)")
+	field(SCAN,"1 second")
+	field(AOUT,"?I6")
+	field(FLNK,"$(P)$(ENCODER)6_Pos PP MS")
+}
+          
+# Parce string
+grecord(scalcout,"$(P)$(ENCODER)6_Pos") 
+{
+	field(INAA,"$(P)$(ENCODER)6_ReadPos.TINP NPP NMS")
+	field(CALC,"SSCANF(AA, '%*6c   %f')")
+	field(PREC,"4")
+	field(EGU,"mm")
+}
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)1_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)1_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)1_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)1_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)1_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('Q%.3f_]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)1_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)1_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)1_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('Q%.3f]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)1_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)1_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)1_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)1_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)1_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)1_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)1_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)1_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)1_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)1_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)1_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)1_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+ 
+############### Encoder 2
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)2_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)2_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)2_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)2_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)2_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('W%.3f_]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)2_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)2_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)2_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('W%.3f]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)2_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)2_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)2_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)2_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)2_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)2_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)2_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)2_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)2_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)2_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)2_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)2_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+ 
+##############CHANNEL3
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)3_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)3_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)3_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)3_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)3_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('E%.3f_]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)3_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)3_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)3_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('E%.3f]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)3_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)3_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)3_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)3_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)3_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)3_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)3_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)3_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)3_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)3_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)3_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)3_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+
+################CHANNEL4
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)4_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)4_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)4_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)4_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)4_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('R%.3f_]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)4_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)4_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)4_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('R%.3f]',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)4_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)4_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)4_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)4_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)4_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)4_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)4_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)4_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)4_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)4_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)4_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)4_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+
+##############CHANNEL5
+
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)5_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)5_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)5_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)5_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)5_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('!@%.3f_]!',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)5_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)5_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)5_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('!@%.3f]!',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)5_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)5_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)5_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)5_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)5_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)5_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)5_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)5_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)5_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)5_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)5_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)5_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+
+###############CHANNEL6
+
+#Define the Channel 1 Set value
+grecord(ai,"$(P)$(ENCODER)6_SetVal") 
+{
+	field(VAL, "0")
+	field(PREC,"4")
+#	field(TPRO,"1")
+	field(EGU, "mm")
+}
+
+#define Set field
+grecord(ai, "$(P)$(ENCODER)6_Set")
+{
+	field(DESC, "Set Channel1")
+	field(VAL, "0")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)6_SetPP PP MS")
+}
+
+#Format the string to send to the port
+grecord(scalcout,"$(P)$(ENCODER)6_SetPP")
+{
+	field(INPA,"$(P)$(ENCODER)6_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('!$%.3f_]!',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)6_SetPN PP MS")
+}
+#Format the string negative to send to the port
+grecord(scalcout,"$(P)$(ENCODER)6_SetPN")
+{
+	field(INPA,"$(P)$(ENCODER)6_SetVal.VAL NPP NMS")
+	field(CALC, "ABS(A)")
+	field(OCAL, "PRINTF('!$%.3f]!',ABS(A))")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)6_GetPos PP MS")
+}
+grecord(scalcout,"$(P)$(ENCODER)6_GetPos")
+{
+	field(INPA,"$(P)$(ENCODER)6_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)6_SetPP.OSV NPP NMS")
+	field(INBB,"$(P)$(ENCODER)6_SetPN.OSV NPP NMS")
+#	field(CALC, "PRINTF('%s',AA)")
+	field(CALC, "A>=0? AA: BB")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(FLNK,"$(P)$(ENCODER)6_SetPos PP MS")
+	
+}
+grecord(scalcout,"$(P)$(ENCODER)6_SetPos")
+{
+	field(INPA,"$(P)$(ENCODER)6_SetVal.VAL NPP NMS")
+	field(INAA,"$(P)$(ENCODER)6_GetPos.SVAL NPP NMS")
+	field(CALC, "PRINTF('%s',AA)")
+	field(OOPT, "Every Time")
+#	field(TPRO,"1")
+	field(OUT, "$(P)$(ENCODER)6_WritePos.AOUT NPP MS")
+	field(FLNK,"$(P)$(ENCODER)6_WritePos PP MS")
+	
+}
+grecord(asyn,"$(P)$(ENCODER)6_WritePos")
+{
+	field(DESC,"Channel 1")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+#	field(AOUT,"")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+
+grecord(asyn,"$(P)$(ENCODER)_Clear")
+{
+	field(DESC,"Clear Error")
+	field(PORT,"$(PORT)")
+	field(TMOD, "Write")
+	field(SCAN,"Passive")
+#	field(TPRO,"1")
+	field(AOUT,"[")
+	field(NOWT, "80")
+	field(NRRD, "80")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

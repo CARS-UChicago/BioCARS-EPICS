@@ -1,0 +1,8 @@
+$(P)$(E):Poll.SCAN
+$(P)$(E):MtrToDrvScale.VAL
+$(P)$(E):MtrToDrvOffset.VAL
+$(P)$(E):OpenPos.VAL
+$(P)$(E):ClosePos.VAL
+$(P)$(E):ExpTrEna.VAL
+$(P)$(E):ExpTrPos.VAL
+$(P)$(E):MaxExpTm.VAL

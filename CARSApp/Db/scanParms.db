@@ -1,0 +1,65 @@
+# Need to add the next 5 records so that I could include before and after commands,
+# record old position and old intensity.
+# RH
+
+grecord(stringout,"$(P)$(Q):setup") {
+	field(VAL,"$(A)")
+	field(OUT,"$(SCANREC).BSPV CA NMS")
+	field(FLNK,"$(P)$(Q):setup2")
+}
+
+grecord(stringout,"$(P)$(Q):setup2") {
+	field(VAL,"$(B)")
+	field(OUT,"$(SCANREC).ASPV CA NMS")
+	field(FLNK,"$(P)$(Q):oldpos")
+}
+
+grecord(calc,"$(P)$(Q):oldpos") {
+	field(INPA,"$(RDBK)")
+	field(CALC,"A")
+	field(PREC,"3")
+	field(FLNK,"$(P)$(Q):oldint")
+}
+
+grecord(calc,"$(P)$(Q):oldint") {
+	field(INPA,"$(DET)")
+	field(CALC,"A")
+	field(FLNK,"$(P)$(Q):setup3")
+}
+
+grecord(calcout,"$(P)$(Q):setup3") {
+#	field(VAL,"1")
+	field(A,"1")
+	field(CALC,"A")
+	field(OUT,"$(P)$(Q):scanParms.GO CA NMS")
+}
+
+# Changed to allow scanning of motors in other crates.  RH
+grecord(scanparm,"$(P)$(Q):scanParms") {
+	field(PREC,"6")
+	field(PRE,"4")
+	field(OPRE,"$(SCANREC).CMND  CA NMS")
+	field(OSM,"$(SCANREC).P1SM  CA NMS")
+	field(AR,"$(AR)")
+	field(OAR,"$(SCANREC).P1AR  CA NMS")
+	field(AFT,"$(AFT)")
+	field(OAFT,"$(SCANREC).PASM  CA NMS")
+	field(PPV,"$(POS)")
+	field(RPV,"$(RDBK)")
+	field(OPPV,"$(SCANREC).P1PV  CA NMS")
+	field(ORPV,"$(SCANREC).R1PV  CA NMS")
+	field(SP,"$(SP)")
+	field(OSP,"$(SCANREC).P1SP  CA NMS")
+	field(EP,"$(EP)")
+	field(OEP,"$(SCANREC).P1EP  CA NMS")
+	field(NP,"$(NP)")
+	field(ONP,"$(SCANREC).NPTS  CA NMS")
+	field(SC,"1")
+	field(OSC,"$(SCANREC).EXSC  CA NMS")
+	field(IMP,"$(SCANREC).MPTS  NPP NMS")
+	field(IACT,"$(SCANREC).BUSY  NPP NMS")
+        field(TPV,"$(TPV)")
+        field(OTPV,"$(SCANREC).T1PV CA NMS")
+        field(DPV,"$(DPV)")
+        field(ODPV,"$(SCANREC).D01PV CA NMS")
+}

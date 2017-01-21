@@ -1,0 +1,17 @@
+record(calcout, "$(P)$(E)Error") {
+#    field(INPA,"14Linux:$(E)Distance.VAL CP")
+    field(INPA,"$(P)$(E)Distance.VAL CP")
+    field(INPB,"$(P)$(E).RBV CP")
+    field(INPC,"5")
+    field(CALC,"(A<=(B+C))&&(A>=(B-C))?0:1")
+    field(OUT, "$(P)$(STOP).STOP PP MS")
+    field(OCAL,"0")
+    field(OOPT,"0")
+}
+
+record(bo, "$(P)$(E)UseEncoder") {
+    field(ZNAM,"Yes")
+    field(ONAM,"No")
+    field(VAL,"0")
+    field(OUT,"$(P)$(E)Error.DOPT")
+}

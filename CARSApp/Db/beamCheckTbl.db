@@ -1,0 +1,97 @@
+
+
+grecord(busy,"$(P)beamCheckTbl") {
+		field(DESC, "Beam Check T Start")
+}
+
+#IK added a record for the cancel button
+
+grecord(busy,"$(P)beamCheckTblCancel") {
+		field(DESC, "BeamCheck Cancel")
+}
+
+
+grecord(ao, "$(P)beamCheckTblDelta") {
+ 		field("VAL",".003")
+ 	    field(PREC,"4")
+    	field(DESC, "Vert Tbl Increment")
+}
+
+grecord(ao, "$(P)beamCheckTblPkFd") {
+ 		field("VAL","0")
+ 	    field(PREC,"0")
+    	field(DESC, "Peak Found")
+}
+
+
+grecord(ao, "$(P)beamCheckTblPeak") {
+ 	
+ 	    field(PREC,"5")
+    	field(DESC, "Vert Tbl Peak Pos")
+}
+
+grecord(ao, "$(P)beamCheckTblIter") {
+		field("VAL","5")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheckTbl  Iterations")
+}
+
+
+
+
+grecord(stringout, "$(P)beamCheckTblStatus") {
+	field("VAL", "Idle")
+}
+
+# Added by RH
+grecord(mbbo,"$(P)beamCheckDetector") {
+	field(DESC,"Select detector")
+	field(VAL,"0")
+	field(ZRVL,"0")
+	field(ZRST,"WaveSurfer I0")
+	field(ONVL,"1")
+	field(ONST,"Keithley I0")
+}
+
+#
+#  Simulation PV's
+#
+#
+#grecord(ao, "$(P)DAC1_4") {
+#	field(PREC,"4")
+#   field(DESC, "test DAC")
+#}
+
+#grecord(ai, "$(P)waveSurfer:P1:last") {
+# 	field(PREC,"4")
+#   field(DESC, "test DAC")
+#	field(INP, "$(P)trans")
+#}
+
+#grecord(calc,"$(P)trans") {
+#	field(INPA,"$(P)DAC1_4.VAL")
+#	field(CALC,"(-A*A+4.*A-3.)*10000.0")
+#   field(FLNK,"$(P)waveSurfer:P1:last")
+#}
+
+#record(busy, "$(P)waveSurfer:count")
+#{
+#	field(DESC, "waveSurfer Count")
+#	field(VAL, "0")
+#   field(FLNK,"$(P)trans PP")
+#}
+
+#grecord(mbbo,"$(P)waveSurfer:triggerMode") {
+#   field(DESC,"waveSurfer Trigger Mode")
+#   field(NOBT,"3")
+#   field(ZRVL,"0x0")
+#   field(ONVL,"0x1")
+#   field(TWVL,"0x2")
+#   field(ZRST,"Stop")
+#   field(ONST,"Normal")
+#   field(TWST,"Auto")
+#}
+
+#grecord(ai, "$(P)mir2Th")
+#{
+#}

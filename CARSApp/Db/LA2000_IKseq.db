@@ -1,0 +1,156 @@
+
+# Here sequence record is implemented to poll status of LA2000 HLCHopper
+# and to display the errors if any
+
+grecord(seq, "$(P)$(R)_ScanValues"){
+	field(DO1, "1")
+	field(LNK1,"$(P)$(R)_SPD.PROC PP NMS")
+	field(DLY1, "1")
+	field(DO2, "1")
+	field(LNK2,"$(P)$(R)_ENABLE.PROC PP NMS")
+	field(DLY2, "1")
+	field(DO3, "1")
+	field(LNK3,"$(P)$(R)_FLTA.PROC PP NMS")
+	field(DLY3, "1")
+	field(SCAN, "4")
+}
+
+record(asyn, "$(P)$(R)_SPD") {
+	field(AOUT,"SPD?")
+	field(PORT,"$(PORT)")
+	#field(SCAN,"4")
+#	field(FLNK, "$(P)$(R)_ENABLE")
+}
+
+record(asyn,"$(P)$(R)_RUN") {
+	field(AOUT,"RUN")
+	field(PORT,"$(PORT)")
+}
+
+record(asyn,"$(P)$(R)_STOP") {
+	field(AOUT,"STOP")
+	field(PORT,"$(PORT)")
+}
+
+record(asyn, "$(P)$(R)_ENABLE") {
+	field(AOUT, "ENABLE?")
+	field(PORT, "$(PORT)")
+#	field(FLNK, "$(P)$(R)_SPEED")
+}
+
+#record(asyn, "$(P)$(R)_FAULT") {
+#	field(AOUT, "FAULT?")
+#	field(PORT, "$(PORT)")
+#	#field(FLNK, "$(P)$(R)_FLTA")
+#}
+
+#record(scalcout, "$(P)$(R)_SPEED") {
+#	field(INAA, "$(P)$(R)_SPD.TINP CP")
+#	field(CALC,"SSCANF(AA, '%f')")
+#}
+
+ record(asyn, "$(P)$(R)_FLTA"){
+	field(AOUT, "FLTA?")
+	field(PORT, "$(PORT)")
+	#field(SCAN, "5")
+	field(FLNK, "$(P)$(R)_PARSE1")
+}
+
+grecord(scalcout,"$(P)$(R)_PARSE1"){
+
+	field(INAA, "$(P)$(R)_FLTA.TINP CP")
+	#field(INAA, "$(P)$(R)_TEST_INP CP")
+	field(CALC, "SSCANF(AA,'%d')")
+	field(FLNK, "$(P)$(R)_PARSE2")
+}
+grecord(scalcout,"$(P)$(R)_PARSE2"){
+	#field(INAA,"(P)$(R)_STRING2")
+	field(INAA,"$(P)$(R)_FLTA.TINP CP")
+	#field(INAA, "$(P)$(R)_TEST_INP CP")
+	field(CALC, "SSCANF(AA,'%*3c%d')")
+	field(FLNK, "$(P)$(R)_TRANSFORM2")
+}
+grecord(transform,"$(P)$(R)_TRANSFORM2"){
+	field(INPA,"$(P)$(R)_PARSE2.VAL NPP NMS")
+	field(CLCB,"A%2")
+	field(OUTB,"$(P)$(R)_ERR2_1.VAL PP NMS")
+	field(CLCC,"A/2")
+	field(CLCD,"C%2")
+	field(OUTD, "$(P)$(R)_ERR2_2.VAL PP NMS")
+	field(CLCE,"C/2")
+	field(CLCF,"E%2")
+	field(OUTF, "$(P)$(R)_ERR2_3.VAL PP NMS")
+	field(CLCG,"E/2")
+	field(CLCH,"G%2")
+	field(OUTH, "$(P)$(R)_ERR2_4.VAL PP NMS")
+	field(FLNK, "$(P)$(R)_TRANSFORM1")
+}
+
+grecord(transform,"$(P)$(R)_TRANSFORM1"){
+	field(INPA,"$(P)$(R)_PARSE1.VAL NPP NMS")
+	field(CLCB,"A%2")
+	field(OUTB, "$(P)$(R)_ERR1_0.VAL PP NMS")
+	field(CLCC,"A/2")
+	field(CLCD,"C%2")
+	field(OUTD, "$(P)$(R)_ERR1_1.VAL PP NMS")
+	field(CLCE,"C/2")
+	field(CLCF,"E%2")
+	field(OUTF, "$(P)$(R)_ERR1_2.VAL PP NMS")
+	field(CLCG,"E/2")
+	field(CLCH,"G%2")
+	field(OUTH, "$(P)$(R)_ERR1_3.VAL PP NMS")
+	field(CLCI,"G/2")
+	field(CLCJ,"I%2")
+	field(OUTJ, "$(P)$(R)_ERR1_4.VAL PP NMS")
+	
+	
+}
+grecord(bi,"$(P)$(R)_ERR1_1"){
+	field(ZNAM, "OK")
+	field(ONAM,"Amp Over-Temp")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR1_2"){
+	field(ZNAM, "OK")
+	field(ONAM,"Logic Power Fault")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR1_3"){
+	field(ZNAM, "OK")
+	field(ONAM,"Auxiliar #1 Fault")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR1_4"){
+	field(ZNAM, "OK")
+	field(ONAM,"Transf Over-Temp")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR1_0"){
+	field(ZNAM, "OK")
+	field(ONAM,"RESERVED")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR2_1"){
+	field(ZNAM, "OK")
+	field(ONAM,"Bearing Air Pres Fault")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR2_2"){
+	field(ZNAM, "OK")
+	field(ONAM,"Clamp Air Pres Fault")
+	field(VAL, "0")
+}
+grecord(bi,"$(P)$(R)_ERR2_3"){
+	field(ZNAM, "OK")
+	field(ONAM,"Main Air Fault")
+	field(VAL, "0")
+} 
+grecord(bi,"$(P)$(R)_ERR2_4"){
+	field(ZNAM, "OK")
+	field(ONAM,"Over Speed Fault")
+	field(VAL, "0")
+} 
+#grecord(stringin, "$(P)$(R)_TEST_INP"){
+#	field(VAL,"02 08")
+#}      
+

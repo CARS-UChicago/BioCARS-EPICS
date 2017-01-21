@@ -1,0 +1,80 @@
+#
+# allStopIDA.db
+# stop all motors in IDA crate
+
+
+grecord(bo,"$(P)allstop") {
+	field(DOL,"1")
+	field(OUT,"$(P)allstop2.A  PP MS")
+}
+
+grecord(transform,"$(P)allstop5") {
+	field(DESC,"allstop distribution")
+	field(CLCB,"a")
+	field(CLCC,"a")
+	field(CLCD,"a")
+	field(OUTA,"$(P)27.STOP  CA MS")
+	field(OUTB,"$(P)28.STOP  CA MS")
+	field(OUTC,"$(P)29.STOP  CA MS")
+	field(OUTD,"$(P)30.STOP  CA MS")
+}
+grecord(transform,"$(P)allstop4") {
+	field(DESC,"allstop distribution")
+	field(CLCB,"a")
+	field(CLCC,"a")
+	field(CLCD,"a")
+	field(CLCE,"a")
+	field(CLCF,"a")
+	field(CLCG,"a")
+	field(CLCH,"a")
+	field(CLCI,"a")
+	field(OUTA,"$(P)m18.STOP  CA MS")
+	field(OUTB,"$(P)m19.STOP  CA MS")
+	field(OUTC,"$(P)m20.STOP  CA MS")
+	field(OUTD,"$(P)m21.STOP  CA MS")
+	field(OUTE,"$(P)m22.STOP  CA MS")
+	field(OUTF,"$(P)m25.STOP  CA MS")
+	field(OUTG,"$(P)m26.STOP  CA MS")
+	field(OUTI,"$(P)allstop5.A  PP MS")
+}
+grecord(transform,"$(P)allstop3") {
+	field(DESC,"allstop distribution")
+	field(CLCB,"a")
+	field(CLCC,"a")
+	field(CLCD,"a")
+	field(CLCE,"a")
+	field(CLCF,"a")
+	field(CLCG,"a")
+	field(CLCH,"a")
+	field(CLCI,"a")
+	field(OUTA,"$(P)m11.STOP  CA MS")
+	field(OUTB,"$(P)m12.STOP  CA MS")
+	field(OUTC,"$(P)m13.STOP  CA MS")
+	field(OUTD,"$(P)m14.STOP  CA MS")
+	field(OUTE,"$(P)m15.STOP  CA MS")
+	field(OUTG,"$(P)m16.STOP  CA MS")
+	field(OUTH,"$(P)m17.STOP  CA MS")
+	field(OUTI,"$(P)allstop4.A  PP MS")
+}
+grecord(transform,"$(P)allstop2") {
+	field(DESC,"allstop distribution")
+	field(CLCB,"a")
+	field(CLCC,"a")
+	field(CLCD,"a")
+	field(CLCE,"a")
+	field(CLCF,"a")
+	field(CLCI,"a")
+	field(OUTA,"$(P)m1.STOP  CA MS")
+	field(OUTB,"$(P)m2.STOP  CA MS")
+	field(OUTC,"$(P)m3.STOP  CA MS")
+	field(OUTD,"$(P)m4.STOP  CA MS")
+	field(OUTE,"$(P)m9.STOP  CA MS")
+	field(OUTF,"$(P)m10.STOP  CA MS")
+	field(OUTI,"$(P)allstop3.A  PP MS")
+}
+#grecord(transform,"$(P)allstop1") {
+#	field(DESC,"allstop distribution")
+#	field(CLCB,"a")
+#	field(OUTA,"$(P)AbortScans.PROC  PP MS")
+#	field(OUTB,"$(P)allstop2.A  PP MS")
+#}

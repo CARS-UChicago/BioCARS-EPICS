@@ -1,0 +1,14 @@
+record(transform, "$(P)Chi2Correction") {
+  field(CMTA,"Angle of first crystal")
+  field(INPA,"$(P)$(E) NPP MS")
+  field(CMTB,"Distance mono to hutch slits")
+  field(INPB,"$(D)")
+  field(CMTC,"Difference in hsx scan")
+  field(CMTD,"Current Chi position")
+  field(INPD,"$(P)$(C) NPP MS")
+  field(CMTE,"Delta chi2")
+  field(CLCE,"(C*57.29578)/(B*2*SIN(A*D2R))")
+  field(CMTF,"New value of Chi2")
+  field(CLCF,"D+E")
+  field(PREC,"4")
+}

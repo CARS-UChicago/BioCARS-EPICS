@@ -1,0 +1,8 @@
+record(calcout, "$(P)stop_button") {
+    field(INPA,"$(P)B1Bi7.VAL CP MS")
+    field(SCAN,".1 second")
+    field(CALC,"A")
+    field(OOPT,"When Zero")
+    field(OUT, "$(P)allstop.PROC PP NMS")
+    field(DISA,"1")
+}

@@ -1,0 +1,33 @@
+# Soft motors used in BMD and IDB.  BMC has the real thing.
+record(motor,"$(P)dz") {
+	field(DTYP,"Soft Channel")
+        field(OUT,"$(P)dz_calc.VAL PP MS") 
+	field(RDBL,"$(P)dz_calc.VAL NPP NMS")
+	field(PREC,"3")
+	field(TWV,"10")
+	field(EGU,"mm")
+	field(RRES,"1")
+	field(MRES,"0.01")
+	field(VBAS,"0.1")
+	field(URIP,"1")
+}
+
+record(ao,"$(P)dz_calc") {
+}
+
+record(motor,"$(P)bsz") {
+	field(DTYP,"Soft Channel")
+        field(OUT,"$(P)bsz_calc.VAL PP MS") 
+	field(RDBL,"$(P)bsz_calc.VAL NPP NMS")
+	field(PREC,"2")
+	field(TWV,"10")
+	field(EGU,"mm")
+	field(RRES,"1")
+	field(MRES,"0.01")
+	field(VBAS,"0.1")
+	field(URIP,"1")
+}
+
+record(ao,"$(P)bsz_calc") {
+}
+

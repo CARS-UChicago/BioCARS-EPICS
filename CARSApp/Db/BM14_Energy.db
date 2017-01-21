@@ -1,0 +1,112 @@
+# Calculate energy from crystal angle.
+record(calcout,"$(P)Energy_D_Calc_E") {
+	field(INPA,"$(P)Dmonotheta1.RBV CP MS")
+	field(INPB,"12.39854")
+	field(INPC,"3.14159")
+	field(CALC,"B/(2.0*3.1355*sin(A*C/180.0))")
+}
+
+record(calcout,"$(P)Energy_D_Calc_T") {
+	field(INPB,"12.39854")
+	field(INPC,"3.14159")
+	field(CALC,"(180.0/C)*asin(B/(2*3.1355*A))")
+	field(OUT,"$(P)Dmonotheta1.VAL PP MS")
+}
+
+record(motor,"$(P)Energy_D") {
+	field(DTYP,"Soft Channel")
+	field(RDBL,"$(P)Energy_D_Calc_E.VAL NPP MS")
+	field(OUT,"$(P)Energy_D_Calc_T.A PP MS")
+	field(URIP,"Yes")
+	field(PREC,"4")
+	field(DHLM,"100")
+	field(DLLM,"-100")
+	field(RTRY,"0")
+	field(STOO,"$(P)Dmonotheta1.STOP PP MS")
+	field(DINP,"$(P)Dmonotheta1.DMOV NPP MS")
+	field(MRES,"0.001")
+	field(RRES,"1.000")
+	field(TWV,"1")
+	field(EGU,"Kev")
+# Had to add this to prevent Energy_D from sending a STOP to Dmonotheta1
+#	field(NTM,"0")
+	field(NTM,"0")
+}
+
+record(calcout,"$(P)Energy_C_Calc") {
+        field(INPA,"$(P)Cmonotheta.RBV CP MS")
+        field(INPB,"12.39854")
+        field(INPC,"3.14159")
+        field(CALC,"B/(2.0*3.2664*sin(A*C/180.0))")
+}
+
+record(motor,"$(P)Energy_C") {
+        field(DTYP,"Soft Channel")
+        field(RDBL,"$(P)Energy_C_Calc.VAL NPP MS")
+        field(URIP,"Yes")
+        field(PREC,"5")
+        field(DHLM,"100")
+        field(DLLM,"-100")
+        field(RTRY,"0")
+        field(STOO,"$(P)Cmonotheta.STOP PP MS")
+        field(DINP,"$(P)Cmonotheta.DMOV NPP MS")
+        field(MRES,"0.001")
+        field(RRES,"1.000")
+        field(TWV,"1")
+        field(EGU,"Kev")
+}
+
+# Wavelength
+record(calcout,"$(P)Wave_D_Calc_W") {
+	field(INPA,"$(P)Dmonotheta1.RBV CP MS")
+	field(INPB,"12.39854")
+	field(INPC,"3.14159")
+	field(CALC,"2.0*3.1355*sin(A*C/180.0)")
+}
+
+record(calcout,"$(P)Wave_D_Calc_T") {
+	field(INPB,"12.39854")
+	field(INPC,"3.14159")
+	field(CALC,"(180.0/C)*asin(A/(2*3.1355))")
+	field(OUT,"$(P)Dmonotheta1.VAL PP MS")
+}
+
+record(motor,"$(P)Wave_D") {
+	field(DTYP,"Soft Channel")
+	field(RDBL,"$(P)Wave_D_Calc_W.VAL NPP MS")
+	field(OUT,"$(P)Wave_D_Calc_T.A PP MS")
+	field(URIP,"Yes")
+	field(PREC,"4")
+	field(DHLM,"100")
+	field(DLLM,"-100")
+	field(RTRY,"0")
+	field(STOO,"$(P)Dmonotheta1.STOP PP MS")
+	field(DINP,"$(P)Dmonotheta1.DMOV NPP MS")
+	field(MRES,"0.001")
+	field(RRES,"1.000")
+	field(TWV,"1")
+	field(EGU,"Ang")
+}
+
+record(calcout,"$(P)Wave_C_Calc") {
+        field(INPA,"$(P)Cmonotheta.RBV CP NMS")
+        field(INPB,"12.39854")
+        field(INPC,"3.14159")
+        field(CALC,"2.0*3.2664*sin(A*C/180.0)")
+}
+
+record(motor,"$(P)Wave_C") {
+        field(DTYP,"Soft Channel")
+        field(RDBL,"$(P)Wave_C_Calc.VAL NPP MS")
+        field(URIP,"Yes")
+        field(PREC,"5")
+        field(DHLM,"100")
+        field(DLLM,"-100")
+        field(RTRY,"0")
+        field(STOO,"$(P)Cmonotheta.STOP PP MS")
+        field(DINP,"$(P)Cmonotheta.DMOV NPP MS")
+        field(MRES,"0.001")
+        field(RRES,"1.000")
+        field(TWV,"1")
+        field(EGU,"Ang")
+}

@@ -1,0 +1,109 @@
+grecord(busy,"$(P)beamCheckComb") {
+		field(DESC, "Beam Check V Start")
+}
+
+grecord(busy,"$(P)beamCheckV") {
+		field(DESC, "Beam Check V Start")
+}
+
+grecord(busy,"$(P)beamCheckH") {
+		field(DESC, "Beam Check H Start")
+}
+
+#IK added a record for the cancel button
+
+grecord(busy,"$(P)beamCheckCancel") {
+		field(DESC, "BeamCheck Cancel")
+}
+
+grecord(ao, "$(P)beamCheckDeltaV") {
+		field("VAL",".3")
+ 	    field(PREC,"4")
+    	field(DESC, "Vertical Increment")
+}
+
+grecord(ao, "$(P)beamCheckDeltaH") {
+ 		field("VAL",".003")
+ 	    field(PREC,"4")
+    	field(DESC, "Horizontal Increment")
+}
+
+grecord(ao, "$(P)beamCheckIter") {
+		field("VAL","5")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheck Iterations")
+}
+# added by IK . Variables return 0 if alignement is not successful, and 1 if it is
+grecord(ao, "$(P)beamCheckVAln") {
+		field("VAL","0")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheck V Algn")
+}
+grecord(ao, "$(P)beamCheckHAln") {
+		field("VAL","0")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheck H Algn")
+}
+
+
+
+grecord(stringout, "$(P)beamCheckStatus") {
+	field("VAL", "Idle")
+}
+
+# Added by RH
+grecord(mbbo,"$(P)beamCheckDetector") {
+	field(DESC,"Select detector")
+	field(VAL,"0")
+	field(ZRVL,"0")
+	field(ZRST,"WaveSurfer I0")
+	field(ONVL,"1")
+	field(ONST,"Keithley I0")
+        field(TWVL,"2")
+        field(TWST,"Micro I0")
+        field(THVL,"3")
+        field(THST,"Sdev/Mean")
+}
+
+#
+#  Simulation PV's
+#
+#
+#grecord(ao, "$(P)DAC1_4") {
+#	field(PREC,"4")
+#   field(DESC, "test DAC")
+#}
+
+#grecord(ai, "$(P)waveSurfer:P1:last") {
+# 	field(PREC,"4")
+#   field(DESC, "test DAC")
+#	field(INP, "$(P)trans")
+#}
+
+#grecord(calc,"$(P)trans") {
+#	field(INPA,"$(P)DAC1_4.VAL")
+#	field(CALC,"(-A*A+4.*A-3.)*10000.0")
+#   field(FLNK,"$(P)waveSurfer:P1:last")
+#}
+
+#record(busy, "$(P)waveSurfer:count")
+#{
+#	field(DESC, "waveSurfer Count")
+#	field(VAL, "0")
+#   field(FLNK,"$(P)trans PP")
+#}
+
+#grecord(mbbo,"$(P)waveSurfer:triggerMode") {
+#   field(DESC,"waveSurfer Trigger Mode")
+#   field(NOBT,"3")
+#   field(ZRVL,"0x0")
+#   field(ONVL,"0x1")
+#   field(TWVL,"0x2")
+#   field(ZRST,"Stop")
+#   field(ONST,"Normal")
+#   field(TWST,"Auto")
+#}
+
+#grecord(ai, "$(P)mir2Th")
+#{
+#}

@@ -1,0 +1,262 @@
+grecord(ao,"$(P)$(EN):Energy") {
+        field(DESC, "Energy")
+	field(PREC, "$(PREC)")
+	field(EGU, "$(EGU)")
+	field(FLNK,"$(P)$(EN):PutMoving.PROC  PP MS")
+}
+
+grecord(calcout,"$(P)$(EN):E_RBV") {
+        field(DESC, "Energy Readback")
+        field(INPA,"$(P2)Dmonotheta1.DRBV CP MS")
+	field(INPB,"12.39854")
+	field(INPC,"$(P)$(EN):dspace.VAL CP MS")
+        field(CALC,"B/(2*C*sin(A*1/57.29577951))")
+	field(PREC, "$(PREC)")
+	field(EGU, "$(EGU)")
+}
+
+grecord(busy,"$(P)$(EN):Moving") {
+	field(DESC,"Energy moving (SNL control)")
+}
+
+grecord(bo,"$(P)$(EN):PutMoving") {
+	field(DOL,"1")
+	field(OUT,"$(P)$(EN):Moving.VAL  PP MS")
+}
+
+grecord(bo,"$(P)$(EN):SET") {
+	field(DESC, "Set Energy")
+	field(ONAM, "Set")
+	field(ZNAM, "Use")
+}
+
+grecord(ao,"$(P)$(EN):width") {
+	field(DESC, "channel width")
+	field(VAL,  "5")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+grecord(ao,"$(P)$(EN):dspace") {
+	field(DESC, "lattice spacing")
+	field(VAL,  "2.059287")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(ao,"$(P)$(EN):height") {
+	field(DESC, "beam offset height")
+	field(VAL,  "38.1")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):z2_track") {
+	field(DESC, "2nd Xtal Z Tracking")
+	field(VAL,  "1")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(ao,"$(P)$(EN):z2_off") {
+	field(DESC, "2nd Xtal Z Offset")
+	field(VAL,  "0.000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):y2_track") {
+	field(DESC, "2nd Xtal Height Tracking")
+	field(VAL,  "1")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(ao,"$(P)$(EN):y2_off") {
+	field(DESC, "2nd Xtal Height Offset")
+	field(VAL,  "0.000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):hsy_track") {
+	field(DESC, "Expt Table Tracking")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(ao,"$(P)$(EN):hsy_sign") {
+	field(DESC, "sign of Expt Table Motion")
+	field(VAL,  "1.0000")
+	field(PREC, "$(PREC)")
+}
+
+grecord(ao,"$(P)$(EN):hsy_mvmin") {
+	field(DESC, "Minimum Expt Table Move (mm)")
+	field(VAL,  "0.0030")
+	field(PREC, "5")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(ao,"$(P)$(EN):hsy_off") {
+	field(DESC, "Expt Table Offset")
+	field(VAL,  "0.000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):tY_track") {
+	field(DESC, "Expt Table Tracking")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(ao,"$(P)$(EN):tY_sign") {
+	field(DESC, "sign of Expt Table Motion")
+	field(VAL,  "1.0000")
+	field(PREC, "$(PREC)")
+}
+
+grecord(ao,"$(P)$(EN):tY_mvmin") {
+	field(DESC, "Min. Expt Table2 Move (mm)")
+	field(VAL,  "0.0030")
+	field(PREC, "5")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(ao,"$(P)$(EN):tY_off") {
+	field(DESC, "Expt Table Offset")
+	field(VAL,  "0.000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(ao,"$(P)$(EN):y2_mvmin") {
+	field(DESC, "Minimum 2nd XTAL Y Move (mm)")
+	field(VAL,  "0.0030")
+	field(PREC, "5")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):use_feedback") {
+	field(DESC, "Flag to wait for Feedback")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(bo,"$(P)$(EN):verbose") {
+	field(DESC, "Print Mono Debugging Info")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(ao,"$(P)$(EN):tweakval") {
+	field(DESC, "energy tweak value")
+	field(VAL,  "$(TWEAK)")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+
+# Mark Rivers removed APP and BPP from the transform record, fields deleted
+# in R3.13.1.1 version of record
+grecord(transform,"$(P)$(EN):tweak") {
+	field(DESC, "Tweak Energy")
+	field(CLCD,"a?c-e:b?c+e:c")
+	field(INPC,"$(P)$(EN):Energy  NPP NMS")
+	field(INPE,"$(P)$(EN):tweakval")
+	field(OUTD,"$(P)$(EN):Energy  PP MS")
+	field(OUTF,"$(P)$(EN):tweak.A  NPP NMS")
+	field(OUTG,"$(P)$(EN):tweak.B  NPP NMS")
+	field(PREC,"$(PREC)")
+}
+grecord(scanparm,"$(P)$(EN):scanParms") {
+	field(PREC,"6")
+	field(PRE,"4")
+	field(OPRE,"$(SCANREC).CMND PP MS")
+	field(OSM,"$(SCANREC).P1SM PP MS")
+	field(OAR,"$(SCANREC).P1AR PP MS")
+	field(OAFT,"$(SCANREC).PASM PP MS")
+	field(PPV,"$(P)$(EN):Energy")
+	field(RPV,"$(P)$(EN):Energy")
+	field(OPPV,"$(SCANREC).P1PV PP MS")
+	field(ORPV,"$(SCANREC).R1PV PP MS")
+	field(OSP,"$(SCANREC).P1SP PP MS")
+	field(OEP,"$(SCANREC).P1EP PP MS")
+	field(ONP,"$(SCANREC).NPTS PP MS")
+	field(SC,"1")
+	field(AR,"1")
+        field(AFT,"2")
+	field(NP,"10")
+	field(OSC,"$(P)$(EN):scanpSEQ.DO1 PP MS")
+	field(IMP,"$(SCANREC).MPTS NPP NMS")
+	field(IACT,"$(SCANREC).EXSC NPP NMS")
+}
+grecord(seq,"$(P)$(EN):scanpSEQ")
+{
+	field(DLY1,"0.2")
+	field(LNK1,"$(SCANREC).EXSC NPP NMS")
+}
+
+
+grecord(ao,"$(P)$(EN):DummyUND:EnSet") {
+	field(DESC, "Dummy UND Energy")
+	field(VAL,  "10.0000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(ao,"$(P)$(EN):DummyUND:Energy") {
+	field(DESC, "Dummy UND Energy")
+	field(VAL,  "10.0000")
+	field(PREC, "$(PREC)")
+	field(EGU,  "$(EGU)")
+}
+
+grecord(bo,"$(P)$(EN):DummyUND:Start") {
+	field(DESC, "Dummy UND Start")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(bo,"$(P)$(EN):DummyUND:Busy") {
+	field(DESC, "Dummy UND Busy")
+	field(VAL,  "0")
+	field(ONAM, "Yes")
+	field(ZNAM, "No")
+}
+
+grecord(motor,"$(P)$(EN):m1")
+{
+	field(DESC,"Energy pseudo motor")
+	field(DTYP,"Soft Channel")
+	field(DINP,"$(P2)Dmonotheta1.DMOV NPP MS")
+	field(DIR, "0")
+	field(VELO,"1")
+	field(VMAX,"1")
+	field(S,"0")
+	field(VBAS,"0")
+	field(SBAS,"0")
+	field(ACCL,"0.2")
+	field(BDST,"0")
+	field(BVEL,"1.")
+	field(BACC,"0")
+	field(RDBL,"$(P)$(EN):E_RBV.VAL NPP MS")
+	field(OUT,"$(P)$(EN):Energy.VAL PP MS")
+        field(URIP,"Yes")
+        field(STOO,"$(P2)Dmonotheta1.STOP PP MS")
+	field(MRES,"0.00002")
+	field(RRES,"1")
+	field(PREC,"5")
+	field(EGU,"keV")
+	field(DHLM,"17")
+	field(DLLM,"6")
+	field(TWV,"1")
+        field(RTRY,"0")
+        field(OFF,"0.")
+        field(FOFF,"Frozen")
+}

@@ -1,0 +1,462 @@
+# 14ID-EPS_2K10_WF-TC_R-VAL.db
+# -------------------------
+# The records below create PVs for displaying WFx & TCx real values on MEDM screen
+
+# The values will be one-by-one transmitted via DCM --> 6008SV1R link 
+
+# A reference number (x=RF=0-15) is sent at meantime to identify the data possessor
+
+#=======================================================
+
+
+# Get "Rval_SN" as Idx of WF and TC
+#   --by extracting bit8-11 then right shifting eps_TransID 8-bits  
+
+record(calc,"$(P)eps_valSN")
+{
+	field(INPA,"$(P)eps_TransID.VAL CP NMS")
+	field(CALC,"(A AND 3840) >> 8")
+}
+
+#------------------------------------------------
+#Read WF and TC value from PLC via DCM-B
+record(longin,"$(P)eps_WF")
+
+{
+	field(DESC,"from DCM-B_OUT-8 -- O:8.6")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"I/O Intr")
+     field(INP,"#L0 A0 C10 S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"32767")
+     field(LOPR,"-32767")
+}
+
+record(longin,"$(P)eps_TC")
+
+{
+	field(DESC,"from DCM-B_OUT-8 -- O:8.7")
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"I/O Intr")
+     field(INP,"#L0 A0 C12 S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"32767")
+     field(LOPR,"-32767")
+}
+
+#=====================================================
+# Get "WF0" value
+
+record(calcout,"$(P)eps_WF0calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF0.VAL PP NMS")
+	field(CALC,"(A=0) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF0") {field(PREC,"2")}
+
+#--------------------
+# Get "TC0" value
+
+record(calcout,"$(P)eps_TC0calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC0.VAL PP NMS")
+	field(CALC,"(A=0) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC0") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF1" value
+
+record(calcout,"$(P)eps_WF1calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF1.VAL PP NMS")
+	field(CALC,"(A=1) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF1") {field(PREC,"2")}
+
+#--------------------
+# Get "TC1" value
+
+record(calcout,"$(P)eps_TC1calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC1.VAL PP NMS")
+	field(CALC,"(A=1) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC1") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF2" value
+
+record(calcout,"$(P)eps_WF2calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF2.VAL PP NMS")
+	field(CALC,"(A=2) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF2") {field(PREC,"2")}
+
+#--------------------
+# Get "TC2" value
+
+record(calcout,"$(P)eps_TC2calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC2.VAL PP NMS")
+	field(CALC,"(A=2) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC2") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF3" value
+
+record(calcout,"$(P)eps_WF3calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF3.VAL PP NMS")
+	field(CALC,"(A=3) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF3") {field(PREC,"2")}
+
+#--------------------
+# Get "TC3" value
+
+record(calcout,"$(P)eps_TC3calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC3.VAL PP NMS")
+	field(CALC,"(A=3) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC3") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF4" value
+
+record(calcout,"$(P)eps_WF4calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF4.VAL PP NMS")
+	field(CALC,"(A=4) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF4") {field(PREC,"2")}
+
+#--------------------
+# Get "TC4" value
+
+record(calcout,"$(P)eps_TC4calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC4.VAL PP NMS")
+	field(CALC,"(A=4) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC4") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF5" value
+
+record(calcout,"$(P)eps_WF5calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF5.VAL PP NMS")
+	field(CALC,"(A=5) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF5") {field(PREC,"2")}
+
+#--------------------
+# Get "TC5" value
+
+record(calcout,"$(P)eps_TC5calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC5.VAL PP NMS")
+	field(CALC,"(A=5) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC5") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF6" value
+
+record(calcout,"$(P)eps_WF6calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF6.VAL PP NMS")
+	field(CALC,"(A=6) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF6") {field(PREC,"2")}
+
+#--------------------
+# Get "TC6" value
+
+record(calcout,"$(P)eps_TC6calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC6.VAL PP NMS")
+	field(CALC,"(A=6) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC6") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF7" value
+
+record(calcout,"$(P)eps_WF7calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF7.VAL PP NMS")
+	field(CALC,"(A=7) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF7") {field(PREC,"2")}
+
+#--------------------
+# Get "TC7" value
+
+record(calcout,"$(P)eps_TC7calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC7.VAL PP NMS")
+	field(CALC,"(A=7) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC7") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF8" value
+
+record(calcout,"$(P)eps_WF8calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF8.VAL PP NMS")
+	field(CALC,"(A=8) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF8") {field(PREC,"2")}
+
+#--------------------
+# Get "TC8" value
+
+record(calcout,"$(P)eps_TC8calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC8.VAL PP NMS")
+	field(CALC,"(A=8) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC8") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF9" value
+
+record(calcout,"$(P)eps_WF9calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF9.VAL PP NMS")
+	field(CALC,"(A=9) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF9") {field(PREC,"2")}
+
+#--------------------
+# Get "TC9" value
+
+record(calcout,"$(P)eps_TC9calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC9.VAL PP NMS")
+	field(CALC,"(A=9) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC9") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF10" value
+
+record(calcout,"$(P)eps_WF10calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF10.VAL PP NMS")
+	field(CALC,"(A=10) ? B/100:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF10") {field(PREC,"2")}
+
+#--------------------
+# Get "TC10" value
+
+record(calcout,"$(P)eps_TC10calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC10.VAL PP NMS")
+	field(CALC,"(A=10) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC10") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF11" value
+
+record(calcout,"$(P)eps_WF11calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF11.VAL PP NMS")
+	field(CALC,"(A=11) ? B/100:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF11") {field(PREC,"2")}
+
+#--------------------
+# Get "TC11" value
+
+record(calcout,"$(P)eps_TC11calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC11.VAL PP NMS")
+	field(CALC,"(A=11) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC11") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF12" value
+
+record(calcout,"$(P)eps_WF12calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF12.VAL PP NMS")
+	field(CALC,"(A=12) ? B/100:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF12") {field(PREC,"2")}
+
+#--------------------
+# Get "TC12" value
+
+record(calcout,"$(P)eps_TC12calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC12.VAL PP NMS")
+	field(CALC,"(A=12) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC12") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF13" value
+
+record(calcout,"$(P)eps_WF13calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF13.VAL PP NMS")
+	field(CALC,"(A=13) ? B/100:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF13") {field(PREC,"2")}
+
+#--------------------
+# Get "TC13" value
+
+record(calcout,"$(P)eps_TC13calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC13.VAL PP NMS")
+	field(CALC,"(A=13) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC13") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF14" value
+
+record(calcout,"$(P)eps_WF14calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF14.VAL PP NMS")
+	field(CALC,"(A=14) ? B/1000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF14") {field(PREC,"2")}
+
+#--------------------
+# Get "TC14" value
+
+record(calcout,"$(P)eps_TC14calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC14.VAL PP NMS")
+	field(CALC,"(A=14) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC14") {field(PREC,"2")}
+
+#---------------------------------------------------
+# Get "WF15" value
+
+record(calcout,"$(P)eps_WF15calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_WF.VAL PP NMS")
+	field(OUT,"$(P)eps_val_WF15.VAL PP NMS")
+	field(CALC,"(A=15) ? B/10000:VAL")
+}
+
+grecord(ao,"$(P)eps_val_WF15") {field(PREC,"2")}
+
+#--------------------
+# Get "TC15" value
+
+record(calcout,"$(P)eps_TC15calc")
+{
+	field(INPA,"$(P)eps_valSN.VAL CP NMS")
+	field(INPB,"$(P)eps_TC.VAL PP NMS")
+	field(OUT,"$(P)eps_val_TC15.VAL PP NMS")
+	field(CALC,"(A=15) ? B/10:VAL")
+}
+
+grecord(ao,"$(P)eps_val_TC15") {field(PREC,"2")}
+

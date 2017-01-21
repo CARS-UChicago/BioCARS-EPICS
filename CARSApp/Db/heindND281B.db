@@ -1,0 +1,52 @@
+#
+#
+#
+#
+
+
+grecord(asyn,"$(P)HeindREAD") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+	field(SCAN, "1 second")
+	field(TMOT, "1.0")
+	field(FLNK, "$(P)HeindEncPos")
+}
+
+
+grecord(scalcout,"$(P)HeindEncPos") {
+	field(INAA,"$(P)HeindREAD.TINP NPP NMS")
+	field(EGU, "deg")
+	field(CALC,"SSCANF(AA,'%*c%f')")
+        field(PREC, "5")
+	field(FLNK, "$(P)HeindEncPosSn")
+
+}
+
+grecord(scalcout,"$(P)HeindEncPosSn") {
+	field(INAA,"$(P)HeindREAD.TINP NPP NMS")
+#	field(CALC,"SSCANF(AA,'%1c')")
+	field(CALC,"AA[0,1]")
+       	field(FLNK, "$(P)HeindEncPosSn1")
+
+}
+grecord(scalcout,"$(P)HeindEncPosSn1") {
+	field(INAA,"$(P)HeindEncPosSn.SVAL NPP NMS")
+	field(CALC,"AA=='- '?1:0")
+	field(FLNK, "$(P)HeindEncPosFlt")
+        
+	
+
+}
+grecord(calcout,"$(P)HeindEncPosFlt") {
+	field(INPA,"$(P)HeindEncPosSn1 NPP NMS")
+	field(INPB,"$(P)HeindEncPos NPP NMS")
+	field(EGU, "deg")
+	field(CALC,"A==1?-B:B")
+        field(PREC, "5")
+}
+	
+
+ 
+
+
+

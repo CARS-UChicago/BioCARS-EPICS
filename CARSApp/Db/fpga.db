@@ -1,0 +1,253 @@
+record(longout,"$(P)$(F)_RBV:ver") {}
+record(longout,"$(P)$(F)_RBV:clksrc") {}
+record(longout,"$(P)$(F)_RBV:clkfrq") {}
+record(longout,"$(P)$(F)_RBV:clkstat") {}
+record(longout,"$(P)$(F)_RBV:clkrst") {}
+record(longout,"$(P)$(F)_RBV:p0afd") {}
+record(longout,"$(P)$(F)_RBV:p0fd") {}
+record(longout,"$(P)$(F)_RBV:p0ad") {}
+record(longout,"$(P)$(F)_RBV:p0d") {}
+record(longout,"$(P)$(F)_RBV:p0led") {}
+record(longout,"$(P)$(F)_RBV:lmode") {}
+record(longout,"$(P)$(F)_RBV:tmode") {}
+record(longout,"$(P)$(F)_RBV:pulses") {}
+record(longout,"$(P)$(F)_RBV:nswaitt") {}
+record(longout,"$(P)$(F)_RBV:pswaitt") {}
+record(longout,"$(P)$(F)_RBV:xwaitt") {}
+record(longout,"$(P)$(F)_RBV:pson") {}
+record(longout,"$(P)$(F)_RBV:psd1") {}
+record(longout,"$(P)$(F)_RBV:psd2") {}
+record(longout,"$(P)$(F)_RBV:psd3") {}
+record(longout,"$(P)$(F)_RBV:losct1") {}
+record(longout,"$(P)$(F)_RBV:losct2") {}
+record(longout,"$(P)$(F)_RBV:psrate") {}
+record(longout,"$(P)$(F)_RBV:psmode") {}
+record(longout,"$(P)$(F)_RBV:nson") {}
+record(longout,"$(P)$(F)_RBV:nsd1") {}
+record(longout,"$(P)$(F)_RBV:nsd2") {}
+record(longout,"$(P)$(F)_RBV:nsd3") {}
+record(longout,"$(P)$(F)_RBV:nsrate") {}
+record(longout,"$(P)$(F)_RBV:nsfqd") {}
+record(longout,"$(P)$(F)_RBV:hlcnd") {}
+record(longout,"$(P)$(F)_RBV:hlctd") {}
+record(longout,"$(P)$(F)_RBV:hlcad") {}
+record(longout,"$(P)$(F)_RBV:hlcled") {}
+record(longout,"$(P)$(F)_RBV:hscd") {}
+record(longout,"$(P)$(F)_RBV:mson") {}
+record(longout,"$(P)$(F)_RBV:msd1") {}
+record(longout,"$(P)$(F)_RBV:msd2") {}
+record(longout,"$(P)$(F)_RBV:xosct1") {}
+record(longout,"$(P)$(F)_RBV:xosct2") {}
+record(longout,"$(P)$(F)_RBV:transon") {}
+record(longout,"$(P)$(F)_RBV:transd") {}
+record(longout,"$(P)$(F)_RBV:diag1") {}
+record(longout,"$(P)$(F)_RBV:diag2") {}
+
+record(longout,"$(P)$(F)_DRV:clksrc") {}
+record(longout,"$(P)$(F)_DRV:clkfrq") {}
+record(longout,"$(P)$(F)_DRV:clkrst") {}
+record(longout,"$(P)$(F)_DRV:p0fd") {}
+record(longout,"$(P)$(F)_DRV:p0d") {}
+record(longout,"$(P)$(F)_DRV:lmode") {}
+record(longout,"$(P)$(F)_DRV:tmode") {}
+record(longout,"$(P)$(F)_DRV:pulses") {
+	field(FLNK,"$(P)pulses_calcout.PROC")
+}
+record(longout,"$(P)$(F)_DRV:nswaitt") {}
+record(longout,"$(P)$(F)_DRV:pswaitt") {}
+record(longout,"$(P)$(F)_DRV:xwaitt") {}
+record(longout,"$(P)$(F)_DRV:pson") {}
+record(longout,"$(P)$(F)_DRV:psd1") {}
+record(longout,"$(P)$(F)_DRV:psd2") {}
+record(longout,"$(P)$(F)_DRV:psd3") {}
+record(longout,"$(P)$(F)_DRV:losct1") {}
+record(longout,"$(P)$(F)_DRV:losct2") {}
+record(longout,"$(P)$(F)_DRV:psrate") {}
+record(longout,"$(P)$(F)_DRV:psmode") {}
+record(longout,"$(P)$(F)_DRV:nson") {}
+record(longout,"$(P)$(F)_DRV:nsd1") {}
+record(longout,"$(P)$(F)_DRV:nsd2") {}
+record(longout,"$(P)$(F)_DRV:nsd3") {}
+record(longout,"$(P)$(F)_DRV:nsrate") {}
+record(longout,"$(P)$(F)_DRV:nsfqd") {}
+record(longout,"$(P)$(F)_DRV:hlcnd") {}
+record(longout,"$(P)$(F)_DRV:hlctd") {}
+record(longout,"$(P)$(F)_DRV:hscd") {}
+record(longout,"$(P)$(F)_DRV:mson") {}
+record(longout,"$(P)$(F)_DRV:msd1") {}
+record(longout,"$(P)$(F)_DRV:msd2") {}
+record(longout,"$(P)$(F)_DRV:xosct1") {}
+record(longout,"$(P)$(F)_DRV:xosct2") {}
+record(longout,"$(P)$(F)_DRV:transon") {}
+record(longout,"$(P)$(F)_DRV:transd") {}
+record(longout,"$(P)$(F)_DRV:diag1") {}
+record(longout,"$(P)$(F)_DRV:diag2") {}
+
+
+record(ao,"$(P)$(F)_OFFSET:msd2") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:ns_lxd_xd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:ns_lxd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:lxd_xd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:hlcnd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:msd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:xosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:psdc_psd1") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:msd1") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:lxd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:hscd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:hlcad") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:nsd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:transd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:ns_lxd_xosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:lxd_xosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_OFFSET:hlctd") {
+	field(PREC,"17")
+}
+
+
+record(ao,"$(P)$(F)_DRV:Pmsd2") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pns_lxd_xd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pns_lxd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Plxd_xd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Phlcnd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pmsd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pxosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Ppsdc_psd1") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pmsd1") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Plxd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Phscd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Phlcad") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pnsd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Ptransd") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Pns_lxd_xosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Plxd_xosct") {
+	field(PREC,"17")
+}
+record(ao,"$(P)$(F)_DRV:Phlctd") {
+	field(PREC,"17")
+}
+
+
+record(ao,"$(P)$(F)_SCAN") {
+	field(VAL,"60")
+} 
+
+record(ao,"$(P)$(F)_hscd") {
+	field(DESC,"hscd.value")
+	field(PREC,"3")	
+}
+
+record(ao,"$(P)$(F)_hscd_pos") {
+	field(DESC,"hscd tweak positive")
+#	field(PREC,"3")	
+}
+
+record(ao,"$(P)$(F)_hscd_neg") {
+	field(DESC,"hscd tweak negative")
+#	field(PREC,"3")	
+}
+
+record(ao,"$(P)$(F)_hscd_step") {
+	field(DESC,"hscd tweak step size")
+	field(VAL,"1")	
+}
+
+record(ao,"$(P)$(F)_hscd_set") {
+	field(DESC,"hscd set command")
+	field(VAL,"0")	
+}
+
+record(ao,"$(P)lxd"){
+	field(DESC,"lxd in seconds")
+	field(PREC,"12")
+	field(FLNK,"$(P)lxd_calcout.PROC")
+}
+
+record(ao,"$(P)lxd_RBV"){
+	field(DESC,"lxd in seconds")
+	field(PREC,"12")
+}
+
+record(longout,"$(P)fpga_debug"){
+	field(VAL,"0")
+}
+
+record(calcout,"$(P)lxd_calcout"){
+	field(A,"1")
+	field(CALC,"A")
+	field(OUT,"$(P)lxd_busy PP")
+}
+record(busy,"$(P)lxd_busy"){
+	field(VAL,"0")
+}
+
+record(calcout,"$(P)pulses_calcout"){
+	field(A,"1")
+	field(CALC,"A")
+	field(OUT,"$(P)pulses_busy PP")
+}
+record(busy,"$(P)pulses_busy"){
+	field(VAL,"0")
+}

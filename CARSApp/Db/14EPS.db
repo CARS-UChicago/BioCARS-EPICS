@@ -1,0 +1,11 @@
+grecord(bi,"$(P)$(N)")
+{
+	field(DESC,"$(DESC)")
+	field(SCAN,"I/O Intr")
+	field(DTYP,"AB-16 bit BI")
+	field(INP,"#L0 A0 C$(C) S$(S) F0 @")
+	field(ZNAM,"$(ZNAM)")
+	field(ZSV, "$(ZSV)")
+	field(ONAM,"$(ONAM)")
+	field(OSV,"$(OSV)")
+}

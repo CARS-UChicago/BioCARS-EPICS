@@ -1,0 +1,151 @@
+
+# This is database to use with the beamCheckMono.st
+# where $P is what is used in $P2 in beamCheckMono.st
+# $D and $M is used for the simulation purposes only - should be removed 
+#  $(D) - "DAC1_3"or other DAC for simulations only ;  $(P) - "14IDB:"   $(M) motor  for simulations only
+
+
+grecord(busy,"$(P)beamCheckMDT") {
+		field(DESC, "Beam Check Mono Piezo Theta")
+}
+grecord(busy,"$(P)beamCheckMD") {
+		field(DESC, "Beam Check Mono Pz Start")
+}
+
+grecord(busy,"$(P)beamCheckMT") {
+		field(DESC, "Beam Check Mono Th Start")
+}
+
+grecord(busy,"$(P)beamCheckMCancel") {
+		field(DESC, "Beam Check Mono Cancel")
+}
+
+grecord(ao, "$(P)beamCheckDeltaMD") {
+		field("VAL",".3")
+ 	    field(PREC,"4")
+    	field(DESC, "Mono Piezo Incr")
+}
+
+grecord(ao, "$(P)beamCheckDeltaMT") {
+ 		field("VAL",".03")
+ 	    field(PREC,"4")
+    	field(DESC, "Mono Theta Incr")
+}
+
+grecord(ao, "$(P)beamCheckMIter") {
+		field("VAL","5")
+ 	    field(PREC,"0")
+    	field(DESC, "BeamCheckM Iterations")
+}
+
+grecord(ai, "$(P)beamCheckMAlinged") {
+		field("VAL","0")
+ 	    field(PREC,"0")
+    	field(DESC, "Mono Align Status")
+}
+
+grecord(stringout, "$(P)beamCheckMStatus") {
+	field("VAL", "Idle")
+}
+
+
+#
+#  Simulation PV's
+#
+#
+#  $(D) - "DAC1_3"or other DAC ;  $(P) - "14BMD:"   $(M) motor 
+#  (A) "10000" station amplitude 
+#  (B) number for the Center "2.0";$C - "3.0" number for the width 
+#  the calculated output will be A*EXP(-(DAC-B)^2/C^2)
+#
+# grecord (ai,"$(P)AD")
+# {	field(VAL, "1000.0")
+#	field(PREC,"4")
+# }
+
+# grecord (ai,"$(P)BD")
+# {	field(VAL, "5.0")
+#	field(PREC,"4")
+# }
+
+# grecord (ai,"$(P)CD")
+# {	field(VAL, "4.0")
+#	field(PREC,"4")
+# }
+
+# grecord (ai,"$(P)AM")
+# {	field(VAL, "1000.0")
+#	field(PREC,"4")
+# }
+
+# grecord (ai,"$(P)BM")
+# {	field(VAL, "5.0")
+#	field(PREC,"4")
+# }
+
+# grecord (ai,"$(P)CM")
+# {	field(VAL, "2.0")
+#	field(PREC,"4")
+# }
+
+# grecord(calcout,"$(P)SimVal")
+# {
+#	field(INPD,"$(P)$(D).VAL NPP NMS")
+#	field(INPA, "$(P)AD.VAL NPP NMS")
+#	field(INPB, "$(P)BD.VAL NPP NMS")
+#	field(INPC, "$(P)CD.VAL NPP NMS")
+#	field(CALC,"A*(EXP(-(D-B)*(D-B)/(C*C)))")
+#	field(PREC, "4")
+
+# }
+# grecord(calcout,"$(P)SimValMot")
+# {
+#	field(INPD,"$(P)$(M).RBV NPP NMS")
+#	field(INPA, "$(P)AM.VAL NPP NMS")
+#	field(INPB, "$(P)BM.VAL NPP NMS")
+#	field(INPC, "$(P)CM.VAL NPP NMS")
+#	field(CALC,"A*(EXP(-(D-B)*(D-B)/(C*C)))")
+#	field(PREC, "4")
+
+# }
+
+
+#
+# grecord(ao, "$(P)DAC1_4") {
+#	field(PREC,"4")
+#   field(DESC, "test DAC")
+# }
+
+# grecord(ai, "$(P)waveSurfer:P1:last") {
+# 	field(PREC,"4")
+#   field(DESC, "test DAC")
+#	field(INP, "$(P)trans")
+# }
+
+# grecord(calc,"$(P)trans") {
+#	field(INPA,"$(P)DAC1_4.VAL")
+#	field(CALC,"(-A*A+4.*A-3.)*10000.0")
+#   field(FLNK,"$(P)waveSurfer:P1:last")
+# }
+
+# record(busy, "$(P)waveSurfer:count")
+# {
+#	field(DESC, "waveSurfer Count")
+#	field(VAL, "0")
+#   field(FLNK,"$(P)trans PP")
+# }
+
+# grecord(mbbo,"$(P)waveSurfer:triggerMode") {
+#   field(DESC,"waveSurfer Trigger Mode")
+#   field(NOBT,"3")
+#   field(ZRVL,"0x0")
+#   field(ONVL,"0x1")
+#   field(TWVL,"0x2")
+#   field(ZRST,"Stop")
+#   field(ONST,"Normal")
+#   field(TWST,"Auto")
+# }
+
+#grecord(ai, "$(P)mir2Th")
+#{
+#}

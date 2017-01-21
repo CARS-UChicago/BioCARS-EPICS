@@ -1,0 +1,237 @@
+
+# This is modification of  RH database
+# to be used with  scanParmsMAD_IDB.template in ioc14idb or ioc14MAD dir
+# This database sets up for only one P=14IDB or other defaults  
+# Because state notation will open and close shutter these records eliminated
+
+
+# This sets up the low range for the ROI at SATURN
+grecord(stringout,"$(P)$(Q):setupROIL") {
+	field(VAL,"$(L)")
+	field(OUT,"$(DPV)LO CA NMS")
+	field(FLNK,"$(P)$(Q):setupROIH.PROC")
+}
+
+# This sets up the high range for the ROI at SATURN
+grecord(stringout,"$(P)$(Q):setupROIH") {
+	field(VAL,"$(H)")
+	field(OUT,"$(DPV)HI CA NMS")
+	field(FLNK,"$(P)$(Q):setupLBL.PROC")
+}
+
+# This sets up the Label for the ROI SATURN
+grecord(stringout,"$(P)$(Q):setupLBL") {
+	field(VAL,"$(Q)")
+	field(OUT,"$(DPV)NM CA NMS")
+	field(FLNK,"$(P)$(Q):setupENG.PROC")
+}
+
+# This sets up the Edge Energy
+grecord(stringout,"$(P)$(Q):setupENG") {
+	field(VAL,"$(EDG)")
+	field(TPRO, "1")
+	field(OUT, "$(P)EdgeEnergy NPP NMS")
+	field(FLNK, "$(P)$(Q):setupELM.PROC")
+
+}
+
+############
+# This sets up the Label for the Element
+grecord(stringout,"$(P)$(Q):setupELM") {
+	field(VAL,"$(Q)")
+	field(OUT,"$(P)Element NPP NMS")
+	field(FLNK,"$(P)$(Q):setupSCAN.PROC")
+}
+############
+
+# This writes to the scanParms record which will be using a specified template
+grecord(calcout,"$(P)$(Q):setupSCAN") {
+	field(VAL,"1")
+	field(TPRO, "1")
+	field(OUT,"$(P)$(Q):scanParmsIDB.LOAD CA NMS")
+	field(FLNK, "$(P)$(Q):scanParmsIDB.PROC")
+}
+
+# This sets up parameters to run energy scan - see the template
+# Here specify value fields for the scanparm record  and output fileds scanParms for the sscan record
+# Changed to allow scanning of motors in other crates.  RH
+grecord(scanparm,"$(P)$(Q):scanParmsIDB") {
+	field(PREC,"6")
+	field(PRE,"4")
+	field(OPRE,"$(SCANREC).CMND  CA NMS")
+	field(OSM,"$(SCANREC).P1SM  CA NMS")
+	field(AR,"$(AR)")
+	field(OAR,"$(SCANREC).P1AR  CA NMS")
+	field(AFT,"$(AFT)")
+	field(OAFT,"$(SCANREC).PASM  CA NMS")
+	field(PPV,"$(POS)")
+	field(RPV,"$(RDBK)")
+	field(OPPV,"$(SCANREC).P1PV  CA NMS")
+	field(ORPV,"$(SCANREC).R1PV  CA NMS")
+	field(SP,"$(SP)")
+	field(OSP,"$(SCANREC).P1SP  CA NMS")
+	field(EP,"$(EP)")
+	field(OEP,"$(SCANREC).P1EP  CA NMS")
+	field(NP,"$(NP)")
+	field(ONP,"$(SCANREC).NPTS  CA NMS")
+	field(SC,"1")
+	field(OSC,"$(SCANREC).EXSC  CA NMS")
+	field(IMP,"$(SCANREC).MPTS  NPP NMS")
+	field(IACT,"$(SCANREC).BUSY  NPP NMS")
+        field(TPV,"$(TPV)")
+        field(OTPV,"$(SCANREC).T1PV CA NMS")
+        field(DPV,"$(DPV)")
+        field(ODPV,"$(SCANREC).D01PV CA NMS")
+	field(TPRO, "1")
+	field(FLNK,"$(P)EdgeEnergy.PROC")
+}
+
+
+###########
+##########
+
+
+
+# This sets up desired energy to perform alignments and use in scans
+grecord(calcout,"$(P)EdgeEnergy") {
+	field(VAL, "12.000")
+	field(PREC,"4")
+	field(EGU, "eV")
+	field(HOPR, "20000")
+	field(LOPR, "7000")
+	field(TPRO, "1")
+	field(OUT, "$(P)DesiredEnergy  PP MS")
+	field(FLNK,"$(P)$(Q):DesiredEnergy.PROC")
+
+}
+
+# This sets up desired energy to perform alignments and use in scans
+grecord(calcout,"$(P)DesiredEnergy") {
+	field(VAL, "12.000")
+	field(PREC,"4")
+	field(EGU, "eV")
+	field(TPRO, "1")
+	field(HOPR, "20000")
+	field(LOPR, "7000")
+	field(TPRO, "1")
+	field(FLNK,"$(P)Element.PROC")
+}
+
+
+
+#######
+
+# This sets up the Label for the ROI SATURN
+grecord(stringout,"$(P)Element") {
+	field(VAL," ")
+
+}
+
+
+###########
+# This sets up initial value for Beam Check for V Mirror DAC
+grecord(ao,"$(P)VMirrorDAC_INIT") {
+	field(VAL,"5.0")
+	field(HOPR, "10.0")
+	field(LOPR, "0.0")
+        field(PREC, "2")
+
+}
+
+
+# This sets up initial value for Beam Check for Mono DAC
+grecord(ao,"$(P)MonoDAC_INIT") {
+	field(VAL,"5.0")
+	field(HOPR, "10.0")
+	field(LOPR, "0.0")
+        field(PREC, "2")
+
+}
+###########
+# This sets up desired energy to perform alignments and others in MEDM
+grecord(busy,"$(P)DriveEnergy") {
+	field(VAL,"0")
+
+}
+
+grecord(busy,"$(P)AlignAll") {
+	field(VAL,"0")
+
+}
+grecord(busy,"$(P)StartScan") {
+	field(VAL,"0")
+
+}
+
+grecord(busy,"$(P)AbortScan") {
+	field(VAL,"0")
+
+}
+
+
+grecord(busy,"$(P)CancelAlignment") {
+	field(VAL,"0")
+
+}
+
+grecord(stringout,"$(P)AlignmentStatus") {
+	field(VAL,"Idle")
+}
+
+grecord(stringout,"$(P)ScanStatus") {
+	field(VAL,"Idle")
+}
+grecord(stringout,"$(P)MonoStatus") {
+	field(VAL,"Idle")
+}
+
+# These records are appended to allow manual scanning monochromator and V mirrors DACs
+
+# Seq record which finds the maximum for the Mono intensity feedback
+grecord(sseq,"$(P)MonoScanSetup") {
+	field(DESC,"Mono Scan Setup")
+	field(PREC,"1")
+	field(STR1,"1")
+	field(LNK1,"14IDB:beamCheckDetector PP NMS")
+	field(STR2,"0")
+	field(LNK2,"14IDA:mono_pid1.FBON PP NMS")
+	field(STR3,"0")
+	field(LNK3,"14IDA:vmirror_pid1.FBON PP NMS")
+	field(DO4,"1")
+	field(LNK4,"14IDB:Mono_DAC:setupSCAN.PROC PP NMS")
+	field(DLY5,"0.1")
+	field(DO5,"0.1")
+	field(LNK5,"14IDB:scanAux.PDLY NPP NMS")
+	field(DO6,"1")
+	field(LNK6,"14IDB:scanAux.EXSC CA NMS")
+	field(WAIT6,"Wait")
+	field(TPRO, "1")
+
+}
+
+
+# Seq record which scans mirrro DAC and drives it to max
+grecord(sseq,"$(P)MirrorScanSetup") {
+	field(DESC,"Mirror Scan Setup")
+	field(PREC,"1")
+	field(STR1,"1")
+	field(LNK1,"14IDB:beamCheckDetector PP NMS")
+	field(STR2,"0")
+	field(LNK2,"14IDA:vmirror_pid1.FBON PP NMS")
+	field(DO3,"1")
+	field(LNK3,"14IDB:Mirror_DAC:setupSCAN.PROC PP NMS")
+	field(DO4,"1")
+	field(LNK4,"14IDB:openXiaShutter.PROC PP NMS")
+        field(DLY5,"0.1")
+	field(DO5,"0.0")
+	field(LNK5,"14IDB:scanAux.PDLY NPP NMS")
+	field(DO6,"1")
+	field(LNK6,"14IDB:scanAux.EXSC CA NMS")
+	field(WAIT6,"Wait")
+	field(DLY7,"0.1")
+	field(DO7,"1")
+	field(LNK7,"14IDB:closeXiaShutter.PROC PP NMS")
+	field(TPRO, "1")
+}
+
+

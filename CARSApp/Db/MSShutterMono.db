@@ -1,0 +1,104 @@
+#created as a database for MS Shutter interface using DAC to open/clse MS shutter
+#and motor record to operate Phi motion
+
+#This database consistes of records needed for the xxx state notation code for the MS Shutter interface.
+
+
+
+
+
+# Parameters needed for the SnapShot
+
+
+# Oscillation Width
+
+grecord(ao, "$(P)OscWidth")
+{
+	field(DESC,"Osc Width")
+	field(PREC, "3")
+	field(VAL, "1.0")
+
+}
+
+# Exposure time
+
+grecord(ao, "$(P)ExpTime")
+{
+	field(DESC,"Exposure Time")
+	field(PREC, "3")
+	field(VAL, "2")
+
+}
+
+# Manual Exposure time
+
+grecord(ao, "$(P)ExpTimeMan")
+{
+	field(DESC,"Manual Exposure Time")
+	field(PREC, "3")
+	field(VAL, "2")
+
+}
+
+# Status of the Shutter, busy or not
+
+grecord(busy, "$(P)MSShutterBusy")
+{
+	field(VAL,"0")
+}
+
+#
+#Error String
+
+grecord(stringin, "$(P)Error_String")
+{
+	field(DESC, "Use for Error message")
+	field(VAL, " ")
+}
+
+# Abort Shutter Button
+
+grecord(ao, "$(P)AbortMSShutter")
+{
+	field(DESC,"Abort Shutter")
+	field(VAL, "0")
+
+}
+
+# Expose Shutter Button
+
+grecord(ao, "$(P)ExposeMSShutter")
+{
+	field(DESC,"Expose Shutter")
+	field(VAL, "0")
+
+}
+
+# Open Shutter Button
+
+grecord(ao, "$(P)OpenMSShutter")
+{
+	field(DESC,"Open Shutter")
+	field(VAL, "0")
+
+}
+
+# Close Shutter Button
+
+grecord(ao, "$(P)CloseMSShutter")
+{
+	field(DESC,"Close Shutter")
+	field(VAL, "0")
+
+}
+
+# Start Snapshot Button
+
+grecord(ao, "$(P)StartSnapShot")
+{
+	field(DESC,"Start Snapshot")
+	field(VAL, "0")
+
+}
+
+

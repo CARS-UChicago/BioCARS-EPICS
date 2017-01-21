@@ -1,0 +1,80 @@
+#
+#
+#	Remote Shutter Database
+
+
+
+# The shutter is opens or closes on the DAC transition from 0V to 5V so go to 0->5 to open, and 0->5 to close
+#       IK 2/16/11
+#	Remote Shutter Database
+#
+#
+grecord(bi,"$(P)shutter_in$(N)") {
+	field(ZNAM,"OPEN")
+	field(ONAM,"CLOSE")
+	field(VAL,"1")
+#	field(TPRO, "1")
+	field(FLNK, "$(P)shutter_check$(N) PP NMS")
+}
+
+
+
+grecord(transform,"$(P)shutter_check$(N)") {
+
+	field(INPA,"$(ShutterStatus).VAL NPP NMS")
+	field(INPB,"$(P)shutter_in$(N).VAL NPP NMS")
+	field(INPC, "$(ShutterSearched).VAL PP NMS")
+        #A=0: shutter open; A=1: shutter closed
+        field(CLCD,"(((A=0 & B=1)||(A=1 & B=0))&&C=1)?1:0")
+	# put it to DISV so it woudn't try to open/close if it is not correct request
+	# A=0 shutter is open, B=1 request to close enable shutter seg send request to shutter sequence DAC 0, DAC 5
+	# A=1 shutter is closed, B=0 request to open enable shutter seq and send request to shutter sequence DAC 0, DAC 5
+	# otherwise disable the seq shutter record
+	field(OUTD,"$(P)shutter_seq$(N).DISV PP NMS")
+	field(CLCF,"1")
+	field(OUTF,"$(P)shutter_seq$(N).PROC PP NMS")
+#	field(TPRO, "1")
+}
+
+
+grecord(transform,"$(P)shutter_auto$(N)") {
+	# 1 means OK
+	field(INPA,"$(EPS).VAL PP MS")
+	# 0 means open
+	field(INPB,"$(ShutterStatus).VAL PP NMS")
+	# 1 means OK
+	field(INPC,"ACIS:ShutterPermit.VAL PP NMS")
+
+# Do not try to open if EPS is not ready (A=0), shutter is already open (B=0),
+# or shutter permit is not allowed (C=0).  This will disable the seq record
+#	field(CLCD,"(A=0)||(B=0)||(C=0) ? 0:1")
+# Removed EPS from calculation
+	# 1 menas OK, BMC is searched
+	field(INPD, "$(ShutterSearched).VAL PP NMS")
+	field(CLCE,"(A=0)||(B=0)||(C=0)||(D=0) ? 0:1")
+	#field(CLCD,"(B=0)||(C=0) ? 0:1")
+	field(OUTE,"$(P)shutter_seq$(N).DISV PP NMS")
+	field(CLCF,"1")
+	field(OUTF,"$(P)shutter_seq$(N).PROC PP NMS")
+	field(DISV,"0")
+	field(SCAN,"10 second")
+#	field(TPRO, "1")
+}
+
+
+
+grecord(seq,"$(P)shutter_seq$(N)") {
+	field(DO1,"0")
+	field(LNK1,"$(P)DAC1_$(N).VAL PP NMS")
+	field(DO2,"5")
+	field(LNK2,"$(P)DAC1_$(N).VAL PP NMS")
+	field(DLY2,"2")
+#	field(TPRO, "1")
+}
+
+grecord(bo,"$(P)shutter_auto_enable$(N)") {
+	field(ZNAM,"No")
+	field(ONAM,"Yes")
+	field(OUT,"$(P)shutter_auto$(N).DISV PP NMS")
+#	field(TPRO, "1")
+}

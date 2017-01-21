@@ -1,0 +1,42 @@
+grecord(vme,"$(P)7022") {
+	field(ADDR,"0xff0000")
+	field(AMOD,"A24")
+}
+
+grecord(longout,"$(P)CH1_CNT") {
+	field(DESC,"Channel 1 counter")
+}
+grecord(longout,"$(P)CH1_CNTADDR") {
+	field(DESC,"Channel 1 counter address")
+	field(VAL,"0x0")
+}
+grecord(longout,"$(P)CH1_CONT") {
+	field(DESC,"Channel 1 control register")
+}
+grecord(longout,"$(P)CH1_CONTADDR") {
+	field(DESC,"Channel 1 control register address")
+	field(VAL,"0x2")
+}
+grecord(longout,"$(P)CH2_CNT") {
+	field(DESC,"Channel 2 counter")
+}
+grecord(longout,"$(P)CH2_CNTADDR") {
+	field(DESC,"Channel 2 counter address")
+	field(VAL,"0x4")
+}
+grecord(longout,"$(P)CH2_CONT") {
+	field(DESC,"Channel 2 control register")
+}
+grecord(longout,"$(P)CH2_CONTADDR") {
+	field(DESC,"Channel 2 control register address")
+	field(VAL,"0x6")
+}
+grecord(ao,"$(P)OSC_START") {
+	field(DESC,"Starting angle")
+}
+grecord(ao,"$(P)OSC_WIDTH") {
+	field(DESC,"Oscilation width")
+}
+grecord(ao,"$(P)OSC_TIME") {
+	field(DESC,"Oscilation time (sec)")
+}

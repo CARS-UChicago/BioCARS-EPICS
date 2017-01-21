@@ -1,0 +1,481 @@
+#
+#	Database for Irena
+#	This is a database to communicate with M6 VALCO liquid/gas delivery pump
+#    
+#	call from st.cmd : dbLoadRecords("M6VALCOpump.db", "P=14LAB:,DEVICE=M6,PORT=serial4")
+#
+#
+#	Parameters
+#	P	Pv name example 14ID
+#	PORT	async (serial) port name example serial4
+#	DEVICE M6
+#
+#
+#
+
+#
+
+
+grecord(asyn,"$(P)$(DEVICE):SerialWR") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+        field(SCAN, "Passive")
+	field(TMOT, "10.0")
+}
+
+grecord(asyn,"$(P)$(DEVICE):SerialW") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "")
+	field(TMOD, "Write")
+        field(SCAN, "Passive")
+	field(TMOT, "1.0")
+}
+
+grecord(asyn,"$(P)$(DEVICE):SerialScan") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "PRINT MVG")
+        field(SCAN, "Passive")
+}
+
+## modified 9/22/10 by IK to allow change of the speed on the fly
+
+grecord(asyn,"$(P)$(DEVICE):READPOS") {
+	field(PORT, "$(PORT)")
+	field(AOUT, "PRINT POS")
+        field(SCAN, "1 second")
+}
+
+
+grecord(ao, "$(P)$(DEVICE):SlewFlowRate")  {
+	field(DESC, "FlowRateto  Slew")
+	field(VAL, "60")
+	field(DRVH, "150")
+	field(DRVL,"0.0001")
+	field(PREC, "4")
+	field(EGU, "uL/min")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):SetSlew") {
+	field(INPA,"$(P)$(DEVICE):SlewFlowRate.VAL PP MS")
+	field(CALC, "A/(15*60)")
+	#field(OCAL,"PRINTF('SLEW=%s', A)")
+	field(OCAL,"PRINTF('SLEW=%f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):WRITE_SLEW.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):WRITE_SLEW" )
+}
+grecord(asyn,"$(P)$(DEVICE):WRITE_SLEW") {
+	field(PORT, "$(PORT)")
+	field(NRRD, "400")
+	field(AOUT, "")
+#	field(TMOT, "1.0")
+}
+
+#
+#### Modified to configure IOS -this accepts a string to be passed to the controller
+grecord(stringin,"$(P)$(DEVICE):CONFIOS21") {
+	field(DESC, "CONF IOS 21 for Jog+")
+	field(VAL, "16,0,0,0")
+	}
+
+grecord(scalcout,"$(P)$(DEVICE):SetIOS21ForJog") {
+	field(INAA, "$(P)$(DEVICE):CONFIOS21.VAL PP MS")
+	field(OCAL,"PRINTF('IOS 21 = %s', AA)")
+
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):SerialW.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):SerialW" )
+}
+
+grecord(ao, "$(P)$(DEVICE):Jog")  {
+	field(DESC, "Set Jog Speed")
+	field(VAL, "10")
+	field(DRVH, "150")
+	field(DRVL,"0.001")
+	field(PREC, "4")
+	field(EGU, "uL/sec")
+}
+
+grecord(scalcout,"$(P)$(DEVICE):SetJog") {
+	field(INPA,"$(P)$(DEVICE):Jog.VAL PP MS")
+	field(CALC, "A")
+	#field(OCAL,"PRINTF('SLEW=%s', A)")
+	field(OCAL,"PRINTF('JOGS=%f', A)")
+	field(OOPT, "On Change")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):SerialW.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):SerialW" )
+}
+
+
+
+# This is a variable for selections of Gain Ranges
+# An MBBO record which provides the menu and schannel values
+#
+grecord(mbbo,"$(P)$(DEVICE):SelectChannel") {
+        field(ZRVL,"0")
+        field(ZRST,"21")
+        field(ONVL,"1")
+        field(ONST,"22")
+        field(TWVL,"2")
+        field(TWST,"23")
+        field(THVL,"3")
+        field(THST,"24")
+	field(FRVL,"4")
+        field(FRST,"25")
+	field(FVVL,"5")
+        field(FVST,"26")
+	field(PINI, "YES")
+	field(FLNK,"$(P)$(DEVICE):CalcIOS" )
+}
+#
+
+# An MBBO record which provides the menu and function
+#
+grecord(mbbo,"$(P)$(DEVICE):SelectFunction") {
+        field(ZRVL,"0")
+        field(ZRST,"JOG+")
+        field(ONVL,"1")
+        field(ONST,"JOG-")
+        field(TWVL,"2")
+        field(TWST,"START INPUT")
+        field(THVL,"3")
+        field(THST,"STOP INPUT")
+	field(FRVL,"4")
+        field(FRST,"MOVING OUTPUT")
+	field(PINI, "YES")
+	field(FLNK,"$(P)$(DEVICE):FunctionNumber" )
+}
+grecord(scalcout,"$(P)$(DEVICE):FunctionNumber") {
+        field(VAL, "16")
+	field(INPA, "$(P)$(DEVICE):SelectFunction.VAL PP MS")
+	field(CALC, "A==0?16:A==1?17:A==2?9:A==3?10:A==4?18")
+	field(OOPT, "On Change")
+	field(FLNK,"$(P)$(DEVICE):ConfigureInput" )
+}
+#
+#
+# An MBBO record which provides the menu to configure channels for input or output
+#
+grecord(mbbo,"$(P)$(DEVICE):ConfigureInput") {
+        field(ZRVL,"0")
+        field(ZRST,"INPUT")
+        field(ONVL,"1")
+        field(ONST,"OUTPUT")
+	field(FLNK,"$(P)$(DEVICE):ConfigureHigh" )
+}
+#
+# An MBBO record which provides the menu to configure channels for input or output
+#
+grecord(mbbo,"$(P)$(DEVICE):ConfigureHigh") {
+        field(ZRVL,"0")
+        field(ZRST,"LOW")
+        field(ONVL,"1")
+        field(ONST,"HIGH")
+	field(FLNK,"$(P)$(DEVICE):CalcInput" )
+}
+######
+grecord(stringin,"$(P)$(DEVICE):SN1") {
+	field(DESC, "=")
+	field(VAL, "=")
+	}
+grecord(stringin,"$(P)$(DEVICE):SN2") {
+	field(DESC, ",")
+	field(VAL, ",")
+	}
+#
+grecord(scalcout,"$(P)$(DEVICE):CalcInput") {
+	
+	field(INPC, "$(P)$(DEVICE):ConfigureInput.VAL PP MS")
+
+
+        field(CALC,  "C==0?'0':'1'")
+	field(OOPT, "On Change")
+
+	field(FLNK,"$(P)$(DEVICE):CalcHigh" )
+}
+grecord(scalcout,"$(P)$(DEVICE):CalcHigh") {
+	
+
+	field(INPD, "$(P)$(DEVICE):ConfigureHigh.VAL PP MS")
+
+        field(CALC,  "D==0?'0':'1'")
+	field(OOPT, "On Change")
+
+	field(FLNK,"$(P)$(DEVICE):CalcIOS" )
+}
+grecord(scalcout,"$(P)$(DEVICE):CalcIOS") {
+	field(INAA, "$(P)$(DEVICE):SelectChannel.VAL PP MS")
+	field(INBB, "$(P)$(DEVICE):FunctionNumber.VAL PP MS")
+	field(INCC, "$(P)$(DEVICE):CalcInput.VAL PP MS")
+	field(INDD, "$(P)$(DEVICE):CalcHigh.VAL PP MS")
+	field(INEE, "$(P)$(DEVICE):SN1.VAL PP MS")
+	field(INFF, "$(P)$(DEVICE):SN2.VAL PP MS")
+        field(CALC,  "AA+EE+BB+FF+CC+FF+DD")
+	field(OOPT, "Every Time")
+
+	field(FLNK,"$(P)$(DEVICE):SetIOS" )
+}
+
+#
+grecord(scalcout,"$(P)$(DEVICE):SetIOS") {
+	field(INAA, "$(P)$(DEVICE):CalcIOS.SVAL PP MS")
+	
+        field(CALC,  "AA")
+
+	field(OCAL,"PRINTF('IOS %s ', AA )")
+
+	field(OOPT, "Every Time")
+	field(DOPT, "Use OCAL")
+	field(OUT, "$(P)$(DEVICE):SerialW.AOUT PP MS")
+	field(FLNK,"$(P)$(DEVICE):SerialW" )
+}
+
+
+#######################################
+ # Dispense deliver A to B
+
+grecord(busy, "$(P)$(DEVICE):Dispense")  {
+	field(DESC, " Dispense")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):DispenseVal")  {
+	field(DESC, "Value to Dispense")
+	field(VAL, "20")
+	field(DRVH, "799999")
+	field(DRVL,"0.31")
+	field(PREC, "2")
+	field(EGU, "uL")
+}
+
+grecord(ao, "$(P)$(DEVICE):DispenseFlowRate")  {
+	field(DESC, "FlowRateto  Dispense")
+	field(VAL, "600")
+	field(DRVH, "9000")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL/min")
+}
+
+#Aspirate B to A
+
+grecord(busy, "$(P)$(DEVICE):Aspirate")  {
+	field(DESC, " Aspirate")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):AspirateVal")  {
+	field(DESC, "Value to Dispense")
+	field(VAL, "20")
+	field(DRVH, "799999")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+
+
+grecord(ao, "$(P)$(DEVICE):AspirateFlowRate")  {
+	field(DESC, "FlowRateto  Aspirate")
+	field(VAL, "600")
+	field(DRVH, "9000")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL/min")
+}
+
+# Wash A to B
+
+grecord(busy, "$(P)$(DEVICE):Wash")  {
+	field(DESC, " Wash")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):WashVal")  {
+	field(DESC, "Value to Dispense")
+	field(VAL, "2000")
+	field(DRVH, "200000")
+	field(DRVL,"0.01")
+	field(PREC, "4")
+	field(EGU, "uL")
+}
+
+grecord(ao, "$(P)$(DEVICE):WashFlowRate")  {
+	field(DESC, "FlowRate to Dispense")
+	field(VAL, "2000")
+	field(DRVH, "9000")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL/min")
+}
+
+# deliver the sample from the input to the flow cell
+
+grecord(busy, "$(P)$(DEVICE):Deliver")  {
+	field(DESC, " Deliver")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):DeliverVal")  {
+	field(DESC, "Deliver sample value")
+	field(VAL, "20")
+	field(DRVH, "799999")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+
+grecord(ao, "$(P)$(DEVICE):DeliverFlowRate")  {
+	field(DESC, "FlowRate to  Deliver")
+	field(VAL, "600")
+	field(DRVH, "9000")
+	field(DRVL,"0.01")
+	field(PREC, "3")
+	field(EGU, "uL/min")
+}
+
+grecord(busy, "$(P)$(DEVICE):Abort")  {
+	field(DESC, " Abort operation")
+	field(VAL, "0")
+}
+
+grecord(busy, "$(P)$(DEVICE):Initialize")  {
+	field(DESC, " Initialize")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):MotorPosition")  {
+	field(DESC, "Position of the motor")
+	field(VAL, "0")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+
+
+grecord(busy, "$(P)$(DEVICE):SetMotorPos")  {
+	field(DESC, " SetMotorPosition")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):MotorPosVal")  {
+	field(DESC, "Position to be set")
+	field(VAL, "0")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+
+
+
+grecord(stringin,"$(P)$(DEVICE):ERROR_STRING") {
+	field(DESC, "USE FOR ERROR MESSAGE")
+	field(VAL, " ")
+	}
+
+
+grecord(stringin,"$(P)$(DEVICE):STATUS_STRING") {
+	field(DESC, "USE FOR STATUS MESSAGE")
+	field(VAL, " ")
+	}
+# Below are located configuration fields
+# This is a variable for selections of Backlash enable /disable flag
+# An MBBO record which provides the menu and enable backlash values
+#
+grecord(mbbo,"$(P)$(DEVICE):EnableBacklash") {
+        field(ZRVL,"0")
+        field(ZRST,"ENABLE")
+        field(ONVL,"1")
+        field(ONST,"DISABLE")
+}
+#
+grecord(ao, "$(P)$(DEVICE):BacklashVal")  {
+	field(DESC, "Value for M6 Backlash")
+	field(VAL, "1.585")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+grecord(busy, "$(P)$(DEVICE):SetBacklash")  {
+	field(DESC, " Set Backlash")
+	field(VAL, "0")
+}
+
+grecord(ao, "$(P)$(DEVICE):VolPerRevValReq")  {
+	field(DESC, "M6 Volume per Rev")
+	field(DRVH, "110")
+	field(DRVL,"90")
+	field(VAL, "99.124")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+
+grecord(busy, "$(P)$(DEVICE):Calibrate")  {
+	field(DESC, " Set Volume per Rev")
+	field(VAL, "0")
+}
+grecord(ao, "$(P)$(DEVICE):VolumePerRevVal")  {
+	field(DESC, "M6 Volume per Rev")
+	field(VAL, "99.124")
+	field(PREC, "3")
+	field(EGU, "uL")
+}
+######################## below are pressure sensor records
+
+grecord(ai, "$(P)$(DEVICE):SensorPV")  {
+	field(INP, "$(P)DVX_8 CP NMS")
+	field(DESC, "M6 Pressure Sensor PV")
+	field(PREC, "4")
+	field(FLNK, "$(P)$(DEVICE):SensorPressure PP NMS")
+	field(SCAN, "4")
+}
+## record below disables the abort sequence when SensorPVis  in passive mode or pressure is  below 80 PSI
+## otherwise it runs abort sequence which stops the pump, puts in passive interlock and set the pressure trip
+grecord(transform, "$(P)$(DEVICE):SensorPressure")  {
+	field(INPA, "$(P)$(DEVICE):SensorPV.VAL PP NMS")
+	field(CLCA, "A")
+	field(INPB, "$(P)$(DEVICE):SensorPV.SCAN PP NMS")
+	field(CLCB, "B")
+	field(CLCD, "(A-0.67)/0.005")
+	field(CLCF, "B>1 && A>1.0 ? 1:0")
+	field(OUTF, "$(P)$(DEVICE):AbortSeq.DISV PP NMS")
+	field(CLCG, "1")
+	field(OUTG, "$(P)$(DEVICE):AbortSeq.PROC PP NMS")
+	field(DESC, "M6  Pressure ")
+	field(PREC, "4")
+
+}
+grecord(transform, "$(P)$(DEVICE):PressureValue")  {
+	field(INPA, "$(P)$(DEVICE):SensorPV.VAL PP NMS")
+	field(CLCD, "(A-0.67)/0.0048")
+	field(DESC, "M6 Out Pressure PSI")
+	field(PREC, "2")
+	field(SCAN, "4")
+
+}
+grecord(seq, "$(P)$(DEVICE):AbortSeq")  {
+	field(DO1,"1")
+	field(LNK1, "$(P)$(DEVICE):Abort.VAL PP NMS")
+	field(DO2,"1")
+	field(LNK2, "$(P)$(DEVICE):PressureTrip.PROC PP NMS")
+#	field(DO3,"0")
+#	field(LNK3, "$(P)$(DEVICE):SensorPV.SCAN PP NMS")
+#	field(DO3,"1")
+#	field(LNK3, "$(P)$(DEVICE):PressureTrip.PROC PP NMS")
+	
+
+} 
+
+grecord(calcout, "$(P)$(DEVICE):PressureTrip")  {
+	field(DESC, "M6 Pressure at Trip")
+	field(INPA, "$(P)$(DEVICE):PressureValue.D PP NMS")
+	field(CALC, "A")
+	field(PREC, "2")
+	field(EGU, "PSI")
+}
+
+
+#
+
+#
+
+

@@ -1,0 +1,13 @@
+# 14ID-EPS_2K9_input-B.db
+
+#=======================================================
+record(longin,"$(P)eps_$(m)wd$(n)")
+
+{
+	field(DTYP,"AB-SLC500DCM")
+	field(SCAN,"I/O Intr")
+     field(INP,"#L0 A$(A) C$(C) S0 @") 
+	field(EGU,"Number")
+     field(HOPR,"65535")
+     field(LOPR,"0")
+}

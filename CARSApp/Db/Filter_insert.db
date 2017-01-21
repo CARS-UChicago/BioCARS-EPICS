@@ -1,0 +1,9 @@
+grecord(sseq,"$(P)$(S)") {
+	field(DESC,"Insert Ti then Ag in XIA")
+	field(LNK1,"14IDB:DAC1_3.VAL PP NMS")
+	field(DO1,"0")
+	field(DLY2,"0.2")
+	field(LNK2,"14IDB:DAC1_2.VAL PP NMS")
+	field(DO2,"0")
+	field(PREC,"1")
+}

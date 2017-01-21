@@ -1,0 +1,43 @@
+record(asyn, "$(P)$(R)_SPD") {
+	field(AOUT,"SPD?")
+	field(PORT,"$(PORT)")
+	field(SCAN,"6")
+	field(FLNK, "$(P)$(R)_ENABLE")
+}
+
+record(asyn,"$(P)$(R)_RUN") {
+	field(AOUT,"RUN")
+	field(PORT,"$(PORT)")
+}
+
+record(asyn,"$(P)$(R)_STOP") {
+	field(AOUT,"STOP")
+	field(PORT,"$(PORT)")
+}
+
+record(asyn, "$(P)$(R)_ENABLE") {
+	field(AOUT, "ENABLE?")
+	field(PORT, "$(PORT)")
+#	field(SCAN, "6")
+#	field(FLNK, "$(P)$(R)_FAULT")
+}
+
+#record(asyn, "$(P)$(R)_FAULT") {
+#	field(AOUT, "FAULT?")
+#	field(PORT, "$(PORT)")
+#}
+
+record(scalcout, "$(P)$(R)_SPEED") {
+	field(INAA, "$(P)$(R)_SPD.TINP CP")
+	field(CALC,"SSCANF(AA, '%f')")
+}
+
+record(calcout, "$(P)$(R)_SHUTTER") {
+	field(INPA, "$(P)$(R)_SPEED")
+# Change to -2 to deal with controller reading out -1
+	field(INPB, "-2")
+	field(CALC,"A < B ? 1:0")
+	field(OOPT, "When Non-zero")
+	field(OUT, "$(P)shutter_in1 PP NMS")
+	field(SCAN, "3")
+}

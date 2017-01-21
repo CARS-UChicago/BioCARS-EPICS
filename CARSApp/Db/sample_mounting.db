@@ -1,0 +1,46 @@
+# This record provides some of the PV's that are needed for 
+# the sample mounting SNL program
+
+record(longout,"$(P)Sample_mount") {
+}
+
+record(longout,"$(P)Sample_done") {
+}
+
+#record(ao,"$(P)bsz_orig_pos") {
+#    field(VAL,"30")
+#    field(DRVL,"10")
+#    field(DRVH,"50")
+#}
+
+record(ao,"$(P)bsz_mount_pos") {
+    field(VAL,"150")
+    field(DRVL,"10")
+    field(DRVH,"150")
+}
+
+#record(ao,"$(P)dz_orig_pos")  {
+#    field(VAL,"250")
+#    field(DRVL,"150")
+#    field(DRVH,"700")
+#}
+
+record(ao,"$(P)dz_mount_pos")  {
+    field(VAL,"450")
+    field(DRVL,"400")
+    field(DRVH,"1000")
+}
+
+record(ao,"$(P)kappa_mount_pos")  {
+    field(VAL,"0")
+    field(DRVL,"-80")
+    field(DRVH,"60")
+}
+
+record(ao,"$(P)dz_rbv_cutoff")  {
+    field(VAL,"300")
+}
+
+record(ao,"$(P)bsz_rbv_cutoff")  {
+    field(VAL,"50")
+}
