@@ -1,0 +1,93 @@
+#file "icb_adc_settings.req",		P=14IDB:, ADC=adc1
+#file "mca_settings.req",		P=14IDB:, M=aim_adc1
+#file "SR570preamp_settings.req",       	P=14IDB:, A=A1
+#file "SR570preamp_settings.req",       	P=14IDB:, A=A2
+file "scaler_16ch_settings.req",        P=14IDB:, S=sclS1
+#file "mono_pid_control_settings.req",   P=14IDB:, PID=mono_pid1
+file "standardScans_settings.req",	P=14IDB:
+file "saveData_settings.req",		P=14IDB:
+file "CARS_24_motor_settings.req",      P=14IDB:
+#file "CARS_motor_settings.req", 	P=14IDB:, M=m12
+file "CARS_motor_settings.req", 	P=14IDB:, M=m25
+file "CARS_motor_settings.req", 	P=14IDB:, M=m26
+file "CARS_motor_settings.req", 	P=14IDB:, M=m27
+file "CARS_motor_settings.req", 	P=14IDB:, M=m28
+file "CARS_motor_settings.req", 	P=14IDB:, M=m49
+file "CARS_motor_settings.req", 	P=14IDB:, M=m50
+file "CARS_motor_settings.req", 	P=14IDB:, M=m51
+file "CARS_motor_settings.req", 	P=14IDB:, M=m52
+file "CARS_motor_settings.req", 	P=14IDB:, M=m53
+file "CARS_motor_settings.req", 	P=14IDB:, M=m54
+file "CARS_motor_settings.req", 	P=14IDB:, M=m55
+file "CARS_motor_settings.req", 	P=14IDB:, M=m56
+file "CARS_motor_settings.req", 	P=14IDB:, M=m57
+file "CARS_motor_settings.req", 	P=14IDB:, M=m58
+file "CARS_motor_settings.req", 	P=14IDB:, M=m59
+file "CARS_motor_settings.req", 	P=14IDB:, M=m60
+file "CARS_motor_settings.req", 	P=14IDB:, M=m61
+file "CARS_motor_settings.req", 	P=14IDB:, M=m62
+file "CARS_motor_settings.req", 	P=14IDB:, M=m63
+file "CARS_motor_settings.req", 	P=14IDB:, M=m64
+##file "table_settings.req",		P=14IDB:, T=table1, Q=Table1
+##file "table_settings.req",              P=14IDB:, T=table2, Q=Table2
+file "userAve10_settings.req",          P=14IDB:
+#file "userTransforms10_settings.req",	P=14IDB:
+file "transforms10_settings.req",       P=14IDB:,N=1
+file "FastShutter.req",			P=14IDB:,Q=FS
+file "FastShutter.req",			P=14IDB:,Q=FS2
+file "XYZ.req",				P=14IDB:,Q=XYZ
+file "SavedPositions6.req",		P=14IDB:,Q=IDBTable
+file "SavedPositions4.req",             P=14IDB:,Q=DetXY
+file "userStringSeqs10_settings.req",	P=14IDB:
+#file "softMotor_settings.req",		P=14IDB:,SM=SM1
+#file "softMotor_settings.req",		P=14IDB:,SM=SM2
+#file "softMotor_settings.req",		P=14IDB:,SM=SM3
+#file "softMotor_settings.req",		P=14IDB:,SM=SM4
+#file "softMotor_settings.req",		P=14IDB:,SM=SM5
+#file "softMotor_settings.req",		P=14IDB:,SM=SM6
+#file "softMotor_settings.req",		P=14IDB:,SM=SM7
+#file "softMotor_settings.req",		P=14IDB:,SM=SM8
+#file "softMotor_settings.req",		P=14IDB:,SM=SM9
+#file "softMotor_settings.req",		P=14IDB:,SM=SM10
+file "Keithley2kDMM_mf22_settings.req",  P=14Keithley1:,Dmm=DMM1
+file "transform_settings.req",          P=14IDB:FSX0
+file "transform_settings.req",          P=14IDB:FSY0
+file "transform_settings.req",          P=14IDB:FS2X0
+file "transform_settings.req",          P=14IDB:FS2Y0
+#file "transform_settings.req",          P=14IDB:FSP0
+file "transform_settings.req",          P=14IDB:T2_ENCODERS_CALIBRATION
+file "LaserPower.req",			P=14IDB:
+14IDB:soft_limits_enable.VAL
+file "transform_settings.req",          P=14IDB:Pause_scans
+file "pvHistory_settings.req",          P=14IDB:,N=Cryo
+14IDB:oxSetTemp.A
+14IDB:oxSetSampleFlow.A
+14IDB:oxSetShieldFlow.A
+14IDB:historyCryo_PV1_curr.INP
+14IDB:historyCryo_PV2_curr.INP
+#14IDB:oxTempPlot
+#file "CARS_motor_settings.req", 	P=14IDB:, M=ESP300X
+#file "CARS_motor_settings.req", 	P=14IDB:, M=ESP300Y
+#file "CARS_motor_settings.req", 	P=14IDB:, M=ESP300Z
+##############LY####ESP301SETTINGS############
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301X
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301Y
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301Z
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301X1
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301Y1
+###file "CARS_motor_settings.req", 	P=14IDB:, M=ESP301Z1
+##############################################
+###file "quadEM_settings.req",             P=14IDB:, R=QE1:
+###file "quadEM_TimeSeries_settings.req",  P=14IDB:, R=QE1_TS:
+###file "quadEM_Plugin_settings.req",      P=14IDB:, R=QE1:
+
+file exphi_settings.req P=14IDB:,E=Exphi
+file motor_settings.req P=14IDB:,M=m150
+file motor_settings.req P=14IDB:,M=m151
+file motor_settings.req P=14IDB:,M=m152
+file motor_settings.req P=14IDB:,M=m153
+14IDB:DETECTOR_CEN_X.VAL
+14IDB:DETECTOR_CEN_Y.VAL
+14IDB:m3.OFF
+## below is redundant?
+##file "T2_ENCODERS_CALIBRATION.req",     P=14IDB:

@@ -1,0 +1,6 @@
+#14LAB:BraggTypeMO.VAL
+14LAB:sclS1.VAL
+#file "VME_DAC_settings.req",             P=14LAB:,DAC=DAC2
+#14LAB:DAC2_2.VAL
+#14LAB:DAC2_4.VAL
+file softGlue_settings.req P=14LAB:,H=softGlue:

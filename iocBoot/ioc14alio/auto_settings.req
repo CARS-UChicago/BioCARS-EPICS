@@ -1,0 +1,17 @@
+# Note: the macro P must have been supplied to the routine that parses
+# this file.  Normally, this means a command like the following is in st.cmd
+# create_monitor_set("auto_settings.req",30,"P=17idb:")
+# This requires save_restore v2.8 or later.
+
+# ...
+
+file exphi_settings.req P=14IDB:,E=Exphi
+file motor_settings.req P=14IDB:,M=m150
+file motor_settings.req P=14IDB:,M=m151
+file motor_settings.req P=14IDB:,M=m152
+file motor_settings.req P=14IDB:,M=m153
+
+# Aliog
+#file aliog_settings.req P=$(P),D=alio1
+
+# ...

@@ -1,0 +1,33 @@
+file "CARS_24_motor_positions.req", P=14IDB:
+file "motor_positions.req", P=14IDB:, M=m25
+file "motor_positions.req", P=14IDB:, M=m26
+file "motor_positions.req", P=14IDB:, M=m27
+file "motor_positions.req", P=14IDB:, M=m28
+file "motor_positions.req", P=14IDB:, M=m49
+file "motor_positions.req", P=14IDB:, M=m50
+file "motor_positions.req", P=14IDB:, M=m51
+file "motor_positions.req", P=14IDB:, M=m52
+file "motor_positions.req", P=14IDB:, M=m53
+file "motor_positions.req", P=14IDB:, M=m54
+file "motor_positions.req", P=14IDB:, M=m55
+file "motor_positions.req", P=14IDB:, M=m56
+file "motor_positions.req", P=14IDB:, M=m57
+file "motor_positions.req", P=14IDB:, M=m58
+file "motor_positions.req", P=14IDB:, M=m59
+file "motor_positions.req", P=14IDB:, M=m60
+file "motor_positions.req", P=14IDB:, M=m61
+file "motor_positions.req", P=14IDB:, M=m62
+file "motor_positions.req", P=14IDB:, M=m63
+file "motor_positions.req", P=14IDB:, M=m64
+#file "motor_positions.req", P=14IDB:, M=m12
+#file "motor_positions.req", P=14IDB:, M=ESP300X
+#file "motor_positions.req", P=14IDB:, M=ESP300Y
+#file "motor_positions.req", P=14IDB:, M=ESP300Z
+################################LY ESP motors#####
+##file "motor_positions.req", P=14IDB:, M=ESP301X
+##file "motor_positions.req", P=14IDB:, M=ESP301Y
+##file "motor_positions.req", P=14IDB:, M=ESP301Z
+##file "motor_positions.req", P=14IDB:, M=ESP301X1
+##file "motor_positions.req", P=14IDB:, M=ESP301Y1
+##file "motor_positions.req", P=14IDB:, M=ESP301Z1
+

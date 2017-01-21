@@ -1,0 +1,3 @@
+file "AutoSampler_settings.req",         P=$(P), R=$(R)
+#14Syringe1:S1:Upper.VAL 
+#14Syringe1:S1:Lower.VAL 

@@ -1,0 +1,10 @@
+14IDA:DAC1_4.VAL
+14IDA:DAC1_1.VAL
+14IDA:DAC1_2.VAL
+14IDA:DAC1_3.VAL
+
+########
+file "CARS_16_motor_positions.req",P=14IDA:
+#############
+#file "VME_DAC_positions.req", P=14IDA:,DAC=DAC1
+#14IDA:DAC1_4.VAL

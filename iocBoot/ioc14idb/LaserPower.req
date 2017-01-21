@@ -1,0 +1,7 @@
+$(P)LaserX_size
+$(P)LaserZ_size
+#$(P)Laser_size
+#$(P)Laser_power
+$(P)Laser_VN_pos
+$(P)Laser_VN_en
+$(P)Laser_VN_pow

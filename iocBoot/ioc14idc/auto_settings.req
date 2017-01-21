@@ -1,0 +1,29 @@
+file "CARS_40_motor_settings_14idc.req",      P=14IDC:
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m15
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m8
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m41
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m42
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m43
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m44
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m45
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m46
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m47
+file "CARS_KBMIR_motor_settings.req",         P=14IDC:, M=m48
+file "table_settings.req", 		P=14IDC:, T=table1, Q=Table1
+file "table_settings.req", 		P=14IDC:, T=table2, Q=Table2
+14IDC:mir1Y.OFF
+14IDC:mir1Y.FOFF
+14IDC:mir1Th.OFF
+14IDC:mir1Th.FOFF
+14IDC:mir1Chi.OFF
+14IDC:mir1Chi.FOFF
+14IDC:mir1X.OFF
+14IDC:mir1X.FOFF
+14IDC:mir2Y.OFF
+14IDC:mir2Y.FOFF
+14IDC:mir2Th.OFF
+14IDC:mir2Th.FOFF
+14IDC:mir2Chi.OFF
+14IDC:mir2Chi.FOFF
+14IDC:mir2X.OFF
+14IDC:mir2X.FOFF

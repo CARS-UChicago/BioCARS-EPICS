@@ -1,0 +1,11 @@
+file "CARS_40_motor_positions_14idc.req", P=14IDC:
+
+
+file "CARS_motor_positions.req", P=14IDC:, M=m41
+file "CARS_motor_positions.req", P=14IDC:, M=m42
+file "CARS_motor_positions.req", P=14IDC:, M=m43
+file "CARS_motor_positions.req", P=14IDC:, M=m44
+file "CARS_motor_positions.req", P=14IDC:, M=m45
+file "CARS_motor_positions.req", P=14IDC:, M=m46
+file "CARS_motor_positions.req", P=14IDC:, M=m47
+file "CARS_motor_positions.req", P=14IDC:, M=m48

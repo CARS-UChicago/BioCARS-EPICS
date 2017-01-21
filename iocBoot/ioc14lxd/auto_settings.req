@@ -1,0 +1,4 @@
+# 4-step measurement
+#file auto_4step_settings.req P=$(P),Q=4step
+#file "UndPos.req",                 P=14IDA:,Q=Und
+#file "SaveSamplePositions.req",    P=14IDB:,Q=SP
