@@ -1,0 +1,16 @@
+# Set the default gateway (the address to which IP datagrams will be sent
+# when there is no specific specific routing table entry available for the
+# actual destination address.)
+nfsAuthUnixSet("everest", 501,500,0,0)
+nfsMount("everest", "/home/epics","/home/epics")
+#hostAdd "bm14c4","164.54.161.156"
+
+#nfsAuthUnixSet("bm14c4", 500,500,0,0)
+#nfsMount("bm14c4", "/home/epics","/home/epics")
+
+
+routeShow
+
+
+# The following line eliminates "cksum: out of data" messages due to DHCP
+#proxyPortFwdOff(67)
