@@ -1,0 +1,18 @@
+file "$(CARS)/CARSApp/Db/pseudoMotor.db"
+{
+pattern
+{P,          M,              DINP,                        OUT,                     RDBL,                           STOO,             DESC, EGU, DIR, VELO, VBAS, ACCL, BDST, BVEL, BACC, MRES,  RRES, PREC, DHLM, DLLM}
+# KB Mirror Benders
+{14IDB:,  pm1, "14IDB:KBH:Done NPP NMS", "14IDB:pm1DVAL.VAL PP MS", "14IDB:KBH:Readback.G NPP NMS", "14IDB:KBH:Stop PP MS",   "Curvature",  mm, Pos,   1,    .1,   .1,    0,    1,   .1, .1,     1.0,  1,  10000, -10000}
+{14IDB:,  pm2, "14IDB:KBH:Done NPP NMS", "14IDB:pm2DVAL.VAL PP MS", "14IDB:KBH:Readback.H NPP NMS", "14IDB:KBH:Stop PP MS", "Ellipticity",  mm, Pos,   1,    .1,   .1,    0,    1,   .1, .1,     1.0,  1,  10000, -10000}
+{14IDB:,  pm3, "14IDB:KBV:Done NPP NMS", "14IDB:pm3DVAL.VAL PP MS", "14IDB:KBV:Readback.G NPP NMS", "14IDB:KBV:Stop PP MS",   "Curvature",  mm, Pos,   1,    .1,   .1,    0,    1,   .1, .1,     1.0,  1,  10000, -10000}
+{14IDB:,  pm4, "14IDB:KBV:Done NPP NMS", "14IDB:pm4DVAL.VAL PP MS", "14IDB:KBV:Readback.H NPP NMS", "14IDB:KBV:Stop PP MS", "Ellipticity",  mm, Pos,   1,    .1,   .1,    0,    1,   .1, .1,     1.0,  1,  10000, -10000}
+}
+
+file "$(CARS)/CARSApp/Db/sumDiff2D.db"
+{
+pattern
+{P,      T,     SUM, DIFF,    M1DRV,    M1RBV,   M2DRV,   M2RBV,   M1STOP,   M1DONE,   M2STOP,   M2DONE,  PREC}
+{14IDB:, KBH:,  pm1, pm2,    m55.VAL,  m55.RBV,  m56.VAL, m56.RBV, m55.STOP, m55.DMOV, m56.STOP, m56.DMOV, 1}
+{14IDB:, KBV:,  pm3, pm4,    m51.VAL,  m51.RBV,  m52.VAL, m52.RBV, m51.STOP, m51.DMOV, m52.STOP, m52.DMOV, 1}
+}

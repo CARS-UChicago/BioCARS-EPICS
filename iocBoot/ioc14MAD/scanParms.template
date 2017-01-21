@@ -1,0 +1,21 @@
+file "$(CARS)/CARSApp/Db/scanParms.db"
+{
+pattern  
+{P,          SCANREC,    Q,                          POS,                    RDBK,         AR,         AFT,                          TPV,              DPV,     SP,   EP,  NP,                           A,                            B,                  DET}
+# Channel cut scans
+{14IDB:, 14IDB:scan1,  Energy_CC,     14IDB:Energy_CC.VAL,    14IDB:Energy_CC.RBV, "RELATIVE", "PRIOR POS",                           "",               "",   -2.0,  2.0, 101,                          "",                           "",                   ""}
+
+# KB motions in IDB
+{14IDB:, 14IDB:scan1,        m49,           14IDB:m49.VAL,          14IDB:m49.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -150.0, 150.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m50,           14IDB:m50.VAL,          14IDB:m50.RBV, "RELATIVE", "PRIOR POS",                           "",               "",   -3.0,   3.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m51,           14IDB:m51.VAL,          14IDB:m51.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m52,           14IDB:m52.VAL,          14IDB:m52.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m53,           14IDB:m53.VAL,          14IDB:m53.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -150.0, 150.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m54,           14IDB:m54.VAL,          14IDB:m54.RBV, "RELATIVE", "PRIOR POS",                           "",               "",   -3.0,   3.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m55,           14IDB:m55.VAL,          14IDB:m55.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        m56,           14IDB:m56.VAL,          14IDB:m56.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        pm1,           14IDB:pm1.VAL,          14IDB:pm1.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        pm2,           14IDB:pm2.VAL,          14IDB:pm2.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        pm3,           14IDB:pm3.VAL,          14IDB:pm3.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+{14IDB:, 14IDB:scan1,        pm4,           14IDB:pm4.VAL,          14IDB:pm4.RBV, "RELATIVE", "PRIOR POS",                           "",               "", -100.0, 100.0, 51,                          "",                           "",                   ""}
+}

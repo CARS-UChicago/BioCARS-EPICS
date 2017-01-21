@@ -1,0 +1,82 @@
+file ../../biocarsApp/Db/14ID-EPS_2K6_tgt-sel.db
+
+# 14ID-EPS_2K6_tgt-sel.template
+# In Epics application for EPS, pressing a button with label as shown
+#     in the "Name" field will select a PLC input channel as "Target" 
+# The "Target" selected will be an object to accept re-configuration 
+#     or explore real input value and setpoint for this channel
+# "Targeting" is permissible for every input as long as "PLC_OK" is 
+#    recieved by Epics via DCM <--> AB-6008V1 communication 
+
+{
+pattern  
+{P,		A,C,S,	  Name}
+{14LAB:,	0,3,0,	"IG0_"}
+{14LAB:,	0,3,1,	"IG1_"}
+{14LAB:,	0,3,2,	"IG2_"}
+{14LAB:,	0,3,4,	"IG3_"}
+{14LAB:,	0,3,4,	"IG4_"}
+{14LAB:,	0,3,5,	"IG5_"}
+{14LAB:,	0,3,6,	"IG6_"}
+{14LAB:,	0,3,7,	"IG7_"}
+{14LAB:,	0,3,8,	"IG8_"}
+{14LAB:,	0,3,9,	"IG9_"}
+
+{14LAB:,	0,5,0,  	"VO0_"}
+{14LAB:,	0,5,1,  	"VO1_"}
+{14LAB:,	0,5,2,  	"VO2_"}
+{14LAB:,	0,5,3,  	"VO3_"}
+{14LAB:,	0,5,4,  	"VO4_"}
+{14LAB:,	0,5,5,  	"VO5_"}
+{14LAB:,	0,5,6,  	"VO6_"}
+{14LAB:,	0,5,7, 	"VO7_"}
+{14LAB:,	0,5,8, 	"VO8_"}
+{14LAB:,	0,5,9,  	"VO9_"}
+
+{14LAB:,	0,7,0,  	"WF0_"}
+{14LAB:,	0,7,1,  	"WF1_"}
+{14LAB:,	0,7,2,  	"WF2_"}
+{14LAB:,	0,7,3,  	"WF3_"}
+{14LAB:,	0,7,4,  	"WF4_"}
+{14LAB:,	0,7,5,  	"WF5_"}
+{14LAB:,	0,7,6,  	"WF6_"}
+{14LAB:,	0,7,7,  	"WF7_"}
+{14LAB:,	0,7,8,  	"WF8_"}
+{14LAB:,	0,7,9,  	"WF9_"}
+{14LAB:,	0,7,10, 	"WF10_"}
+{14LAB:,	0,7,11, 	"WF11_"}
+
+{14LAB:,	0,9,0,  	"TC0_"}
+{14LAB:,	0,9,1,  	"TC1_"}
+{14LAB:,	0,9,2,  	"TC2_"}
+{14LAB:,	0,9,3,  	"TC3_"}
+{14LAB:,	0,9,4,  	"TC4_"}
+{14LAB:,	0,9,5,  	"TC5_"}
+{14LAB:,	0,9,6, 	"TC6_"}
+{14LAB:,	0,9,7, 	"TC7_"}
+{14LAB:,	0,9,8,  	"TC8_"}
+{14LAB:,	0,9,9,  	"TC9_"}
+{14LAB:,	0,9,10, 	"TC10_"}
+{14LAB:,	0,9,11, 	"TC11_"}
+{14LAB:,	0,9,12, 	"TC12_"}
+{14LAB:,	0,9,13, 	"TC13_"}
+{14LAB:,	0,9,14, 	"TC14_"}
+{14LAB:,	0,9,15,	"TC15_"}
+
+{14LAB:,	0,11,0, "       "}
+{14LAB:,	0,11,1, "Air_"   }
+{14LAB:,	0,11,2, "LN2_"   }
+{14LAB:,	0,11,3, "STOP-A_MONO_"}
+{14LAB:,	0,11,4, "STOP-A_PINK_"}
+{14LAB:,	0,11,5, "STOP-A_LOCK_"}
+{14LAB:,	0,11,6, "STOP-B_MONO_"}
+{14LAB:,	0,11,7, "STOP-B_PINK_"}
+{14LAB:,	0,11,8, "STOP-B_LOCK_"}
+{14LAB:,	0,11,9, "       "}
+{14LAB:,	0,11,10,"       "}
+{14LAB:,	0,11,11,"       "}
+{14LAB:,	0,11,12,"       "}
+{14LAB:,	0,11,13,"       "}
+{14LAB:,	0,11,14,"       "}
+{14LAB:,	0,11,15,"       "}
+}

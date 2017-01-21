@@ -1,0 +1,38 @@
+# 14IDA motor parameters
+
+# mono and slit related motor PVs
+# for mono: see document in \\Cars5\users\BioCARS\UpgradeProjects\Monochromator\Kohzu
+#           coordinates form a right-hand rule with Y in the upward direction and Z along the x-ray forward direction
+# OMS card #:  0 - white beam slits and heat load shutter
+#              1 - mono
+#
+# for 77K Si(111), 2d=6.2712, E=20, theta=5.674 deg, lamda=0.62,  Z2=75.86 mm (for offset 0f 7.5 mm)
+#                             E=25, theta=4.536 deg, lamda=0.496, Z2=94.834
+#                             E=6,  theta=19.239, lamda=2.066,    Z2=22.761 
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,       M,   DTYP,        C, S, DESC,                          EGU,    DIR, VELO,    VBAS,    ACCL, BDST, BVEL,   TWV,    UREV,      PREC, SREV, DHLM,  DLLM}
+
+# white slits
+{14IDA:,  m1, "OMS VME58", 0,  0,  "white slit y-top",           "mm",   Pos, 0.40000, 0.2000,  0.2,  0.1,  0.2000, 0.01,   0.40000,   3,    400,  5.3,   -1.2}
+{14IDA:,  m2, "OMS VME58", 0,  1,  "white slit y-bottom",        "mm",   Pos, 0.40000, 0.2000,  0.2,  0.1,  0.2000, 0.01,   0.40000,   3,    400,  1.2,   -5.3}
+{14IDA:,  m3, "OMS VME58", 0,  2,  "white slit x-in",            "mm",   Pos, 0.63500, 0.3175,  0.2,  0.1,  0.3175, 0.01,   0.63500,   3,    400,  15.0,   -3.0}
+{14IDA:,  m4, "OMS VME58", 0,  3,  "white slit x-out",           "mm",   Pos, 0.63500, 0.3175,  0.2,  0.1,  0.3175, 0.01,   0.63500,   3,    400,  15.0,   -3.0}
+{14IDA:,  m5, "OMS VME58", 0,  4, "Heat Load Shutter",           "mm",   Pos, 2.000,   0.200,   0.2,  0.1,  0.20,   0.1,    2.00000,   3,    400,  10.5,    -11}
+{14IDA:,  m6, "OMS VME58", 0,  5,        "Unused",               "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+{14IDA:,  m7, "OMS VME58", 0,  6,        "Unused",               "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14IDA:,  m8, "OMS VME58", 0,  7,        "Unused",               "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+
+# mono
+{14IDA:,  m9,  "OMS VME58", 1, 0, "mono theta for assembly ",    "deg",  Pos, 0.13888, 0.01388, 0.2, -0.1,  0.222,  0.0005, 0.0138889, 5,    500,  19.239, -0.1}
+{14IDA:,  m10, "OMS VME58", 1, 1, "mono Y1",                     "mm",   Neg, 1.00000, 0.10000, 0.2,  0.0,  0.100,  1.0000, 0.1000000, 3,    500,  25.0,   5.0}
+{14IDA:,  m11, "OMS VME58", 1, 3, "mono Z2",                     "mm",   Neg, 1.00000, 0.10000, 0.2,  0.0,  0.100,  1.0000, 1.0000000, 3,    500,  2.0,  -76.0}
+{14IDA:,  m12, "OMS VME58", 1, 2, "mono theta1",             "arcsec",   Neg,100.0000, 10.00000, 0.2,-200.0,  100.0,  1.0000,25.7000000, 5,    1000, 3600.0, -3600.0}
+#{14IDA:,  m12, "OMS VME58", 1, 2, "mono theta1",                "deg",   Neg, 0.10000, 0.01000, 0.2,  0.0,  0.100,  0.0005, 0.0125000,  5,    1000, 1.0,   -1.0}
+{14IDA:,  m13, "OMS VME58", 1, 4, "mono X2",                     "mm",   Neg, 0.10000, 0.01000, 0.2,  0.0,  0.010,  0.1000, 0.1000000, 3,    1000, 3.0,   -3.0}
+{14IDA:,  m14, "OMS VME58", 1, 5, "mono Chi2",                   "deg",  Neg, 0.01000, 0.01000, 0.2,  0.0,  0.010,  0.0100, 0.0562500, 5,    1000, 1.0,   -1.0}
+{14IDA:,  m15, "OMS VME58", 1, 6, "mono beam monitor",           "mm",   Pos, 1.00000, 0.25000, 0.2,  0.0,  0.250,  8.0000, 0.2500000, 3,    500,  0.0,   -9.0}
+{14IDA:,  m16, "OMS VME58", 1, 7, "mono table Y",                "mm",   Neg, 0.50000, 0.01000, 0.2,  0.0,  0.010,  0.1000, 0.0925926, 4,    500,  5.0,   -5.0}
+}

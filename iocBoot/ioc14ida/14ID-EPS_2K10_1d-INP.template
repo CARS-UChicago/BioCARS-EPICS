@@ -1,0 +1,67 @@
+#14ID-EPS_2K10_1d-INP.template
+# for each input, the "PV name" will be -- 14IDA:eps_[Symbol]
+file "$(CARS)/CARSApp/Db/14ID-EPS_2K10_1d-INP.db"
+{
+pattern
+{P,     N,   A,C,S,   ZNAM,     ZSV,  	ONAM,   OSV,  	      Symbol}
+
+{14IDA:,16,  1,2,0,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Idx0"}
+{14IDA:,17,  1,2,1,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Idx1"}
+{14IDA:,18,  1,2,2,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Idx2"}
+{14IDA:,19,  1,2,3,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Idx3"}
+{14IDA:,20,  1,2,4,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Ctg0"}
+{14IDA:,21,  1,2,5,  "0",    "NO_ALARM",	"1",   "NO_ALARM",	 "tgt-Ctg1"}
+{14IDA:,22,  1,2,6,  "0",    "NO_ALARM",	"1",   "NO_ALARM",	 "tgt-Ctg2"}
+{14IDA:,23,  1,2,7,  "0",    "NO_ALARM",	"1",   "NO_ALARM",   "tgt-Ctg3"}
+{14IDA:,24,  1,2,8,  "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "Tgt-STAT"}
+{14IDA:,25,  1,2,9,  "nOVRD","NO_ALARM",	"OVRD","MINOR",      "Tgt-OVRD"}
+{14IDA:,26,  1,2,10, "FAULT","NO_ALARM",	"OK",  "NO_ALARM",   "Tgt-LTHD"}
+{14IDA:,27,  1,2,11, "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "Vopn-PRMT"}
+{14IDA:,28,  1,2,12, "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "Vcls-PRMT"}
+{14IDA:,29,  1,2,13, "nOpn", "MAJOR",	     "Open","NO_ALARM",   "Vopn-Stat"}
+{14IDA:,30,  1,2,14, "nCls", "NO_ALARM",	"Clsd","MAJOR",      "Vcls-Stat"}
+{14IDA:,31,  1,2,15, "NoWrn","NO_ALARM",	"Warn","MINOR",      "Vopn-Warn"}
+
+{14IDA:,64,  1,8,0,  "FAULT","NO_ALARM",	"OK",  "NO_ALARM",   "adm_PRMT"}
+{14IDA:,65,  1,8,1,  "FAULT","NO_ALARM",	"OK",  "NO_ALARM",   "spr1"     }
+{14IDA:,66,  1,8,2,  "FAULT","NO_ALARM",	"OK",  "MAJOR",      "Major-FLT"}
+{14IDA:,67,  1,8,3,  "FAULT","NO_ALARM",	"OK",  "MAJOR",      "Minor-FLT"}
+{14IDA:,68,  1,8,4,  "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "PLC-OK"}
+{14IDA:,69,  1,8,5,  "FAULT","MINOR",	     "OK",  "NO_ALARM",	 "PLC-NoForce"}
+{14IDA:,70,  1,8,6,  "FAULT","MINOR",	     "OK",  "NO_ALARM",	 "PLC-battOK"}
+{14IDA:,71,  1,8,7,  "FAULT","NO_ALARM",	"OK",  "MINOR",      "RSview-ADM"}
+{14IDA:,72,  1,8,8,  "FAULT","NO_ALARM",	"OK",  "MINOR",      "FE-Emu"}
+{14IDA:,73,  1,8,9,  "FAULT","NO_ALARM",	"OK",  "MINOR",      "APS-Emu"}
+{14IDA:,74,  1,8,10, "FAULT","NO_ALARM",	"OK",  "MINOR",      "Vlv-Emu"}
+{14IDA:,75,  1,8,11, "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "APS-ON"}
+{14IDA:,76,  1,8,12, "FAULT","NO_ALARM",	"OK",  "MAJOR",      "FES-Clsd"}
+{14IDA:,77,  1,8,13, "FAULT","NO_ALARM",	"OK",  "MAJOR",      "FEV-Clsd"}
+{14IDA:,78,  1,8,14, "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "FES-PRMT"}
+{14IDA:,79,  1,8,15, "FAULT","MAJOR",	     "OK",  "NO_ALARM",   "FEV-PRMT"}
+
+{14IDA:,80,  1,10,0,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC0"}
+{14IDA:,81,  1,10,1,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC1"}
+{14IDA:,82,  1,10,2,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC2"}
+{14IDA:,83,  1,10,3,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",       "VC3"}
+{14IDA:,84,  1,10,4,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",       "VC4"}
+{14IDA:,85,  1,10,5,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC5"}
+{14IDA:,86,  1,10,6,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC6"}
+{14IDA:,87,  1,10,7,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC7"}
+{14IDA:,88,  1,10,8,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",       "VC8"}
+{14IDA:,89,  1,10,9,  "NotCLSD","NO_ALARM", "CLSD", "MAJOR",	  "VC9"}
+{14IDA:,90,  1,10,10, "LOW",    "NO_ALARM", "HIGH", "NO_ALARM",   "LA2000"}
+{14IDA:,91,  1,10,11, "FAULT",  "MAJOR",     "OK",  "NO_ALARM",   "PZ1-HV"}	
+{14IDA:,92,  1,10,12, "FAULT",  "MAJOR",     "OK",  "NO_ALARM",   "PZ2-HV"}	
+{14IDA:,93,  1,10,13, "FAULT",  "NO_ALARM",  "OK",  "NO_ALARM",   "Bm-MONO"}
+{14IDA:,94,  1,10,14, "FAULT",  "NO_ALARM",  "OK",  "NO_ALARM",   "Bm-PNK"}
+{14IDA:,95,  1,10,15, "FAULT",  "NO_ALARM",  "OK",  "NO_ALARM",   "Bm-WHT"}
+
+{14IDA:,96,  1,12,0,  "Not-UP", "MAJOR",	 "UP", "NO_ALARM",   "StpA_UP"}
+{14IDA:,97,  1,12,1,  "Not-DN", "MAJOR",	 "DN", "NO_ALARM",   "StpA_DN"}
+{14IDA:,98,  1,12,2,  "Not-LK", "MAJOR",	 "LK", "NO_ALARM",   "StpA_LK"}
+
+{14IDA:,99,  1,12,3,  "Not-UP", "MAJOR",	 "UP", "NO_ALARM",   "StpB_UP"}
+{14IDA:,100, 1,12,4,  "Not-DN", "MAJOR",	 "DN", "NO_ALARM",   "StpB_DN"}
+{14IDA:,101, 1,12,5,  "Not-LK", "MAJOR",	 "LK", "NO_ALARM",   "StpB_LK"}
+ 
+}

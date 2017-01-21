@@ -1,0 +1,22 @@
+file "$(IP)/ipApp/Db/SR630.db"
+
+{
+pattern
+{P,          R, N,     PORT, SCAN, PREC, DESC}
+{14IDA:, SR630, 1, serial11,    3,    1, "Mono Second Stage"}
+{14IDA:, SR630, 2, serial11,    3,    1, "Mono First Stage"}
+{14IDA:, SR630, 3, serial11,    3,    1, "Mono Comption Shield"}
+{14IDA:, SR630, 4, serial11,    3,    1, "Vert Mirror PZT"}
+{14IDA:, SR630, 5, serial11,    3,    1, "Vert Mirror Horiz Motor up"}
+{14IDA:, SR630, 6, serial11,    3,    1, "Vert Mirror Horiz Motor dn"}
+{14IDA:, SR630, 7, serial11,    3,    1, "Horiz Mirror Horiz Motor up"}
+{14IDA:, SR630, 8, serial11,    3,    1, "Horiz Mirror Horiz Motor dn"}
+{14IDA:, SR630, 9, serial11,    0,    1, ""}
+{14IDA:, SR630, 10, serial11,    0,    1, ""}
+{14IDA:, SR630, 11, serial11,    0,    1, ""}
+{14IDA:, SR630, 12, serial11,    0,    1, ""}
+{14IDA:, SR630, 13, serial11,    0,    1, ""}
+{14IDA:, SR630, 14, serial11,    0,    1, ""}
+{14IDA:, SR630, 15, serial11,    0,    1, ""}
+{14IDA:, SR630, 16, serial11,    0,    1, ""}
+}

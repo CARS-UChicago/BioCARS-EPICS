@@ -1,0 +1,33 @@
+
+
+file ChemMatApp/Db/motor.db, top
+{
+#*****************************************************************************#
+#   Motor template file for 15IDB. 					      # 
+#   To add a device:							      #
+#	1) Find its motors in the list below or add them if not present.      #
+#	2) Make sure that the motor name, card number, and slot (i.e. 	      #
+#          M,C,S) for each motor is unique and is not already in use.         #
+#          Note: C is the OMS card in the VME Crate and S is the channel      #
+#          (motor) number.						      #
+#	3) If M,C,S are duplicated in this file you must comment out 	      #
+#	   those motors.						      #
+#	4) After making these changes re-boot the crate. 		      #
+#									      #
+#*****************************************************************************#
+pattern
+{P,       M,          C,  S,   DESC,       EGU,   DIR,   VMAX, VELO,  VBAS, ACCL,  BDST, BVEL, BACC,   SREV,     UREV,  PREC,   DHLM,    DLLM}
+#
+
+#
+#	Bruker D8 Diffractometer Table
+#
+{15IDB:,  m17,   2,  0, "Jack 0",     mm,    Pos,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     0.254,   7,   150.0,   -45.0}
+{15IDB:,  m18,   2,  1, "Jack 1",     mm,    Pos,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     0.254,   7,   100.0,  -100.0}
+{15IDB:,  m19,   2,  2, "Jack 2",     mm,    Pos,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     0.254,   7,   100.0,  -100.0}
+{15IDB:,  m20,   2,  3, "Z 1",        mm,    Neg,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     1.27,    7,   100.0,  -100.0}
+{15IDB:,  m21,   2,  4, "Z 2",        mm,    Neg,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     1.27,    7,   100.0,  -100.0}
+{15IDB:,  m22,   2,  5, "X 2",        mm,    Pos,   0.5,   0.5,   0.05,  2.,    0.1,  0.5,   2.,    400,     1.27,    7,   100.0,  -100.0}
+{15IDB:,  m23,   2,  6, "Not Used",   deg,   Pos,   0.1,   0.1,   0.01,  1.,    0.1,  0.1,   .5,    400,     0.1,     5,     3.0,    -3.0}
+{15IDB:,  m24,   2,  7, "Not Used",   deg,   Pos,   0.1,   0.1,   0.01,  1.,    0.1,  0.1,   .5,    400,     0.50,    5,     1.4,    -1.1}
+#

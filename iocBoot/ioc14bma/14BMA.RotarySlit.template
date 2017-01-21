@@ -1,0 +1,18 @@
+file "$(CARS)/CARSApp/Db/Slit_rot.db"
+{
+pattern
+{P,      SLIT,   mRot,      SEP,    DIA}
+{14BMA:, DV,     Dslitrot,  0.854,  0.604}
+{14BMA:, CV,     Cslitrot,  0.854,  0.604}
+}
+
+file "$(CARS)/CARSApp/Db/Slit_rot90.db"
+{
+pattern
+{P,      SLIT,   mRot,       SEP,   DIA}
+{14BMA:, CH,     CHslitrot,  0.854,  0.604}
+}
+
+
+
+

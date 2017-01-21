@@ -1,0 +1,6 @@
+file "$(CARS)/CARSApp/Db/pseudoMotor.db"
+{
+pattern
+{P,        M,                        DINP,                     OUT,                       RDBL,                      STOO,         DESC,   EGU, DIR,  VELO,  VBAS, ACCL, BDST,  BVEL, BACC, MRES, RRES, PREC, DHLM,  DLLM}
+{14LAB:, omega_offset, "14LAB:omega.DMOV NPP NMS",  "14LAB:omega.VAL PP MS",  "14LAB:omega.RBV NPP NMS", "14LAB:omega.STOP PP MS",  "Omega with offset", (mm), Pos, 1.587, 1.587,   .2,  0.1, 1.587,   .1, .002,  1.0,    4,   25,   -25}
+}

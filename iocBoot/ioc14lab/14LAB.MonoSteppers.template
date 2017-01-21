@@ -1,0 +1,14 @@
+file $(CARS)/biocarsApp/Db/motor_general.db
+
+{
+pattern
+{P,               M,        DTYP, C, S,                DESC,   EGU, DIR,    VELO,    VBAS, ACCL,BDST,  BVEL,    TWV,      UREV, PREC, SREV, DHLM,  DLLM}
+{14LAB:,  monotheta, "OMS VME58", 0, 0,        "Mono theta", "deg", Pos, 0.13888, 0.01388,  0.2, 0.0, 0.222, 0.0005, 0.0138889,    5,  500, 41.0,  -1.0}
+{14LAB:, monotheta1, "OMS VME58", 0, 1,       "Mono theta1", "deg", Neg, 0.10000, 0.01000,  0.2, 0.0, 0.100, 0.0005, 0.0062500,    5,  500,  1.0,  -1.0}
+{14LAB:,     monoY1, "OMS VME58", 0, 2,           "Mono Y1",  "mm", Neg, 1.00000, 0.10000,  0.2, 0.0, 0.100, 1.0000, 0.1000000,    3,  500, 25.0,  -1.0}
+{14LAB:,     monoZ2, "OMS VME58", 0, 3,           "Mono Z2",  "mm", Neg, 1.00000, 0.10000,  0.2, 0.0, 0.100, 1.0000, 1.0000000,    3,  500, 71.0,  -2.0}
+{14LAB:,     monoX2, "OMS VME58", 0, 4,           "Mono X2",  "mm", Neg, 0.10000, 0.01000,  0.2, 0.0, 0.010, 0.1000, 0.0500000,    3,  500,  7.0,  -7.0}
+{14LAB:,   monoChi2, "OMS VME58", 0, 5,         "Mono Chi2", "deg", Neg, 0.10000, 0.01000,  0.2, 0.0, 0.010, 0.0025, 0.0281250,    5,  500,  1.0,  -1.0}
+{14LAB:,     monoYt, "OMS VME58", 0, 6,      "Mono Y table",  "mm", Neg, 0.50000, 0.01000,  0.2, 0.0, 0.010, 0.1000, 0.0925926,    4,  500,  5.0,  -5.0}
+{14LAB:,     monoBM, "OMS VME58", 0, 7, "Mono Beam Monitor",  "mm", Pos, 1.00000, 0.25000,  0.2, 0.0, 0.250, 1.0000, 0.2500000,    3,  500,  0.0, -24.0}
+}

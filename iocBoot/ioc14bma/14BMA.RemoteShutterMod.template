@@ -1,0 +1,8 @@
+file "$(CARS)/CARSApp/Db/remote_shutter_stationModBMC.db"
+{
+pattern
+{P,      N,         EPS,           ShutterStatus,    ShutterSearched}
+{14BMA:, 1,14BM:READY_G,  PA:14BM:STA_A_FES_OPEN_PL,   PA:14BM:STA_A_SEARCHED_PL}
+{14BMA:, 2,14BM:READY_G,  PA:14BM:STA_C_SCS_OPEN_PL,   PA:14BM:STA_C_SEARCHED_PL}
+#{14BMA:, 3,14BM:READY_G,  PA:14BM:D_SHTRS_CLOSED,   PA:14BM:D_SEARCHED}
+}

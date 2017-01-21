@@ -1,0 +1,9 @@
+file "$(CARS)/CARSApp/Db/motor_ESP300.db"
+{
+pattern
+{P,      M,       C, S, DESC,           EGU,  DIR, VELO, VBAS, ACCL, BDST, BVEL, TWV,   UREV, PREC, DHLM,  DLLM,      MRES,      ERES}
+{14LAB:, ESP300X, 0, 0, "Goniometer X", "mm", Pos, 0.2,  0,    1,  0.003,  0.2,  0.1, 0.0009444, 4, 11.5,   0.5, 0.0000590, 0.0000590}
+{14LAB:, ESP300Y, 0, 1, "Goniometer Y", "mm", Pos, 0.2,  0,    1,  0.003,  0.2,  0.1, 0.0009444, 4, 11.5,   0.5, 0.0000590, 0.0000590}
+{14LAB:, ESP300Z, 0, 2, "Goniometer Z", "mm", Pos, 0.6,  0, 0.2,   0.00,  0.0,  0.1, 0.0009408, 4, 24.5,   0.5, 0.0000590, 0.0000590}
+#{14IDB:, ESP300Z, 0, 2, "Goniometer Z", "mm", Pos, 0.3,  0,    1,   0.00,  0.0,  0.1, 0.0009408, 4, 24.5,   0.5, 0.0000590, 0.0000590}
+}									      

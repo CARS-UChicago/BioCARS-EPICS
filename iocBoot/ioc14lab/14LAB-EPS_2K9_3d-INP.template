@@ -1,0 +1,54 @@
+#14LAB-EPS_2K9_3d-INP.template,  for STANDARD type of binary variables
+# for each input, the "PV name" will be -- 14LAB:eps_[SensName]_STAT/OVRD/LTHD
+file ../../CARSApp/Db/14LAB-EPS_2K9_3d-INP.db
+
+{
+pattern
+{P,     N,   A,C,S,   ZNAM,     ZSV,  	 ONAM,     OSV,  	   SensName}
+
+{14LAB:,16,  0,2,0,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP0"}
+{14LAB:,17,  0,2,1,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP1"}
+{14LAB:,18,  0,2,2,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP2"}
+{14LAB:,19,  0,2,3,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP3"}
+{14LAB:,20,  0,2,4,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP4"}
+{14LAB:,21,  0,2,5,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP5"}
+{14LAB:,22,  0,2,6,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP6"}
+{14LAB:,23,  0,2,7,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP7"}
+{14LAB:,24,  0,2,8,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP8"}
+{14LAB:,25,  0,2,9,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "IP9"}
+
+{14LAB:,32,  0,4,0,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG0"}
+{14LAB:,33,  0,4,1,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG1"}
+{14LAB:,34,  0,4,2,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG2"}
+{14LAB:,35,  0,4,3,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG3"}
+{14LAB:,36,  0,4,4,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG4"}
+{14LAB:,37,  0,4,5,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG5"}
+{14LAB:,38,  0,4,6,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG6"}
+{14LAB:,39,  0,4,7,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG7"}
+{14LAB:,40,  0,4,8,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG8"}
+{14LAB:,41,  0,4,9,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "VG9"}
+{14LAB:,42,  0,4,10, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "SHT-clsd"}
+{14LAB:,43,  0,4,11, "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "WF5"}
+{14LAB:,44,  0,4,12, "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "WF6"}
+{14LAB:,45,  0,4,13, "LO",    "NO_ALARM","HI",   "NO_ALARM",   "spr45"}
+{14LAB:,46,  0,4,14, "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "CRYO_RDY"}
+{14LAB:,47,  0,4,15, "FAULT",  "MAJOR",	 "OK",   "NO_ALARM",   "CRYO_noFLT"}
+
+{14LAB:,48,  0,6,0,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO0"}
+{14LAB:,49,  0,6,1,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO1"}
+{14LAB:,50,  0,6,2,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO2"}
+{14LAB:,51,  0,6,3,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO3"}
+{14LAB:,52,  0,6,4,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO4"}
+{14LAB:,53,  0,6,5,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO5"}
+{14LAB:,54,  0,6,6,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO6"}
+{14LAB:,55,  0,6,7,  "CLSD",  "MAJOR",	 "OPN",  "NO_ALARM",   "VO7"}
+{14LAB:,56,  0,6,8,  "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC0"}
+{14LAB:,57,  0,6,9,  "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC1"}
+{14LAB:,58,  0,6,10, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC2"}
+{14LAB:,59,  0,6,11, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC3"}
+{14LAB:,60,  0,6,12, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC4"}
+{14LAB:,61,  0,6,13, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC5"}
+{14LAB:,62,  0,6,14, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC6"}
+{14LAB:,63,  0,6,15, "OPN",  "NO_ALARM", "CLSD",  "MAJOR",     "VC7"}
+
+}

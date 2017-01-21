@@ -1,0 +1,6 @@
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,       M,       DTYP, C, S,      DESC,  EGU, DIR,  VELO, VBAS, ACCL, BDST,  BVEL, TWV,   UREV, SREV, PREC, DHLM, DLLM}
+{14LAB:, m1, "OMS MAXv", 0, 0, "MAXv M1", "mm", Neg,   0.2,  0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,  0.2,   -6}
+}									      

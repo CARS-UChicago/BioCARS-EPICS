@@ -1,0 +1,40 @@
+file $(CARS)/biocarsApp/Db/scanParms.db
+{
+pattern  
+{P,          SCANREC,    Q,                          POS,                    RDBK,         AR,         AFT,               TPV,              DPV,    SP,   EP, NP,                           A,                            B,                  DET}
+{14IDA:, 14IDB:scan1,   m1,                14IDA:m1.VAL,            14IDA:m1.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m2,                14IDA:m2.VAL,            14IDA:m2.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m3,                14IDA:m3.VAL,            14IDA:m3.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m4,                14IDA:m4.VAL,            14IDA:m4.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m5,                14IDA:m5.VAL,            14IDA:m5.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m6,                14IDA:m6.VAL,            14IDA:m6.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m7,                14IDA:m7.VAL,            14IDA:m7.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m8,                14IDA:m8.VAL,            14IDA:m8.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,   m9,                14IDA:m9.VAL,            14IDA:m9.RBV,  "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m10,                14IDA:m10.VAL,           14IDA:m10.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m11,                14IDA:m11.VAL,           14IDA:m11.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "", -20.0, 20.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m12,                14IDA:m12.VAL,           14IDA:m12.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "", -10.0, 10.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m13,                14IDA:m13.VAL,           14IDA:m13.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m14,                14IDA:m14.VAL,           14IDA:m14.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m15,                14IDA:m15.VAL,           14IDA:m15.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m16,                14IDA:m16.VAL,           14IDA:m16.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m17,                14IDA:m17.VAL,           14IDA:m17.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m18,                14IDA:m18.VAL,           14IDA:m18.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m19,                14IDA:m19.VAL,           14IDA:m19.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m20,                14IDA:m20.VAL,           14IDA:m20.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m21,                14IDA:m21.VAL,           14IDA:m21.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                           "",                   ""}
+{14IDA:, 14IDB:scan1,  m22,                14IDA:m22.VAL,           14IDA:m22.RBV, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -1.0,  1.0, 41,                          "",                           "",                   ""}
+
+# Individual blades on white slits but using combined motion record
+{14IDA:, 14IDB:scan1,  Slit1Hp,        14IDA:Slit1Hxp.VAL,      14IDA:Slit1Ht2.A, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Hn,        14IDA:Slit1Hxn.VAL,      14IDA:Slit1Ht2.B, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Vp,        14IDA:Slit1Vxp.VAL,      14IDA:Slit1Vt2.A, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Vn,        14IDA:Slit1Vxn.VAL,      14IDA:Slit1Vt2.B, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+
+# Combined motion of white slits
+{14IDA:, 14IDB:scan1,  Slit1Hsize,    14IDA:Slit1Hsize.VAL,      14IDA:Slit1Ht2.C, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Hsize,  14IDA:Slit1Hcenter.VAL,      14IDA:Slit1Ht2.D, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Vsize,    14IDA:Slit1Vsize.VAL,      14IDA:Slit1Vt2.C, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -0.5,  2.0, 41,                          "",                         "",                   ""}
+{14IDA:, 14IDB:scan1,  Slit1Vsize,  14IDA:Slit1Vcenter.VAL,      14IDA:Slit1Vt2.D, "RELATIVE", "PRIOR POS", "14IDA:sclS1.CNT",               "",  -2.0,  2.0, 41,                          "",                         "",                   ""}
+
+}

@@ -1,0 +1,97 @@
+file "$(CARS)/CARSApp/Db/motor001102.db"
+{
+pattern
+{P,      M,   C, S, DESC,         EGU,   DIR, VELO,   VBAS, ACCL, BDST, BVEL,   TWV,   UREV,PREC,  DHLM,    DLLM}
+{14IDB:,  m1,  0, 0, "Huber X",    "mm", Pos, 10.00, 1.0000,  0.2, 0.1,  3.20, 0.1,   2.000,   4,     90,   10}
+{14IDB:,  m2,  0, 1, "Huber Y",    "mm", Pos, 0.100, 0.0100,  0.2, 0.01,  0.10, 0.1,   0.020,   4,     30,    5}
+# New Parker stage
+{14IDB:,  m3,  0, 2, "Detector Z", "mm", Pos, 10.000, 2.0000,  1.0, -0.1, 2.00, 1.0,   5.000,   3,    700, 99.9}
+# Old Velmex stage
+#{14IDB:,  m3,  0, 2, "Detector Z", "mm", Pos, 4.000, 2.0000,  1.0, -0.1, 2.00, 1.0,   1.000,   3,    700, 99.9}
+
+{14IDB:,  m7,  0, 6, "Gon Single AX","deg", Neg, 2.000, 0.1000,  0.2, 0.1,  0.40, 1.0,   0.100,   5,    120,    -8}
+
+# Mar345 motor needs 4 amps
+{14IDB:,  m9,  1, 0, "Mar345 dist","mm", Neg, 1.000, 0.1000,  2.0, 0.1,  0.10, 0.1,  0.0508,   3,    450,  100}
+
+{14IDB:, m11,  1, 2, "BPM",        "mm", Pos, 2.000, 0.2000,  0.2,-0.1,  0.20, 0.1,   0.625,   3,     -2,  -48}
+
+{14IDB:, m15,  1, 6, "Motor 15",   "mm", Pos, 1.250, 0.1250,  0.2, 0.1,  0.40, 0.1,   0.250,   4,     90,    5}
+#
+
+{14IDB:, m17,  2, 0, "TJ DS Y",    "mm", Pos,  1,     0.1,     2,   0.1,  0.50, 0.1,   0.254,   4,     95,    -5}
+{14IDB:, m18,  2, 1, "TJ OUT Y",   "mm", Pos,  1,     0.1,     2,   0.1,  0.50, 0.1,   0.254,   4,     95,    -5}
+{14IDB:, m19,  2, 2, "TJ IN Y",    "mm", Pos,  1,     0.1,     2,   0.1,  0.50, 0.1,   0.254,   4,     95,    -5}
+{14IDB:, m23,  2, 6, "Kappa",     "deg", Neg, 12.00, 1.0000,  0.2, 0.0,  4.00, 1.0,    2.000,   3,     61,  -61}
+{14IDB:, m24,  2, 7, "Omega",     "deg", Pos, 0.800, 0.2000,  0.2, 0.0,  0.20, 1.0,   0.100,   3,     90,  -90}
+
+}
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,        M,         DTYP, C, S,               DESC,  EGU, DIR,  VELO,   VBAS, ACCL, BDST,  BVEL, TWV,   UREV, SREV, PREC, DHLM,  DLLM}
+{14IDB:,  m8,  "OMS VME58", 0, 7,              "BSZ", "mm", Pos, 4.000, 0.1000,  2.0,  0.1,  1.60, 1.0,  1.000,  400,    3,  200,   9.9}
+
+{14IDB:, m20,  "OMS VME58", 2, 3,           " Motor 20", "mm", Neg, 2.0,   0.20,    2,    0.1,  0.50, 0.1,  1.270,  400,    4,   80,   -5}
+{14IDB:, m21,  "OMS VME58", 2, 4,           "Motor 21", "mm", Neg, 2.0,   0.20,    2,    0.1,  0.50, 0.1,  1.270,  400,    4,   80,   -5}
+{14IDB:, m22,  "OMS VME58", 2, 5,           "Motor 22", "mm", Pos, 2.0,   0.20,    2,    0.1,  0.50, 0.1,  1.270,  400,    4,   90,     5}
+{14IDB:, m25, "ACS MCB-4B", 0, 0,    "JJ2 x aperture", "mm", Neg,   0.1,    0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,    -7}
+{14IDB:, m26, "ACS MCB-4B", 0, 1, "JJ2 x translation", "mm", Pos,   0.1,    0.1,  0.2, 0.02,   0.1, 0.1, 0.0078,   24,    4,  7.5,  -7.5}
+{14IDB:, m27, "ACS MCB-4B", 0, 2,    "JJ2 y aperture", "mm", Neg,   0.1,    0.1,  0.2, 0.02,   0.1, 0.1, 0.0198,   24,    4,    1,    -7}
+{14IDB:, m28, "ACS MCB-4B", 0, 3, "JJ2 y translation", "mm", Neg,   0.1,    0.1,  0.2,-0.02,   0.1, 0.1, 0.0078,   24,    4,  7.5,  -7.5}
+}
+
+file "$(CARS)/CARSApp/Db/motor_micro.db"
+{
+pattern
+{P,      M,     C, S,  DESC,          EGU, DIR,  VELO,  VMAX,    VBAS, ACCL, BDST,   BVEL,  TWV, UREV, PREC,   DHLM,    DLLM,  SREV}
+{14IDB:, m16,   1, 7, "Phi",        "deg", Neg, 30.00, 35.00,  0.1000,  0.2,  0.0, 0.1000, 90.0,  2.0,    4,  10000,  -10000, 10000}
+}
+
+# m29 is not used at this time
+# m30-m34 is used in the IDB hutch for the thorlab motors.
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,        M,        DTYP, C, S,                      DESC,        EGU,  DIR, VELO, VBAS, ACCL, BDST,BVEL, TWV, SREV,     UREV, PREC, DHLM, DLLM}
+{14IDB:, m52, "OMS VME58", 3, 0, "Vert. force DownStream.",    microns,  Pos,100.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m49, "OMS VME58", 3, 1,     "Vert. mirror Y pos.",    microns,  Pos,150.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m51, "OMS VME58", 3, 2,   "Vert. force UpStream.",    microns,  Pos,100.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m50, "OMS VME58", 3, 3,   "Vert. mirror rotation",       mrad,  Pos,   10,   .1,   .2,    0,   1,  10,   48,   0.8868,    3,   30,  -30}
+{14IDB:, m55, "OMS VME58", 3, 4,     "Hor. force UpStream",    microns,  Pos,100.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m53, "OMS VME58", 3, 5,       "Hor. mirror X pos",    microns,  Pos,150.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m56, "OMS VME58", 3, 6,   "Hor. force DownStream",    microns,  Pos,100.0,   10,   .2,    0,   1, 100,   48,   -3.546,    1,  8e3,    0}
+{14IDB:, m54, "OMS VME58", 3, 7,    "Hor. mirror rotation",       mrad,  Pos,   10,   .1,   .2,    0,   1,  10,   48,   0.8868,    3,   30,  -30}
+}
+# m57 through m64, values are generic and have to be modified accordingly 
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+{
+pattern
+{P,        M,        DTYP, C, S,                      DESC,        EGU,  DIR,  VELO, VBAS, ACCL, BDST, BVEL, TWV, SREV,     UREV, PREC, DHLM, DLLM}
+{14IDB:, m57, "OMS VME58", 4, 0,                 "AMO M0Y",         mm,  Pos,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,     0.25,    3,  90,    10}
+{14IDB:, m58, "OMS VME58", 4, 1,                 "AMO M1Y",         mm,  Pos,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,     0.25,    3,  90,    10}
+{14IDB:, m59, "OMS VME58", 4, 2,                 "AMO M2Y",         mm,  Pos,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,     0.25,    3,  90,    10}
+{14IDB:, m60, "OMS VME58", 4, 3,                   "AM M2Z'",         mm,  Pos,  1.00, 0.10,   .2,  0.1, 0.10,   1,  400,      1.0,    3,  45,   -45}
+{14IDB:, m61, "OMS VME58", 4, 4,                "AMO M0X'",         mm,  Pos,  1.00, 0.10,   .2,  0.1, 0.10,   1,  400,      1.0,    3,  45,   -45}
+{14IDB:, m62, "OMS VME58", 4, 5,                 "AMO M2X'",         mm,  Pos,  1.00, 0.10,   .2,  0.1, 0.10,   1,  400,      1.0,    3,  49,   -49}
+{14IDB:, m63, "OMS VME58", 4, 6,                  "Motor 63",        mm,  Pos,  0.5,   0.05,   .2,   20,   0.05, 100,  400,      0.25, 3, 90,  -10}
+{14IDB:, m64, "OMS VME58", 4, 7,                  "Motor 64",        mm,  Pos,  0.5,   0.05,   .2,   10,   0.05, 100,  400,      0.25, 3, 90,  -10}
+#{14IDB:, m9, "OMS VME58", 1, 0,           "Lens Y (vert)",    microns,  Neg, 500.0,   50,   .2,   20,   50, 100,  800,      250,    3,3600,-10000}
+#{14IDB:, m13, "OMS VME58", 1, 1,                  "Edge Z",         mm,  Neg,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,        2,    3,  15,   -15}
+#{14IDB:, m14, "OMS VME58", 1, 5,                  "Edge X",         mm,  Neg,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,    0.635,    3,  10, -10.0}
+#{14IDB:, m15, "OMS VME58", 1, 6,           "Edge Y (vert)",         mm,  Neg,  0.50, 0.05,   .2,  0.1, 0.05,   1,  400,    0.635,    3,  20, -20.0}
+
+# Pushkar stages for Spectroscopy - need to fix save and restore
+# SPM stages from sector 20
+{14IDB:, m10, "OMS VME58", 1, 1,          "SPM-X-IB/OUT",           mm,  Pos, 5.0, 0.50,  0.2, 0.1,  0.40, 0.1, 400, 0.80, 4, 50,  -50}
+{14IDB:, m12, "OMS VME58", 1, 3,          "TMP",                    mm,  Neg, 5.0, 0.50,  0.2, 0.1,  0.40, 0.1, 400, 1.000, 4, 50,  -50}
+{14IDB:, m13, "OMS VME58", 1, 4,          "SPM-Z-UPSTR/DOWNSTR",    mm,  Pos, 5.0, 0.50,  0.2, 0.1,  0.40, 0.1, 400, 1.000, 4, 50,  -50}
+{14IDB:, m14, "OMS VME58", 1, 5,          "SPM-Y-VERT",             mm,  Pos, 1.6666, 0.1667,  0.2, 0.1,  0.1667, 0.1, 400, 0.2500, 4, 50,  -50}
+
+{14IDB:, m4, "OMS VME58", 0, 3,          "SAMPX-INB/OUTB",           mm, Pos, 2,   0.250, 0.2, 0.1,  0.40, 0.1,   400, 0.632,   5,     10,    -10}
+{14IDB:, m5, "OMS VME58", 0, 4,          "SAMPZ-UPSTR/DOWNSTR",      mm, Neg, 2,   0.250, 0.2, 0.1,  0.40, 0.1,   400, 0.632,   5,     10,    -10}
+{14IDB:, m6, "OMS VME58", 0, 5,          "SAMPY-VERT",               mm, Neg,  2,  0.250, 0.2, 0.1,  0.40, 0.1,   400, 0.680,   5,     10,    -10}
+}

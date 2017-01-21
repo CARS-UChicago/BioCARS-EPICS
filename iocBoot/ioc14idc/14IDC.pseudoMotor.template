@@ -1,0 +1,77 @@
+file "$(CARS)/CARSApp/Db/pseudoMotor.db"
+{
+pattern
+{P,         M,                             DINP,                        OUT,                         RDBL,               STOO,            DESC,            EGU,  DIR,  VELO,  VBAS, ACCL, BDST,   BVEL, BACC,    MRES, RRES, PREC, DHLM, DLLM,    C1,     C2}
+{14IDC:, mir1Y,   "14IDC:mir1PseudoDone  NPP NMS",   "14IDC:mir1YMove PP MS",   "14IDC:mir1YRdbk NPP NMS",   "14IDC:mir1YStop   PP MS",  "Mirror 1 Y",     mm,   Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1000, -100, 1, 1}
+{14IDC:, mir1Th,  "14IDC:mir1PseudoDone  NPP NMS",   "14IDC:mir1ThMove PP MS",  "14IDC:mir1ThRdbk NPP NMS",  "14IDC:mir1ThStop   PP MS", "Mirror 1 Theta", mrad, Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  4,   4.5, -1, 1, 1}
+{14IDC:, mir1Chi, "14IDC:mir1PseudoDone  NPP NMS",   "14IDC:mir1ChiMove PP MS", "14IDC:mir1ChiRdbk NPP NMS", "14IDC:mir1ChiStop   PP MS","Mirror 1 Chi",   mrad, Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1, -1, 1, 1}
+{14IDC:, mir1X,      "14IDC:mir1XDone  NPP NMS",      "14IDC:mir1XMove PP MS",   "14IDC:mir1XRdbk NPP NMS",   "14IDC:mir1XStop   PP MS",  "Mirror 1 X",     mm,  Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1000, -100, 1, 1}
+{14IDC:, mir2Y,   "14IDC:mir2PseudoDone  NPP NMS",   "14IDC:mir2YMove PP MS",   "14IDC:mir2YRdbk NPP NMS",   "14IDC:mir2YStop   PP MS",  "Mirror 2 Y",     mm,   Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   100, -100, 1, 1}
+{14IDC:, mir2Th,  "14IDC:mir2PseudoDone  NPP NMS",   "14IDC:mir2ThMove PP MS",  "14IDC:mir2ThRdbk NPP NMS",  "14IDC:mir2ThStop   PP MS", "Mirror 2 Theta", mrad, Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  4,   4.5, -1, 1, 1}
+{14IDC:, mir2Chi, "14IDC:mir2PseudoDone  NPP NMS",   "14IDC:mir2ChiMove PP MS", "14IDC:mir2ChiRdbk NPP NMS", "14IDC:mir2ChiStop   PP MS","Mirror 2 Chi",   mrad, Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1000, -100, 1, 1}
+{14IDC:, mir2Vangle, "14IDC:mir2PseudoDone  NPP NMS",   "14IDC:mir2VangleMove PP MS", "14IDC:mir2VangleRdbk NPP NMS", "14IDC:mir2VangleStop   PP MS","Mirror 2 Vertical Ang",   mrad, Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1000, -100, 1, 1}
+{14IDC:, mir2X,   "14IDC:mir2PseudoDone  NPP NMS",      "14IDC:mir2XMove PP MS",   "14IDC:mir2XRdbk NPP NMS",   "14IDC:mir2XStop   PP MS",  "Mirror 2 X",     mm,  Pos,    1,    .1,  .1,    0,    1,   .1, .0001,   1.0,  3,   1000, -100, 1, 1}
+#{14IDC:,    pm1,       "14IDC:pzt1Done  NPP NMS",        "14IDC:pzt1Move PP MS",     "14IDC:pzt1Rdbk NPP NMS",     "14IDC:pzt1Stop   PP MS", "Mono Theta1 PZT", arcsec, Pos,   1,    .1,  .1,    0,    1,   .1, .000001, 1.0,  3,   1000, -100, 1, 1}
+#{14IDC:,    pm2,       "14IDC:pzt2Done  NPP NMS",        "14IDC:pzt2Move PP MS",     "14IDC:pzt2Rdbk NPP NMS",     "14IDC:pzt2Stop   PP MS", "Mirror1 PZT", arcsec, Pos,   1,    .1,  .1,    0,    1,   .1, .000001, 1.0,  3,   1000, -100, 1, 1}
+
+}
+
+
+###                                          ###
+################################################
+### Vertical KB Miror: pm1, pm2, pm3, pm4    ###
+
+file "$(MOTOR)/motorApp/Db/pseudoMotor.db"
+{
+pattern
+{P,      M,        DINP,                    OUT,                     RDBL,                        STOO,               DESC,    EGU, DIR,VELO,VBAS,ACCL,BDST,BVEL,BACC,MRES,RRES PREC,DHLM, DLLM}
+{14IDC:, pm1, "14IDC:VF:Done NPP NMS", "14IDC:pm1DVAL.VAL PP MS","14IDC:VF:Readback.G NPP NMS", "14IDC:VF:Stop PP MS", "Curvature",  mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm2, "14IDC:VF:Done NPP NMS", "14IDC:pm2DVAL.VAL PP MS","14IDC:VF:Readback.H NPP NMS", "14IDC:VF:Stop PP MS", "Ellipticity",mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm3, "14IDC:VP:Done NPP NMS", "14IDC:pm3DVAL.VAL PP MS","14IDC:VP:Readback.G NPP NMS", "14IDC:VP:Stop PP MS", "Height",     mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm4, "14IDC:VP:Done NPP NMS", "14IDC:pm4DVAL.VAL PP MS","14IDC:VP:Readback.H NPP NMS", "14IDC:VP:Stop PP MS", "Pitch",      mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+}
+
+file "$(MOTOR)/motorApp/Db/sumDiff2D.db"
+{
+pattern
+{P,      T,      SUM,  DIFF,   M1DRV,    M1RBV,   M2DRV,   M2RBV,   M1STOP,   M1DONE,   M2STOP,   M2DONE,  PREC}
+{14IDC:, VF:,  pm1, pm2,   m42.VAL,  m42.RBV,   m41.VAL,  m41.RBV, m42.STOP, m42.DMOV,  m41.STOP,  m41.DMOV, 3}
+{14IDC:, VP:,  pm3, pm4,    m8.VAL,   m8.RBV,   m43.VAL,  m43.RBV,  m8.STOP,  m8.DMOV,  m43.STOP,  m43.DMOV, 3}
+}
+
+###                                          ###
+################################################
+### Horizontal KB Miror: pm5, pm6, pm15, pm8  ###
+
+file "$(MOTOR)/motorApp/Db/pseudoMotor.db"
+{
+pattern
+{P,      M,        DINP,                    OUT,                     RDBL,                        STOO,               DESC,    EGU, DIR,VELO,VBAS,ACCL,BDST,BVEL,BACC,MRES,RRES PREC,DHLM, DLLM}
+{14IDC:, pm5, "14IDC:HF:Done NPP NMS", "14IDC:pm5DVAL.VAL PP MS","14IDC:HF:Readback.G NPP NMS", "14IDC:HF:Stop PP MS", "Curvature",  mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm6, "14IDC:HF:Done NPP NMS", "14IDC:pm6DVAL.VAL PP MS","14IDC:HF:Readback.H NPP NMS", "14IDC:HF:Stop PP MS", "Ellipticity",mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm7, "14IDC:HP:Done NPP NMS", "14IDC:pm7DVAL.VAL PP MS","14IDC:HP:Readback.G NPP NMS", "14IDC:HP:Stop PP MS", "Height",     mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+{14IDC:, pm8, "14IDC:HP:Done NPP NMS", "14IDC:pm8DVAL.VAL PP MS","14IDC:HP:Readback.H NPP NMS", "14IDC:HP:Stop PP MS", "Pitch",      mm, Pos, 1, .1, .1, 0, 1, .1, .0001, 1.0, 3, 10000, -10000}
+}
+
+file "$(MOTOR)/motorApp/Db/sumDiff2D.db"
+{
+pattern
+{P,      T,      SUM,  DIFF,   M1DRV,    M1RBV,   M2DRV,   M2RBV,   M1STOP,   M1DONE,   M2STOP,   M2DONE,  PREC}
+
+{14IDC:, HF:,  pm5, pm6,   m47.VAL,  m47.RBV,  m46.VAL, m46.RBV, m47.STOP, m47.DMOV, m46.STOP, m46.DMOV, 3}
+{14IDC:, HP:,  pm7, pm8,   m45.VAL,  m45.RBV,  m48.VAL, m48.RBV, m45.STOP, m45.DMOV, m48.STOP, m48.DMOV, 3}
+}
+
+###                                          ###
+################################################
+### notes on psued-motor setups for mirror   ###
+#          ID-C  KB Mirrors
+#    V up height    m8	m8
+#    V dn height    m11 m43
+#    H up height    m13	45
+#    H dn height    m17	48
+#    V up force     m10	42
+#    V dn force     m9	41
+#    H up force     m15	47
+#    H dn force     m14	46
+

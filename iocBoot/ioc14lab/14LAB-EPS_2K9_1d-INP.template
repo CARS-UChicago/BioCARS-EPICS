@@ -1,0 +1,42 @@
+#14LAB-EPS_2K9_1d-INP.template,  for GLOBAL type of binary variables
+# for each input, the "PV name" will be -- 14LAB:eps_[Symbol]
+file ../../CARSApp/Db/14LAB-EPS_2K9_1d-INP.db
+{
+pattern
+{P,     N,    A, C, S,   ZNAM,      ZSV,  	  ONAM,     OSV,  	   Symbol}
+
+{14LAB:,96,   0,12,0,  "noFAULT","NO_ALARM","FAULT",  "MAJOR",    "Major-FLT"}
+{14LAB:,97,   0,12,1,  "noFAULT","NO_ALARM","FAULT",  "MAJOR",    "Minor-FLT"}
+{14LAB:,98,   0,12,2,    "ERR",  "MAJOR",	 "OK",   "NO_ALARM", "PLC-OK"}
+{14LAB:,99,   0,12,3,  "Force",  "MINOR",	 "OK",   "NO_ALARM", "PLC-noForce"}
+{14LAB:,100,  0,12,4,  "Lack",   "MINOR",	 "OK",   "NO_ALARM", "PLC-battOK"}
+{14LAB:,101,  0,12,5,  "Norm",   "NO_ALARM",	"in-Emu","MINOR",    "APS-Emu"}
+{14LAB:,102,  0,12,6,  "Norm",   "NO_ALARM",	"in-ADM","MINOR",	 "MEDM-Adm"}
+{14LAB:,103,  0,12,7,  "Norm",   "NO_ALARM",	"in-ADM","MINOR",    "RSview-ADM"}
+{14LAB:,104,  0,12,8,  "Norm",   "NO_ALARM",	"in-Emu","MINOR",    "FE-Emu"}
+{14LAB:,105,  0,12,9,  "Norm",   "NO_ALARM",	"in-Emu","MINOR",    "SHT-Emu"}
+{14LAB:,106,  0,12,10, "Norm",   "NO_ALARM",	"in-Emu","MINOR",    "Vlv-Emu"}
+{14LAB:,107,  0,12,11, "OFF",    "NO_ALARM",	 "ON",   "MAJOR",    "APS-ON"}
+{14LAB:,108,  0,12,12, "Open",   "NO_ALARM",	 "Clsd", "MAJOR",    "FES-Clsd"}
+{14LAB:,109,  0,12,13, "Open",   "NO_ALARM",	 "Clsd", "MAJOR",    "FEV-Clsd"}
+{14LAB:,110,  0,12,14, "Inhbt",  "MAJOR",	 "PRMT", "NO_ALARM", "FES-PRMT"}
+{14LAB:,111,  0,12,15, "Inhbt",  "MAJOR",	 "PRMT", "NO_ALARM", "FEV-PRMT"}
+
+{14LAB:,112,  0,14,0,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "Tgt-Idx0"}
+{14LAB:,113,  0,14,1,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "Tgt-Idx1"}
+{14LAB:,114,  0,14,2,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "Tgt-Idx2"}
+{14LAB:,115,  0,14,3,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "Tgt-Idx3"}
+{14LAB:,116,  0,14,4,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "OSC"}
+{14LAB:,117,  0,14,5,  "0",      "NO_ALARM",	 "1",    "NO_ALARM", "beam-ON"}
+{14LAB:,118,  0,14,6,  "0",      "MAJOR",	 "1",    "NO_ALARM", "Cryo-PRMT"}
+{14LAB:,119,  0,14,7,  "0",      "MAJOR",	 "1",    "NO_ALARM", "Sht-PRMT"}
+{14LAB:,120,  0,14,8,  "FAULT",  "MAJOR",	 "OK",   "NO_ALARM", "Tgt-STAT"}
+{14LAB:,121,  0,14,9,  "Norm",   "NO_ALARM",	 "OVRD", "MINOR",    "Tgt-OVRD"}
+{14LAB:,122,  0,14,10, "FAULT",  "MAJOR",	 "OK",   "NO_ALARM", "Tgt-LTHD"}
+{14LAB:,123,  0,14,11, "Inhbt",  "MAJOR",	 "PRMT", "NO_ALARM", "Vopn-PRMT"}
+{14LAB:,124,  0,14,12, "Inhbt",  "MAJOR",	 "PRMT", "NO_ALARM", "Vcls-PRMT"}
+{14LAB:,125,  0,14,13, "Clsd",   "MAJOR",	 "Open", "NO_ALARM", "Vopn-Stat"}
+{14LAB:,126,  0,14,14, "Open",   "NO_ALARM",	 "Clsd", "MAJOR",    "Vcls-Stat"}
+{14LAB:,127,  0,14,15, "Norm",   "NO_ALARM",	 "Warn", "MAJOR",    "Vopn-Warn"}
+ 
+}

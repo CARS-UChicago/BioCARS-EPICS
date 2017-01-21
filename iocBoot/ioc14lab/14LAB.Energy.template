@@ -1,0 +1,19 @@
+file ../../biocarsApp/Db/motor001102.db
+{
+pattern
+{     P,          M, C, S,               DESC,     EGU, DIR,    VELO,    VBAS, ACCL,  BDST,    BVEL,      TWV,    UREV, PREC,  DHLM,  DLLM}
+{14LAB:,        Und, 0, 0, "Undulator energy", "(KeV)", Pos, 0.15000, 0.05000,  0.2,   0.1, 0.15000, 0.002500, 0.05000,    4,    17,   6.9}
+{14LAB:, Monotheta1, 0, 1,     "Mono theta-1", "(deg)", Pos, 0.15000, 0.05000,  0.2, 0.001, 0.05000, 0.000125, 0.05000,    3,  28.0,  -2.0}
+{14LAB:, Monotheta2, 0, 2,     "Mono theta-2", "(deg)", Pos, 0.15000, 0.05000,  0.2, 0.001, 0.05000, 0.000125, 0.05000,    3,  28.0,  -2.0}
+{14LAB:, Monoztrans, 0, 3,    "Mono z2-trans",  "(mm)", Pos, 6.00000, 2.00000,  0.2,   0.0, 6.00000, 0.100000, 2.00000,    3, 164.0,  27.0}
+{14LAB:,   Monotilt, 0, 4,   "Mono chi2-tilt", "(deg)", Pos, 0.15000, 0.05000,  0.2,   0.1, 0.15000, 0.002500, 0.05000,    4,   2.8,  -4.5}
+{14LAB:,        hsy, 0, 5,       "HutchSlitY",  "(mm)", Neg, 1.41112, 1.41112,  0.2,   0.0, 1.41112, 0.025000, 0.70556,    3,  42.0, -11.0}
+{14LAB:,         tY, 0, 6,          "TJ US Y",  "(mm)", Pos, 0.63500, 0.00000,  0.2,   0.1, 0.38100, 0.100000, 0.25400,    4,    25,   -25}
+}
+
+file CARSApp/Db/Energy.db, top
+{
+pattern
+{P,      EN,   DESC,     EGU,  PREC,  SCANREC,     USEID,   TWEAK}
+{14LAB:,  E,  "Energy",   eV,    5,   14LAB:scan1,     1,    1.00}
+}

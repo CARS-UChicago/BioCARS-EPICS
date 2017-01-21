@@ -1,0 +1,15 @@
+file "$(CARS)/CARSApp/Db/pseudoMotor.db"
+{
+pattern
+{P,         M,                       DINP,                    OUT,                      RDBL,                     STOO,             DESC, EGU, DIR,  VELO,  VBAS, ACCL, BDST,  BVEL, BACC, MRES, RRES, PREC, DHLM,  DLLM, C1, C2}
+{14BMA:,  mXd, "14BMA:DMirr:done NPP NMS",  "14BMA:Dmirr.X PP MS",  "14BMA:Dmirr.EX NPP NMS", "14BMA:DMirr:stop PP MS",     "D mirror X", mm, Pos, 3.969, 1.587,   .2,  0.1, 3.969,   .1, .002,  1.0,    4,    3,    -3,  1,  1}
+{14BMA:,  mYd, "14BMA:DMirr:done NPP NMS",  "14BMA:Dmirr.Y PP MS",  "14BMA:Dmirr.EY NPP NMS", "14BMA:DMirr:stop PP MS",     "D mirror Y", mm, Pos, 3.969, 1.587,   .2,  0.1, 3.969,   .1, .002,  1.0,    4,   38,    32,  1,  1}
+{14BMA:, mAXd, "14BMA:DMirr:done NPP NMS", "14BMA:Dmirr.AX PP MS", "14BMA:Dmirr.EAX NPP NMS", "14BMA:DMirr:stop PP MS", "D mirror rot X", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.5,  -0.1,  1,  1}
+{14BMA:, mAYd, "14BMA:DMirr:done NPP NMS", "14BMA:Dmirr.AY PP MS", "14BMA:Dmirr.EAY NPP NMS", "14BMA:DMirr:stop PP MS", "D mirror rot Y", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.2,  -0.2,  1,  1}
+{14BMA:, mAZd, "14BMA:DMirr:done NPP NMS", "14BMA:Dmirr.AZ PP MS", "14BMA:Dmirr.EAZ NPP NMS", "14BMA:DMirr:stop PP MS", "D mirror rot Z", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.2,  -0.2,  1,  1}
+{14BMA:,  mXc, "14BMA:CMirr:done NPP NMS",  "14BMA:Cmirr.X PP MS",  "14BMA:Cmirr.EX NPP NMS", "14BMA:CMirr:stop PP MS",     "C mirror X", mm, Pos, 3.969, 1.587,   .2,  0.1, 3.969,   .1, .002,  1.0,    4,    3,    -3,  1,  1}
+{14BMA:,  mYc, "14BMA:CMirr:done NPP NMS",  "14BMA:Cmirr.Y PP MS",  "14BMA:Cmirr.EY NPP NMS", "14BMA:CMirr:stop PP MS",     "C mirror Y", mm, Pos, 3.969, 1.587,   .2,  0.1, 3.969,   .1, .002,  1.0,    4,    5,    -2,  1,  1}
+{14BMA:, mAXc, "14BMA:CMirr:done NPP NMS", "14BMA:Cmirr.AX PP MS", "14BMA:Cmirr.EAX NPP NMS", "14BMA:CMirr:stop PP MS", "C mirror rot X", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.1,  -0.5,  1,  1}
+{14BMA:, mAYc, "14BMA:CMirr:done NPP NMS", "14BMA:Cmirr.AY PP MS", "14BMA:Cmirr.EAY NPP NMS", "14BMA:CMirr:stop PP MS", "C mirror rot Y", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.2,  -0.2,  1,  1}
+{14BMA:, mAZc, "14BMA:CMirr:done NPP NMS", "14BMA:Cmirr.AZ PP MS", "14BMA:Cmirr.EAZ NPP NMS", "14BMA:CMirr:stop PP MS", "C mirror rot Z", mm, Pos, 1.587, 1.587,   .2, 0.01, 1.587,   .1, .002,  1.0,    4,  0.2,  -0.2,  1,  1}
+}

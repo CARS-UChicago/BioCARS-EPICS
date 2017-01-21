@@ -1,0 +1,9 @@
+file "$(CARS)/CARSApp/Db/mono_pid_control.db"
+{
+pattern
+{P,      PID,       INP,                      OUT,  LOPR,  HOPR,  DRVL,  DRVH,  PREC,  KP,   KI, KD,         SCAN, SHUT_STATUS}
+{14IDA:, mono_pid1, "14IDB:EM1Sum2", 14IDA:DAC1_3,   0,      10,    0,    10,   2,  0.004,  2.0, 0.,  ".1 second", PA:14ID:STA_A_FES_OPEN_PL.VAL}
+}
+
+
+

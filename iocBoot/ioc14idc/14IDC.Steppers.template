@@ -1,0 +1,88 @@
+# 14IDC and IDC motor parameters
+# Jan 22, 07 - YSC-RH
+
+# mono, mirror and slit related motor PVs
+# for mono: see document in \\Cars5\users\BioCARS\UpgradeProjects\Monochromator\Kohzu
+#           coordinates form a right-hand rule with Y in the upward direction and Z along the x-ray forward direction
+#
+#
+# for 77K Si(111), 2d=6.2712, E=20, theta=5.674 deg, lamda=0.62,  Z2=75.86 mm (for offset 0f 7.5 mm)
+#                             E=25, theta=4.536 deg, lamda=0.496, Z2=94.834
+#                             E=6,  theta=19.239, lamda=2.066,    Z2=22.761 
+
+file "$(CARS)/CARSApp/Db/motor_general.db"
+
+{
+pattern
+{P,       M,   DTYP,        C, S, DESC,                          EGU,    DIR, VELO,    VBAS,    ACCL, BDST, BVEL,   TWV,    UREV,      PREC, SREV, DHLM,  DLLM}
+
+# vert. mirror
+{14IDC:,  m1, "OMS VME58", 0, 0,   "V mirror Y1-upstream",      "mm",   Pos, 0.400,   0.040,   0.2,  0.01,  0.40,   0.1,    0.080000,  4,    400,  25,    -5}
+{14IDC:,  m2, "OMS VME58", 0, 1,   "V mirror Y2-downstream-out","mm",   Pos, 0.400,   0.040,   0.2,  0.01,  0.40,   0.1,    0.080000,  4,    400,  25,    -5}
+{14IDC:,  m3, "OMS VME58", 0, 2,   "V mirror Y3-downstream-in", "mm",   Pos, 0.400,   0.040,   0.2,  0.01,  0.40,   0.1,    0.080000,  4,    400,  25,    -5}
+{14IDC:,  m4  "OMS VME58", 0, 3,   "V mirror X1-upstream",      "mm",   Pos, 0.200,   0.040,   0.2,  0.01,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+{14IDC:,  m5, "OMS VME58", 0, 4,   "V mirror X2-downstream",    "mm",   Pos, 0.200,   0.040,   0.2,  0.01,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+{14IDC:,  m6, "OMS VME58", 0, 5,   "V mirror bender",           "mm",   Pos, 0.180,   0.018,   0.2,  0.01,  0.18,   0.1,    0.035714,  4,    400,  1,     -1}
+## KB mirror stripes M32 Bipolar
+##{14IDC:,  m7, "OMS VME58", 0, 6,   "VMirror stripe x",    	"mm",   Pos,  0.2,    	0.,   	1., 	0, 	1,  .01,    0.0064,    4,    400,  15,       0}
+{14IDC:,  m8, "OMS VME58", 0, 7,   "VMirror up height",   	"mm",   Pos,  0.3,  	0.01,   .2,  0.05, 	1,  .01,    0.072,     4,    400,  19,     -19}
+
+
+# horiz. mirror
+{14IDC:,   m9, "OMS VME58", 1, 0,   "H mirror Y1-downstream",    "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14IDC:,  m10, "OMS VME58", 1, 1,   "H mirror Y2-upstream-in",   "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14IDC:,  m11, "OMS VME58", 1, 2,   "H mirror Y3-upstream-out"   "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14IDC:,  m12, "OMS VME58", 1, 3,   "H mirror X1-upstream",      "mm",   Pos, 0.200,   0.040,   0.2,  0.000416,  0.20,   0.1,    0.166400,  4,    400,  30,    -30}
+{14IDC:,  m13, "OMS VME58", 1, 4,   "H mirror X2-downstream",    "mm",   Pos, 0.200,   0.040,   0.2,  -0.000416,  0.20,   0.1,    0.166400,  4,    400,  30,    -30}
+{14IDC:,  m14, "OMS VME58", 1, 5,   "H mirror bender",           "mm",   Pos, 0.180,   0.018,   0.2,  0.0,  0.18,   0.1,    0.035714,  4,    400,  1,     -1}
+{14IDC:,  m15, "OMS VME58", 1, 6,   "VMirror stripe x",    	"mm",   Pos,  0.2,    	0.,   	1.,  0.05, 	1,  .01,    0.0064,    4,    400,  25,      -10}
+##{14IDC:,  m15, "OMS VME58", 1, 6,        "Unused",               "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14IDC:,  m16  "OMS VME58", 1, 7,        "Unused",               "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+
+# pink slits
+{14IDC:,  m17, "OMS VME58", 2, 0,      "Pink Slits Top",         "mm",   Pos, 1.000,   0.100,   0.2,  0.0,  0.10,   0.1,    0.200000,  3,    400,  64,    -1}
+{14IDC:,  m18, "OMS VME58", 2, 1,   "Pink Slits Bottom",         "mm",   Pos, 1.000,   0.100,   0.2,  0.0,  0.10,   0.1,    0.200000,  3,    400,  60,    -4}
+{14IDC:,  m19, "OMS VME58", 2, 2,  "Pink Slits Inboard",         "mm",   Pos, 1.000,   0.100,   0.2,  0.0,  0.10,   0.1,    0.200000,  3,    400,  29,   -21}
+{14IDC:,  m20  "OMS VME58", 2, 3, "Pink Slits Outboard",         "mm",   Pos, 1.000,   0.100,   0.2,  0.0,  0.10,   0.1,    0.200000,  3,    400,  40,   -17}
+# laser enclosure motors
+
+{14IDC:,  m21, "OMS VME58", 2, 4, "Laser Focus Z",               "mm",   Neg, 5.000,   0.50,    0.2,  0.5,  2.00,   0.1,    20.00000,  2,    400,  40,    -40}
+{14IDC:,  m22, "OMS VME58", 2, 5, "Laser Focus X",               "mm",   Neg, 5.000,   0.50,    0.2,  -0.5, 2.00,   0.1,    20.00000,  2,    400,  16,    -16}
+{14IDC:,  m23, "OMS VME58", 2, 6, "Laser Collimate",             "mm",   Neg, 2.000,   2.00,    0.1,  -0.5, 2.00,   0.1,    20.00000,  2,    400,  15,    -5.6}
+{14IDC:,  m24  "OMS VME58", 2, 7, "Laser Diagnostic",            "mm",   Neg, 5.000,   0.50,    0.2,  -0.5, 2.00,   0.1,    20.00000,  2,    400,  16,    -16}
+
+##Upstream Table Jacks
+{14IDC:,  m25, "OMS VME58" ,3, 0, "T1 UpStream Y",   		 "mm", 	 Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 74,    54}
+{14IDC:,  m26, "OMS VME58", 3, 1, "T1 OutBoard Y",  		 "mm",   Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 83,    64}
+{14IDC:,  m27, "OMS VME58", 3, 2, "T1 InBoard Y",    		 "mm",   Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 83,    64}
+{14IDC:,  m28, "OMS VME58", 3, 3, "T1 UpStream X", 		 "mm",   Pos, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    2.540,     4,     400, 42,    35}
+{14IDC:,  m29, "OMS VME58", 3, 4, "T1 DnSream X", 		 "mm",   Neg, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    2.540,     4,     400, -46,    -54}
+{14IDC:,  m30, "OMS VME58", 3, 5, "T1 UpStream Z", 		 "mm",   Neg, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    2.540,     4,     400, 61,     54}
+
+
+##Downstream Table Jacks
+{14IDC:,  m31, "OMS VME58" ,3, 6, "T2 DnStream Y",   		 "mm", 	 Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 96,    76}
+{14IDC:,  m32, "OMS VME58", 3, 7, "T2 OutBoard Y",  		 "mm",   Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 87,    66}
+{14IDC:,  m33, "OMS VME58", 4, 0, "T2 InBoard Y",    		 "mm",   Pos, 1,       0.1,     2,    0.1,  0.50,   0.1,    0.254,     4,     400, 87,    66}
+{14IDC:,  m34, "OMS VME58", 4, 1, "T2 UpStream X", 		 "mm",   Pos, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    1.270,     4,     400, -50,  -57}
+{14IDC:,  m35, "OMS VME58", 4, 2, "T2 DnStream X", 		 "mm",   Neg, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    1.270,     4,     400, 66,    59}
+{14IDC:,  m36, "OMS VME58", 4, 3, "T2 DnStream Z", 		 "mm",   Pos, 2.0,     0.20,    2,    0.1,  0.50,   0.1,    1.270,     4,     400, 49,    42}
+
+### JJ1 SLITS, 2
+{14IDC:,  m37, "OMS VME58", 4, 4,    "JJ1 y aperture", 		 "mm", 	 Pos, 0.1,     0.1,     0.2,  0.1,  0.1,   0.1,    0.0244,   4,      24,    1,    -7}
+{14IDC:,  m38, "OMS VME58", 4, 5, "JJ1 y translation", 		 "mm",	 Neg, 0.1,     0.1,     0.2,  0.1,  0.1,   0.1,    0.0122,   4,      24,  7.5,  -7.5}
+{14IDC:,  m39, "OMS VME58", 4, 6,    "JJ1 x aperture", 		 "mm",	 Pos, 0.1,     0.1,     0.2,  0.1,  0.1,   0.1,    0.0244,   4,      24,    1,    -7}
+{14IDC:,  m40, "OMS VME58", 4, 7, "JJ1 x translation",		 "mm",	 Pos, 0.1,     0.1,     0.2,  0.1,  0.1,   0.1,    0.0122,   4,      24,  7.5,  -7.5}
+
+###
+### secondary KB Mirrors,full step resolution 200 step we use half step resolution 
+{14IDC:, m41, "OMS VME58", 5, 0, "VMirror dn force",    	 "mm",   Pos,  0.3,   0.01,  	.2, 	0.05, 	1,  .01,    0.072, 	4    400, 	18.6, -5}
+{14IDC:, m42, "OMS VME58", 5, 1, "VMirror up force",    	 "mm",   Pos,  0.3,   0.01,  	.2, 	0.05, 	1,  .01,    0.072, 	4,   400, 	18.6, -5}
+{14IDC:, m43, "OMS VME58", 5, 2, "VMirror dn height",   	 "mm",   Pos,  0.3,   0.01,  	.2, 	0.05, 	1,  .01,    0.072, 	4,   400,	19, -19}
+{14IDC:, m44, "OMS VME58", 5, 3, "HMirror stripe x",    	 "mm",   Pos,  0.2,   0.,    	1., 	0.05, 	1,  .01,    0.0064,    	4,   400,	16,   -19}
+{14IDC:, m45, "OMS VME58", 5, 4, "HMirror up height",   	 "mm",   Pos,  0.5,   0.01,  	.2, 	0.05, 	1,  .01,    0.072,	4,   400,	19, -19}
+{14IDC:, m46, "OMS VME58", 5, 5, "HMirror dn force",    	 "mm",   Pos,  0.5,   0.01,  	.2, 	0.05, 	1,  .01,    0.072, 	4,   400,	19, -19}
+{14IDC:, m47, "OMS VME58", 5, 6, "HMirror up force",    	 "mm",   Pos,  0.5,   0.01,  	.2, 	0.05, 	1,  .01,    0.072, 	4,   400,	19, -19}
+{14IDC:, m48, "OMS VME58", 5, 7, "HMirror dn height",   	 "mm",   Pos,  0.5,   0.01,  	.2, 	0.05, 	1,  .01,    0.072,      4,   400,	19, -19}
+
+}

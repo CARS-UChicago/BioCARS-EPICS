@@ -1,0 +1,15 @@
+file "$(CARS)/CARSApp/Db/scanParms3Pos.db"
+{
+pattern  
+{P,          SCANREC,           Q,           POS1,           RDBK1,      POS2,        RDBK2,        POS3,           RDBK3,                      TPV,  SP1, EP1, NP1, SP2,  EP2, NP2, SP3, EP3, NP3}
+{14IDB:, 14IDB:scan1, VTable_laue, 14IDB:table1.Y, 14IDB:table1.EY,  14IDB:m2, 14IDB:m2.RBV, "14IDB:m28", "14IDB:m28.RBV", "14IDB:waveSurfer:count", -0.1, 0.1,  21, 0.1, -0.1,  21, 0.1, -0.1, 21}
+{14IDB:, 14IDB:scan1, HTable_laue, 14IDB:table1.X, 14IDB:table1.EX,  14IDB:m1, 14IDB:m1.RBV, "14IDB:m26", "14IDB:m26.RBV", "14IDB:waveSurfer:count", -0.1, 0.1,  21, 0.1, -0.1,  21, 0.1, -0.1, 21}
+
+#{14IDB:, 14IDB:scan1, Au, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.90, 11.96, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1030, 1090}
+
+
+# These scans use the scanAux record which does not write to a mda file
+#{14IDB:, 14IDB:scanAux, Mono_DAC, 14IDA:DAC1_3.VAL, 14IDA:DAC1_3.VAL, "ABSOLUTE", "PEAK POS",                      "",     "14IDB:EM1Sum2",   0.1,   9.9,  50,                          "",                           "",    0,    0}
+#{14IDB:, 14IDB:scanAux, Mirror_DAC, 14IDA:DAC1_4.VAL, 14IDA:DAC1_4.VAL, "ABSOLUTE", "PEAK POS", "14IDB:Keithley1:Start.PROC", "14IDB:userTran4.B", 0.1, 9.9,  50, "14IDB:openXiaShutter.PROC","14IDB:closeXiaShutter.PROC",    0,    0}
+}
+

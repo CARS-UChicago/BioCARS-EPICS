@@ -1,0 +1,67 @@
+file "$(CARS)/CARSApp/Db/14EPS.db"
+{
+pattern
+{P,        N,   	DESC,         		C,  S, ZNAM,            ZSV,                  ONAM,             OSV}
+{14BM:,	EPS1_G,		"Beam Splitting Mask",	2,  0,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS1_R,		"Beam Splitting Mask",	2,  1,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS2_G,		"BM-D Slits Flow",	2,  2,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS2_R,		"BM-D Slits Flow",	2,  3,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS3_G,		"BM-C Slits Flow",	2,  4,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS3_R,		"BM-C Slits Flow",	2,  5,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS4A_G,	"Tank Turbo Pump",	2,  6,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"} 
+{14BM:,	EPS4A_R,	"Tank Turbo Pump",	2,  7,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS4B_G,	"Tank Turbo Pump",	2,  8,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}	
+{14BM:,	EPS4B_R,	"Tank Turbo Pump",	2,  9,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS4C_G,	"Tank",			2, 10,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"} 
+{14BM:,	EPS4C_R,	"Tank",			2, 11,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS5_G,		"Monochromator",	2, 12,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS5_R,		"Monochromator",	2, 13,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}	
+{14BM:,	EPS7_G,		"Protective Mask",	2, 14,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS7_R,		"Protective Mask",	2, 15,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS8_G,		"Dual Be Window",	4,  0,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS8_R,		"Dual Be Window",	4,  1,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS9A_G,	"BM-D Mirr Flow",	4,  2,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS9A_R,	"BM-D Mirr Flow",	4,  3,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS9B_G,	"Mirr Leg Guard",	4,  4,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS9B_R,	"Mirr Leg Guard",	4,  5,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS10_G,	"BM-C Mirr Flow",	4,  6,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS10_R,	"BM-C Mirr Flow",	4,  7,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS11_G,	"Vacuum Pumping System",4,  8,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS11_R,	"Vacuum Pumping System",4,  9,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12A_G,	"Tank Turbo Pump",	4, 10,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12A_R,	"Tank Turbo Pump",	4, 11,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12B_G,	"Tank Turbo Pump",	4, 12,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12B_R,	"Tank Turbo Pump",	4, 13,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12C_G,	"Vac Gauge",		4, 14,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS12C_R,	"Vac Gauge",		4, 15,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS15_G,	"Horiz Slits Flow",	6,  0,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS15_R,	"Horiz Slits Flow",	6,  1,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS16_G,	"Mono Cryst Flow",	6,  2,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS16_R,	"Mono Cryst Flow",	6,  3,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS17A_G,	"Hygro Status", 	6,  4,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS17A_R,	"Hygro Status",		6,  5,	"Ok",		"NO_ALARM",	      "Fault",	 	"MAJOR"}
+{14BM:,	EPS17B_G,	"Tank He Flow",		6,  6,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS17B_R,	"Tank He Flow",		6,  7,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS18_G,	"Chiller Status",	6,  8,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS18_R,	"Chiller Status",	6,  9,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS19_G,	"Software Input",	6, 10,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS19_R,	"Software Input",	6, 11,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS6AM_G,	"Mask Mono Mode",	6, 12,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS6AP_G,	"Mask Pink Mode",	6, 13,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS6BM_G,	"Mirr Mono Mode",	6, 14,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS6BP_G,	"Mirr Pink Mode",	6, 15,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS6_R,		"Mode",			8,  0,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS13A_G,	"BM-C Valve Pos",	8,  1,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS13A_R,	"BM-C Valve Pos",	8,  2,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS13B_G,	"BM-D Valve Pos",	8,  3,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS13B_R,	"BM-D Valve Pos",	8,  4,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS14A_G,	"BM-C Valve Pos",	8,  5,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS14A_R,	"BM-C Valve Pos",	8,  6,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS14B_G,	"BM-D Valve Pos",	8,  7,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS14B_R,	"BM-D Valve Pos",	8,  8,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	MAJOR_R,	"MAJOR Error",		8,  9,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	MINOR_Y,	"MINOR Error",		8, 10,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	READY_G,	"EPS Ready",		8, 11,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS20_G,	"Shutter & Beam Stop",	8, 13,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+{14BM:,	EPS20_R,	"Shutter & Beam Stop",	8, 14,	"Ok",		"NO_ALARM",	      "Fault",		"MAJOR"}
+}

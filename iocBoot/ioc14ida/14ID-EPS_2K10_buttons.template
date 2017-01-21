@@ -1,0 +1,42 @@
+#14ID-EPS_2K10_buttons.template
+
+# -- operation request & permission related to each button
+
+file ../../CARSApp/Db/14ID-EPS_2K10_buttons.db
+{
+pattern
+ {P,     A_PRMT,C_PRMT,S_PRMT,A_RQ,C_RQ,S_RQ,  NAME,  	     	  ACTION           }
+#{14IDA:, 0,      10,     12,   0,  13,  0,  "Test",        "Test TGT Inp-channel" }
+#{14IDA:, 0,      10,     12,   0,  13,  1,  "Toggle_OVRD", "Toggle OVRD setting"  }
+#{14IDA:, 0,      10,     12,   0,  13,  2,  "Change_SP",   "Change SetPoint"      }
+ {14IDA:, 0,	  12,     11,   0,  13,  3,  "Open_Vlv",    "Open TGT Valve"       }
+ {14IDA:, 0,      12,     12,   0,  13,  4,  "Close_Vlv",   "Close TGT Valve"      }
+ {14IDA:, 0,	  12,     11,   0,  13,  5,  "Confirm_Vopn","Confirm to open Valve"}
+ {14IDA:, 0,      12,     11,   0,  13,  6,  "Cancel_Vopn", "Cancel openning Valve"}
+ {14IDA:, 0,      12,     15,   0,  13,  7,  "DeSelect",    "DeSelect all Targets" }
+# {14IDA:, 1,      10,     12,   0,  13,  9,  "LogIn",      "LogIn as vlv operator" }
+# {14IDA:, 0,	  13,      9,   0,  13,  10, "LogOut",     "Quit vlv OP mode"      }
+ {14IDA:, 1,       2,     12,   0,  13,  12, "Close_FES",   "Kill FES-PRMT"        }
+#{14IDA:, 1,      10,     12,   0,  13,  14, "Toggle_Emu",  "Toggle Emulation"     }
+ {14IDA:, 1, 	   6,     13,   0,  13,  15, "Reset",	    "Reset EPS"            }
+}
+
+#	The condition under which the ACTION is permitted with this button:
+#
+#	                   Condition 		Button Name
+# 
+#			  in ADM mode		"Test"
+#			  in ADM mode		"Toggle_OVRD"
+#			  in ADM mode		"Change_SP"
+#			TGT_VLV_Opn_PRMT	"Open_Vlv"
+#			TGT_VLV_Cls_PRMT	"Close_Vlv"
+#			TGT_VLV_Opn_PRMT	"Confirm_Vopn"
+#			TGT_VLV_Opn_PRMT	"Cancel_Vopn"
+#			  TGT_selected		"DeSelect"
+#			  PLC_OK		"LogIn"
+#			  in ADM mode		"LogOut"
+#			  FES PRMT		"Close FES"
+#			  in ADM Mode		"Toggle_Emu"
+#			   Resetable		"Reset"	
+
+	

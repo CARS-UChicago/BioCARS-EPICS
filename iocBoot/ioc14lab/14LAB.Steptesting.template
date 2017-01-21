@@ -1,0 +1,22 @@
+
+file $(CARS)/biocarsApp/Db/motor.db
+
+{
+pattern
+{P,       M,   C, S,                 DESC,  EGU, DIR,  VELO,   VBAS, ACCL, BDST, BVEL,    TWV,     UREV, PREC, DHLM, DLLM}
+{14LAB:, m1,   0, 0,          "Motor 1", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m2,   0, 1,          "Motor 2", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m3,   0, 2,          "Motor 3", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m4,   0, 3,          "Motor 4", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m5,   0, 4,          "Motor 5", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m6,   0, 5,          "Motor 6", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m7,   0, 6,          "Motor 7", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+{14LAB:, m8,   0, 7,          "Motor 1", "mm", Neg, 0.400,  0.040,  0.2,  0.0, 0.40,    0.1,   0.250000,    4,   25,  -25}
+}
+
+file $(CARS)/biocarsApp/Db/motor_micro.db
+{
+pattern
+{P,      M,     C, S,           DESC,   EGU, DIR,   VELO,   VBAS, ACCL, BDST,   BVEL,  TWV,   UREV, PREC,  DHLM,   DLLM,  SREV}
+#{14LAB:, phi,   0, 0,     "Phi Axis", "deg", Neg,  30.00, 0.1000,  0.2,  0.0, 0.1000, 90.0,    2.0,    3, 10000, -10000, 10000}
+}

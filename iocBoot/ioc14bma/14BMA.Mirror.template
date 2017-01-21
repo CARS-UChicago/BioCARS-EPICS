@@ -1,0 +1,7 @@
+file "$(CARS)/CARSApp/Db/table.db"
+{
+pattern
+{P,          Q,	    T,	         M0X,	        M0Y,	       M1Y,	      M2X,	     M2Y,  M2Z, GEOM,  LX,  LZ, RX, RY, RZ,  SX,   SY,   SZ,         DESC}
+{14BMA:, DMirr, Dmirr, Dmirrxtransup, Dmirrytransuo, Dmirrytransui, Dmirrxtransdn, Dmirrytransdn, junk,  SRI, 500, 950,  0,  0,  0, 250, -400,  475, "BMD Mirror"}
+{14BMA:, CMirr, Cmirr, Cmirrxtransup, Cmirrytransuo, Cmirrytransui, Cmirrxtransdn, Cmirrytransdn, junk,  SRI, 500, 950,  0,  0,  0, 250, -400,  475, "BMC Mirror"}
+}

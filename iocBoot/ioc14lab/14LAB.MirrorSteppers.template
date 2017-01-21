@@ -1,0 +1,38 @@
+# 14IDA and IDC motor parameters
+# May 24, 06 - Ning Lei
+
+# mono, mirror and slit related motor PVs
+# for mono: see document in \\Cars5\users\BioCARS\UpgradeProjects\Monochromator\Kohzu
+#           coordinates form a right-hand rule with Y in the upward direction and Z along the x-ray forward direction
+# OMS card #:  0 - white and pink slits
+#              1 - mono
+#              2 - vert. mirror
+#              3 - horiz. mirror
+#
+#
+# for 77K Si(111), 2d=6.2712, E=20, theta=5.674 deg, lamda=0.62,  Z2=75.86 mm (for offset 0f 7.5 mm)
+#                             E=25, theta=4.536 deg, lamda=0.496, Z2=94.834
+#                             E=6,  theta=19.239, lamda=2.066,    Z2=22.761 
+
+file $(CARS)/biocarsApp/Db/motor_general.db
+
+{
+pattern
+{P,       M,   DTYP,        C, S, DESC,                          EGU,    DIR, VELO,    VBAS,    ACCL, BDST, BVEL,   TWV,    UREV,      PREC, SREV, DHLM,  DLLM}
+
+# vert. mirror
+{14LAB:,  m17, "OMS VME58", 0, 0,   "V mirror Y1-front",         "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14LAB:,  m18, "OMS VME58", 0, 1,   "V mirror Y2-back inboard",  "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14LAB:,  m19, "OMS VME58", 0, 2,   "V mirror Y3-back outboard", "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+{14LAB:,  m20  "OMS VME58", 0, 3,   "V mirror X1-front",         "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+{14LAB:,  m21, "OMS VME58", 0, 4,   "V mirror X2-back",          "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+{14LAB:,  m22, "OMS VME58", 0, 5,   "V mirror bender",           "mm",   Pos, 0.180,   0.018,   0.2,  0.0,  0.18,   0.1,    0.035714,  4,    400,  1,     -1}
+
+# horiz. mirror
+#{14IDA:,  m25, "OMS VME58", 3, 0,   "H mirror X1",               "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+#{14IDA:,  m26, "OMS VME58", 3, 1,   "H mirror X2",               "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+#{14IDA:,  m27, "OMS VME58", 3, 2,   "H mirror X3",               "mm",   Pos, 0.400,   0.040,   0.2,  0.0,  0.40,   0.1,    0.080000,  4,    400,  25,    -3}
+#{14IDA:,  m28  "OMS VME58", 3, 3,   "H mirror Y1",               "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+#{14IDA:,  m29, "OMS VME58", 3, 4,   "H mirror Y2",               "mm",   Pos, 0.200,   0.040,   0.2,  0.0,  0.40,   0.1,    0.166400,  4,    400,  30,    -30}
+#{14IDA:,  m30, "OMS VME58", 3, 5,   "H mirror bender",           "mm",   Pos, 0.180,   0.018,   0.2,  0.0,  0.18,   0.1,    0.035714,  4,    400,  1,     -1}
+}

@@ -1,0 +1,6 @@
+file ../../../std/stdApp/Db/userTransform.db
+{
+pattern
+{P,      N,            DESC, PREC,      CMTA,              INPA,      CLCB }
+{14LAB:, 1, "Gas pressures",    4, "Voltage", "14LAB:DVX_8.VAL", A*590-200 }
+}									      

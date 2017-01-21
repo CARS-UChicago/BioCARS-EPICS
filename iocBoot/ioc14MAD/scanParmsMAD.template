@@ -1,0 +1,23 @@
+file "$(CARS)/CARSApp/Db/scanParmsMAD.db"
+{
+pattern  
+{P,          SCANREC,  Q,                POS,               RDBK,         AR,        AFT,                         TPV,                 DPV,    SP,    EP,  NP,                           A,                            B,    L,    H}
+#Energy scans
+{14IDB:, 14IDB:scan1, Se, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 12.64, 12.70, 121, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1189, 1251}
+{14IDB:, 14IDB:scan1, Pt, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.53, 11.61, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1000, 1053}
+{14IDB:, 14IDB:scan1, Hg, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 12.26, 12.32, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1055, 1112}
+{14IDB:, 14IDB:scan1,  U, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 17.14, 17.20, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1428, 1510}
+{14IDB:, 14IDB:scan1, Br, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 13.45, 13.51, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1269, 1330}
+{14IDB:, 14IDB:scan1, Fe, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  7.09,  7.15, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC",  670,  730}
+{14IDB:, 14IDB:scan1, Co, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  7.69,  7.75, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC",  727,  787}
+{14IDB:, 14IDB:scan1, Ni, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  8.31,  8.37, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC",  787,  843}
+{14IDB:, 14IDB:scan1, Cu, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  8.96,  9.02, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC",  848,  908}
+{14IDB:, 14IDB:scan1, Zn, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  9.63,  9.69, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC",  913,  973}
+{14IDB:, 14IDB:scan1, Au, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.90, 11.96, 101, "14IDB:openXiaShutter.PROC", "14IDB:closeXiaShutter.PROC", 1030, 1090}
+
+
+# These scans use the scanAux record which does not write to a mda file
+{14IDB:, 14IDB:scanAux, Mono_DAC, 14IDA:DAC1_3.VAL, 14IDA:DAC1_3.VAL, "ABSOLUTE", "PEAK POS",                      "",     "14IDB:EM1Sum2",   0.1,   9.9, 101,                          "",                           "",    0,    0}
+{14IDB:, 14IDB:scanAux, Mirror_DAC, 14IDA:DAC1_4.VAL, 14IDA:DAC1_4.VAL, "ABSOLUTE", "PEAK POS", "14IDB:Keithley1:Start.PROC", "14IDB:Keithley1:AcqTotalInv.VAL", 0.1, 9.9,  50, "14IDB:openXiaShutter.PROC","14IDB:closeXiaShutter.PROC",    0,    0}
+}
+

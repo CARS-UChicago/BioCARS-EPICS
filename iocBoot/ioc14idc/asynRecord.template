@@ -1,0 +1,14 @@
+
+file "$(ASYN)/db/asynRecord.db"
+{
+pattern
+{P          R          PORT    ADDR    OMAX  IMAX}
+{14IDC:     serial1    serial1    0     256  256}
+{14IDC:     serial2    serial2    0     256  256}
+{14IDC:     serial3    serial3    0     256  256}
+{14IDC:     serial4    serial4    0     256  256}
+{14IDC:     serial5    serial5    0     256  256}
+{14IDC:     serial6    serial6    0     256  256}
+{14IDC:     serial7    serial7    0     256  256}
+{14IDC:     serial8    serial8    0     256  256}
+}

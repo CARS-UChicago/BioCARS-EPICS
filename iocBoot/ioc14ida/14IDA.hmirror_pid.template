@@ -1,0 +1,9 @@
+file "$(CARS)/CARSApp/Db/hmirror_pid_control.db"
+{
+pattern
+{P,      PID,           INP,                          OUT,  LOPR,  HOPR, DRVL, DRVH, PREC,     KP,   KI, KD,         SCAN, SHUT_STATUS}
+{14IDA:, hmirror_pid1, "14IDB:EM1Position1", 14IDC:mir2Th.VAL,   3.5,     3.9,    3.5,    3.9,   3,  0.008,  2.0, 0.,  "10 second", PA:14ID:A_SHTRS_CLOSED.VAL}
+}
+
+
+

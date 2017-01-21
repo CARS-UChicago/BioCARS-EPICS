@@ -1,0 +1,25 @@
+#14LAB-EPS_2K9_VlvOP.template
+
+file ../../CARSApp/Db/14LAB-EPS_2K9_ADM.db
+
+# 14ID-EPS_2K6_tgt-sel.template
+# In Epics application for EPS, pressing a button with label as shown
+#     in the "Name" field will select a PLC input channel as "Target" 
+# The "Target" selected will be an object to accept re-configuration 
+#     or explore real input value and setpoint for this channel
+# "Targeting" is permissible for every input as long as "PLC_OK" is 
+#    recieved by Epics via DCM <--> AB-6008V1 communication 
+
+{
+pattern  
+{P,       A,C,S,     NAME}
+
+{14LAB:,	0,5,0,  	"VO0_"}
+{14LAB:,	0,5,1,  	"VO1_"}
+{14LAB:,	0,5,2,  	"VO2_"}
+{14LAB:,	0,5,3,  	"VO3_"}
+{14LAB:,	0,5,4,  	"VO4_"}
+{14LAB:,	0,5,5,  	"VO5_"}
+{14LAB:,	0,5,6,  	"VO6_"}
+
+}

@@ -1,0 +1,11 @@
+file "$(CARS)/CARSApp/Db/remote_shutter_station.db"
+{
+pattern
+{P,      N,         EPS,           ShutterStatus}
+{14IDA:, 1,14IDA:eps_bi95,  PA:14ID:A_SHTRS_CLOSED}
+#{14IDA:, 2,14ID:READY_G,  PA:14ID:C_SHTRS_CLOSED}
+}
+
+
+
+

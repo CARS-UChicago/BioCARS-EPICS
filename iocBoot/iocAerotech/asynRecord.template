@@ -1,0 +1,10 @@
+file "$(ASYN)/db/asynRecord.db"
+{
+pattern
+{P        R         PORT    ADDR    OMAX  IMAX}
+#{CARS:     asyn_1   serial1    0     256  256}
+#{CARS:     asyn_2   serial2    0     256  256}
+#{CARS:     asyn_3   serial3    0     256  256}
+#{CARS:     asyn_4   serial4    0     256  256}
+{14IDB:     tcp1     tcp1       0     256  256}
+}

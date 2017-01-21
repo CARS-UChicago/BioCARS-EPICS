@@ -1,0 +1,42 @@
+file "$(CARS)/CARSApp/Db/scanParmsIDB_MAD.db"
+{
+pattern  
+{P,         SCANREC,  Q,      POS,                RDBK,             AR,         AFT,              TPV,                     DPV,              SP,    EP,  EDG, NP,    L,    H}
+#Energy scans
+{14IDB:, 14IDB:scan1, Se_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 12.64, 12.70, 12.658, 121,  1189, 1251}
+{14IDB:, 14IDB:scan1, Pt_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.53, 11.61, 11.564, 101,  1000, 1053}
+{14IDB:, 14IDB:scan1, Hg_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 12.26, 12.32, 12.283, 101,  1055, 1112}
+{14IDB:, 14IDB:scan1, U_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 17.14, 17.20, 17.160, 101,  1428, 1510}
+{14IDB:, 14IDB:scan1, Br_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 13.45, 13.51, 13.474, 101,  1269, 1330}
+{14IDB:, 14IDB:scan1, Fe_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  7.09,  7.15, 7.112,  101,  670,  730}
+{14IDB:, 14IDB:scan1, Co_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  7.69,  7.75, 7.709,  101,  727,  787}
+{14IDB:, 14IDB:scan1, Ni_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  8.31,  8.37, 8.333,  101,  787,  843}
+{14IDB:, 14IDB:scan1, Cu_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  8.96,  9.02, 8.979,  101,  848,  908}
+{14IDB:, 14IDB:scan1, Zn_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0",  9.63,  9.69, 9.659,  101,  913,  973}
+{14IDB:, 14IDB:scan1, Au_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.90, 11.96, 11.919, 101,  1030, 1090}
+# add additional elements
+{14IDB:, 14IDB:scan1, Ga_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 10.34, 10.40, 10.367, 101,  980, 1040}
+{14IDB:, 14IDB:scan1, Ge_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.08, 11.14, 11.103, 101,  1050, 1110}
+{14IDB:, 14IDB:scan1, As_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.84, 11.90, 11.866, 101,  1120, 1180}
+{14IDB:, 14IDB:scan1, Rb_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 15.18, 15.24, 15.199, 101,  1430, 1490}
+{14IDB:, 14IDB:scan1, Sr_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 16.08, 16.14, 16.104, 101,  1510, 1570}
+{14IDB:, 14IDB:scan1, Y_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 17.02, 17.08, 17.038, 101,  1600, 1660}
+{14IDB:, 14IDB:scan1, Zr_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 17.98, 18.04, 17.997, 101,  1690, 1750}
+{14IDB:, 14IDB:scan1, Nb_Ka, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 18.96, 19.02, 18.985, 101,  1780, 1840}
+{14IDB:, 14IDB:scan1, La_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.90, 11.96, 11.919, 101,  480, 540}
+{14IDB:, 14IDB:scan1, Hf_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 9.54, 9.60, 9.56, 101,  830, 890}
+{14IDB:, 14IDB:scan1, Ta_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 9.86, 9.92, 9.881, 101,  860, 1020}
+{14IDB:, 14IDB:scan1, W_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 10.18, 10.24, 10.206, 101,  890, 950}
+{14IDB:, 14IDB:scan1, Ir_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 11.19, 11.25, 11.215, 101,  970, 1030}
+{14IDB:, 14IDB:scan1, Pb_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 13.02, 13.08, 13.035, 101,  1120, 1180}
+{14IDB:, 14IDB:scan1, Bi_L3, 14IDA:BraggEAO.VAL, 14IDA:BraggERdbkAO, "ABSOLUTE", "+EDGE POS", "dxpSaturn:mca1EraseStart", "dxpSaturn:mca1.R0", 13.40, 13.46, 13.418, 101,  1150, 1210}
+
+
+# These scans use the scanAux record which does not write to a mda file
+# Here for the EDG value of 0 is enetered. These two lines will be envoked from the database only
+ {14IDB:, 14IDB:scanAux, Mono_DAC, 14IDA:DAC1_3.VAL, 14IDA:DAC1_3.VAL, "ABSOLUTE", "PEAK POS",                      "",     "14IDB:EM1Sum2",   0.1,   9.9, 0, 101,   0,    0}
+{14IDB:, 14IDB:scanAux, Mirror_DAC, 14IDA:DAC1_4.VAL, 14IDA:DAC1_4.VAL, "ABSOLUTE", "PEAK POS", "14IDB:Keithley1:Start.PROC", "14IDB:Keithley1:AcqTotalInv.VAL", 0.1, 9.9, 0,  50,    0,    0}
+#}
+
+}
+

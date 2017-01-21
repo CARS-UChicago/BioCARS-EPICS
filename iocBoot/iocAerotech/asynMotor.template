@@ -1,0 +1,10 @@
+file "$(MOTOR)/db/asyn_motor.db"
+
+{
+pattern
+{P,       M,      DTYP,    PORT, ADDR, DESC,              EGU,  DIR,   VELO,  VBAS, ACCL, BDST, BVEL, BACC,   SREV,         UREV, PREC,   DHLM,   DLLM, INIT, MRES}
+# Diffractometer motors
+#{14IDB:, FastPhi, "asynMotor",  AeroE1,  0, "Phi",        deg,  Neg,  180.0,   1.0,  4.0,    0,    1,  0.2,    720,          2.0,    3, 100000,-100000, "", ""}
+#Pushkar setup
+{14IDB:, Spinner, "asynMotor",  AeroE1,  0, "Phi",        deg, Pos,  10.0,   1.0,  4.0,    0,    1,  0.2,   800,           360.0,    3, 10000000,-10000000, "", ""}
+}

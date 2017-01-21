@@ -1,0 +1,15 @@
+file "$(DAC128V)/dac128VApp/Db/singleDAC.db"
+{
+pattern
+{P,      D, N, PORT, S,  EGUL,  DRVL,  LOPR, EGUF, DRVH, HOPR, PREC, LINR,    VAL}
+{14LAB:, 2, 1, DAC2,   0, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+
+# Channel 2 is used for Don Baker's heater  - set range 0V to +10V = 0 to 100%
+#{14LAB:, 2, 2, DAC2,   1, -10.0,  0.,   0.,  10., 10.,  100.,     2,  LINEAR, 0.}
+{14LAB:, 2, 3, DAC2,   2, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+{14LAB:, 2, 4, DAC2,   3, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+{14LAB:, 2, 5, DAC2,   4, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+{14LAB:, 2, 6, DAC2,   5, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+{14LAB:, 2, 7, DAC2,   6, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+{14LAB:, 2, 8, DAC2,   7, -10.0,  -10.0, -10.0, 10.0, 10.0, 10.0,  3,  LINEAR,   0.0}
+}

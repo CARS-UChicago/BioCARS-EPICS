@@ -1,0 +1,9 @@
+file $(CARS)/biocarsApp/Db/scanParms.db
+{
+pattern
+{     P,     SCANREC,            Q,              POS,             RDBK,         AR,        AFT,               TPV,              DPV,  SP,  EP}
+{14LAB:, 14LAB:scan1,        omega,        omega.VAL,        omega.RBV, "RELATIVE", "PEAK POS", "14LAB:sclS1.CNT", "14LAB:sclS1.S2",  -1, 0.0}
+{14LAB:, 14LAB:scan1,       omega2,        omega.VAL,        omega.RBV, "RELATIVE", "PEAK POS", "14LAB:sclS1.CNT", "14LAB:DAC1_1.VAL", -1, 0.0}
+{14LAB:, 14LAB:scan1,       DAC1_1,       DAC1_1.VAL,       DAC1_1.RBV, "ABSOLUTE", "PEAK POS", "14LAB:sclS1.CNT", "14LAB:sclS1.S3", 0.0, 5.0}
+{14LAB:, 14LAB:scan1, omega_offset, omega_offset.VAL, omega_offset.RBV, "RELATIVE", "PEAK POS", "14LAB:sclS1.CNT", "14LAB:sclS1.S2",  -1, 1.0}
+}

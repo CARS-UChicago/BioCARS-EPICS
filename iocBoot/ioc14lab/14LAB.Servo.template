@@ -1,0 +1,7 @@
+file ../../biocarsApp/Db/motor_servo.db
+{
+pattern
+{P,           M,   C, S,          DESC,  EGU, DIR,    VELO,     VBAS,ACCL,BDST, BVEL, TWV,  UREV,   PREC,  DHLM, DLLM, PCOF,    ICOF, DCOF, UEIP}
+{14LAB:, servo1,   0, 0, "servo motor", "mm", Neg, 0.03025, 0.015125, 0.2, 0.0, 0.015, 0.1, 0.0022,     7,    4,   -4, 0.02, 0.00005,  0.0,    0}
+}									      
+

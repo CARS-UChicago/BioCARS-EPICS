@@ -1,0 +1,7 @@
+file ../../ip/ipApp/Db/SR570.db
+{
+pattern
+{P,       A, C, IPSLOT, CHAN }
+{14LAB:  A1, 0,      a,    0 }
+{14LAB:, A2, 0,      a,    0 }
+}

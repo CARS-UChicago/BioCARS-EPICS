@@ -1,0 +1,17 @@
+file "$(OPTICS)/opticsApp/Db/table.db"
+{
+pattern
+{     P,      Q,      T,  M0X,  M0Y,  M1Y,  M2X,  M2Y,  M2Z, GEOM}
+{14IDC:, Table1, table1,  m29,  m26,  m27,  m28,  m25,  m30,  PNC}
+{14IDC:, Table2, table2,  m34,  m32,  m33,  m35,  m31,  m36,  SRI}
+}									      
+#{     P,      Q,      T,  M0X,  M0Y,  M1Y,  M2X,  M2Y,  M2Z, GEOM,  LX,   LZ,     RX,    RY,   RZ,    SX,   SY,   SZ,        DESC}
+#{14IDB:, Table1, table1,  m20,  m18,  m19,  m21,  m17,  m22,  SRI, 496.672, 1270, -152.4,238.02,-431.8, 457.2, 431.7, 1066.8, "IDB Table"}
+
+file "$(CARS)/CARSApp/Db/SavedPositions6.db"
+{
+pattern
+{     P,        Q,       M1,       M2,       M3,        M4,        M5,        M6}
+{14IDB:, IDBTable, table1.X, table1.Y, table1.Z, table1.AX, table1.AY, table1.AZ}
+#{14IDB:, IDBTable, m17, m18, m19, m20, m21, m22}
+}
