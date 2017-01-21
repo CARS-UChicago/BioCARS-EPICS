@@ -1,0 +1,4 @@
+ medm -x -macro "P=14Syringe1:, R=S1:" CPSyringe.adl&
+#../../bin/${EPICS_HOST_ARCH}/CARS st.cmd
+###../../bin/linux-x86/CARS.BACKUP.0516 st.cmd
+../../bin/linux-x86_64/CARS st.cmd
