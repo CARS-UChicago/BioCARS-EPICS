@@ -1,0 +1,18 @@
+record(ao,"$(P)lxd"){
+	field(DESC,"lxd in seconds")
+	field(PREC,"12")
+	field(FLNK,"$(P)lxd_calcout.PROC")
+}
+
+record(longout,"$(P)lxd_debug"){
+	field(VAL,"0")
+}
+
+record(calcout,"$(P)lxd_calcout"){
+	field(A,"1")
+	field(CALC,"A")
+	field(OUT,"$(P)lxd_busy PP")
+}
+record(busy,"$(P)lxd_busy"){
+	field(VAL,"0")
+}

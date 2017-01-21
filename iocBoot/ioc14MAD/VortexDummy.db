@@ -1,0 +1,7 @@
+# use this database only if real Vortex detector is not connected
+record(mca,"$(D):mca1") {
+	field(DESC,"Dummy PV")
+	field(IDTIM,"0.1")
+	field(PRTM, "0.1")
+}
+

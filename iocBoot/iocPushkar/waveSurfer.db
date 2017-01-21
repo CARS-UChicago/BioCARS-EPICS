@@ -1,0 +1,11 @@
+record(bo,"$(P)waveSurfer:clearSweeps") {
+	field(VAL,"0")
+}
+
+record(ao,"$(P)waveSurfer:P1:mean") {
+	field(VAL,"1e-6")
+}
+
+record(bo,"$(P)waveSurfer:P1:read") {
+	field(VAL,"0")
+}
